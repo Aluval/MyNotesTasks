@@ -4490,6 +4490,8 @@ def create_google_flow():
 @login_required
 def google_connect():
 
+    user = get_current_user()
+
     flow = create_google_flow()
 
     authorization_url, state = (
@@ -4501,20 +4503,17 @@ def google_connect():
     )
 
     # --------------------------------------------------------
-    # SAVE GOOGLE OAUTH STATE
+    # SAVE OAUTH STATE + PKCE VERIFIER SERVER-SIDE
     # --------------------------------------------------------
 
-    session["google_oauth_state"] = state
-
-    # --------------------------------------------------------
-    # SAVE PKCE CODE VERIFIER
-    # --------------------------------------------------------
-
-    if flow.code_verifier:
-
-        session["google_code_verifier"] = (
-            flow.code_verifier
-        )
+    google_oauth_collection.insert_one(
+        {
+            "state": state,
+            "user_id": user["_id"],
+            "code_verifier": flow.code_verifier,
+            "created_at": utc_now_naive()
+        }
+    )
 
     return redirect(
         authorization_url
@@ -4532,12 +4531,12 @@ def google_callback():
 
     user = get_current_user()
 
-    state = session.get(
-        "google_oauth_state"
-    )
+    # --------------------------------------------------------
+    # GET OAUTH STATE FROM GOOGLE
+    # --------------------------------------------------------
 
-    code_verifier = session.get(
-        "google_code_verifier"
+    state = request.args.get(
+        "state"
     )
 
     if not state:
@@ -4546,63 +4545,147 @@ def google_callback():
             {
                 "ok": False,
                 "message":
-                    "Google authorization session expired."
+                    "Google OAuth state is missing."
             }
         ), 400
 
-    if not code_verifier:
+    print(
+        "GOOGLE CALLBACK STATE:",
+        state
+    )
+
+    # --------------------------------------------------------
+    # FIND TEMPORARY OAUTH DATA
+    # --------------------------------------------------------
+
+    oauth_data = google_oauth_collection.find_one(
+        {
+            "state": state
+        }
+    )
+
+    if not oauth_data:
+
+        print(
+            "GOOGLE OAUTH STATE NOT FOUND:",
+            state
+        )
 
         return jsonify(
             {
                 "ok": False,
                 "message":
-                    "Google OAuth code verifier is missing. Please try connecting again."
+                    "Google authorization session expired. Please try connecting again."
             }
         ), 400
 
     # --------------------------------------------------------
-    # CREATE FLOW
+    # VERIFY USER
     # --------------------------------------------------------
 
-    client_config = get_google_client_config()
+    if oauth_data.get(
+        "user_id"
+    ) != user["_id"]:
 
-    flow = Flow.from_client_config(
+        print(
+            "GOOGLE OAUTH USER MISMATCH"
+        )
 
-        client_config,
+        return jsonify(
+            {
+                "ok": False,
+                "message":
+                    "Invalid Google authorization session."
+            }
+        ), 400
 
-        scopes=GOOGLE_SCOPES,
+    # --------------------------------------------------------
+    # GET PKCE CODE VERIFIER
+    # --------------------------------------------------------
 
-        state=state
+    code_verifier = oauth_data.get(
+        "code_verifier"
+    )
 
-)
+    if not code_verifier:
 
-    flow.redirect_uri = (
-        get_google_redirect_uri()
+        print(
+            "GOOGLE OAUTH CODE VERIFIER MISSING"
+        )
+
+        google_oauth_collection.delete_one(
+            {
+                "_id":
+                    oauth_data["_id"]
+            }
+        )
+
+        return jsonify(
+            {
+                "ok": False,
+                "message":
+                    "Google OAuth code verifier is missing."
+            }
+        ), 400
+
+    print(
+        "GOOGLE OAUTH CODE VERIFIER FOUND"
     )
 
     # --------------------------------------------------------
-    # RESTORE PKCE VERIFIER
-    # --------------------------------------------------------
-
-    flow.code_verifier = (
-        code_verifier
-    )
-
-    # --------------------------------------------------------
-    # EXCHANGE AUTHORIZATION CODE
+    # CREATE GOOGLE FLOW
     # --------------------------------------------------------
 
     try:
 
+        client_config = (
+            get_google_client_config()
+        )
+
+        flow = Flow.from_client_config(
+
+            client_config,
+
+            scopes=
+                GOOGLE_SCOPES,
+
+            state=
+                state
+
+        )
+
+        flow.redirect_uri = (
+            get_google_redirect_uri()
+        )
+
+        # ----------------------------------------------------
+        # RESTORE PKCE VERIFIER
+        # ----------------------------------------------------
+
+        flow.code_verifier = (
+            code_verifier
+        )
+
+        print(
+            "GOOGLE REDIRECT URI:",
+            flow.redirect_uri
+        )
+
+        # ----------------------------------------------------
+        # EXCHANGE AUTHORIZATION CODE
+        # ----------------------------------------------------
+
         flow.fetch_token(
+
             authorization_response=
                 request.url
+
         )
 
     except Exception as error:
 
         print(
-            "GOOGLE OAUTH ERROR:",
+            "GOOGLE OAUTH TOKEN ERROR:",
             repr(error)
         )
 
@@ -4615,10 +4698,48 @@ def google_callback():
         ), 400
 
     # --------------------------------------------------------
-    # GET CREDENTIALS
+    # GET GOOGLE CREDENTIALS
     # --------------------------------------------------------
 
-    credentials = flow.credentials
+    credentials = (
+        flow.credentials
+    )
+
+    if not credentials:
+
+        print(
+            "GOOGLE CREDENTIALS MISSING"
+        )
+
+        return jsonify(
+            {
+                "ok": False,
+                "message":
+                    "Google credentials were not returned."
+            }
+        ), 400
+
+    # --------------------------------------------------------
+    # VERIFY REFRESH TOKEN
+    # --------------------------------------------------------
+
+    if not credentials.refresh_token:
+
+        print(
+            "GOOGLE REFRESH TOKEN MISSING"
+        )
+
+        return jsonify(
+            {
+                "ok": False,
+                "message":
+                    "Google did not provide a refresh token. Please disconnect and connect again."
+            }
+        ), 400
+
+    # --------------------------------------------------------
+    # PREPARE CREDENTIAL DATA
+    # --------------------------------------------------------
 
     credentials_data = {
 
@@ -4646,10 +4767,10 @@ def google_callback():
     }
 
     # --------------------------------------------------------
-    # SAVE TO USER
+    # SAVE GOOGLE CALENDAR CONNECTION
     # --------------------------------------------------------
 
-    users_collection.update_one(
+    result = users_collection.update_one(
 
         {
             "_id":
@@ -4681,8 +4802,30 @@ def google_callback():
 
     )
 
+    print(
+        "GOOGLE CALENDAR USER UPDATED:",
+        result.modified_count
+    )
+
     # --------------------------------------------------------
-    # CLEAR OAUTH SESSION DATA
+    # DELETE TEMPORARY OAUTH DATA
+    # --------------------------------------------------------
+
+    google_oauth_collection.delete_one(
+
+        {
+            "_id":
+                oauth_data["_id"]
+        }
+
+    )
+
+    print(
+        "GOOGLE OAUTH TEMPORARY DATA DELETED"
+    )
+
+    # --------------------------------------------------------
+    # CLEAR OLD SESSION DATA
     # --------------------------------------------------------
 
     session.pop(
@@ -4716,8 +4859,15 @@ def google_callback():
     )
 
     # --------------------------------------------------------
-    # RETURN TO PROFILE
+    # SUCCESS
     # --------------------------------------------------------
+
+    print(
+        "GOOGLE CALENDAR CONNECTED SUCCESSFULLY:",
+        user.get(
+            "email"
+        )
+    )
 
     return redirect(
         "/profile"
