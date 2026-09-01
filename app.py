@@ -862,6 +862,7 @@ def login_required_page(function):
     return decorated
 
 
+
 # ============================================================
 # AUTH - SIGNUP
 # ============================================================
@@ -907,6 +908,10 @@ def signup():
     ).strip().lower()
 
 
+    # --------------------------------------------------------
+    # NAME VALIDATION
+    # --------------------------------------------------------
+
     if len(name) < 2:
 
         return jsonify(
@@ -917,6 +922,10 @@ def signup():
             }
         ), 400
 
+
+    # --------------------------------------------------------
+    # EMAIL VALIDATION
+    # --------------------------------------------------------
 
     if not valid_email(
         email
@@ -931,6 +940,10 @@ def signup():
         ), 400
 
 
+    # --------------------------------------------------------
+    # PASSWORD VALIDATION
+    # --------------------------------------------------------
+
     if not valid_password(
         password
     ):
@@ -944,12 +957,20 @@ def signup():
         ), 400
 
 
+    # --------------------------------------------------------
+    # CHECK EXISTING USER
+    # --------------------------------------------------------
+
     existing = users_collection.find_one(
         {
             "email": email
         }
     )
 
+
+    # ========================================================
+    # EXISTING UNVERIFIED ACCOUNT
+    # ========================================================
 
     if existing:
 
@@ -967,8 +988,12 @@ def signup():
             ), 409
 
 
+        # Generate new verification code
+
         code = generate_code()
 
+
+        # Update existing account
 
         users_collection.update_one(
 
@@ -993,11 +1018,16 @@ def signup():
                     "name":
                         name,
 
+                    "username":
+                        username,
+
                     "password":
                         generate_password_hash(
                             password
-                        )
+                        ),
 
+                    "updated_at":
+                        utc_now_naive()
                 }
 
             }
@@ -1005,11 +1035,39 @@ def signup():
         )
 
 
-        send_verification_email(
+        print(
+            "NEW VERIFICATION CODE GENERATED FOR:",
+            email
+        )
+
+
+        # Send verification email
+
+        email_sent = send_verification_email(
             email,
             code
         )
 
+
+        # Email failed
+
+        if not email_sent:
+
+            print(
+                "SIGNUP VERIFICATION EMAIL FAILED FOR:",
+                email
+            )
+
+            return jsonify(
+                {
+                    "ok": False,
+                    "message":
+                        "We could not send the verification email. Please try again later."
+                }
+            ), 500
+
+
+        # Email successful
 
         return jsonify(
             {
@@ -1019,6 +1077,10 @@ def signup():
             }
         )
 
+
+    # ========================================================
+    # NEW ACCOUNT
+    # ========================================================
 
     code = generate_code()
 
@@ -1085,14 +1147,60 @@ def signup():
     }
 
 
+    # --------------------------------------------------------
+    # CREATE USER
+    # --------------------------------------------------------
+
     result = users_collection.insert_one(
         user
     )
 
 
-    send_verification_email(
+    print(
+        "USER CREATED:",
+        email
+    )
+
+
+    # --------------------------------------------------------
+    # SEND VERIFICATION EMAIL
+    # --------------------------------------------------------
+
+    email_sent = send_verification_email(
         email,
         code
+    )
+
+
+    # --------------------------------------------------------
+    # EMAIL FAILED
+    # --------------------------------------------------------
+
+    if not email_sent:
+
+        print(
+            "SIGNUP VERIFICATION EMAIL FAILED FOR:",
+            email
+        )
+
+        return jsonify(
+            {
+                "ok": False,
+                "message":
+                    "Account was created, but we could not send the verification email. Please try again later.",
+                "user_id":
+                    str(result.inserted_id)
+            }
+        ), 500
+
+
+    # --------------------------------------------------------
+    # EMAIL SUCCESS
+    # --------------------------------------------------------
+
+    print(
+        "SIGNUP VERIFICATION EMAIL SENT:",
+        email
     )
 
 
@@ -1250,6 +1358,10 @@ def verify_email():
         ), 400
 
 
+    # --------------------------------------------------------
+    # MARK EMAIL VERIFIED
+    # --------------------------------------------------------
+
     users_collection.update_one(
 
         {
@@ -1282,6 +1394,10 @@ def verify_email():
 
     )
 
+
+    # --------------------------------------------------------
+    # ACTIVITY LOG
+    # --------------------------------------------------------
 
     create_log(
 
@@ -1339,6 +1455,10 @@ def resend_verification():
     )
 
 
+    # --------------------------------------------------------
+    # GENERIC RESPONSE
+    # --------------------------------------------------------
+
     if not user:
 
         return jsonify(
@@ -1349,6 +1469,10 @@ def resend_verification():
             }
         )
 
+
+    # --------------------------------------------------------
+    # ALREADY VERIFIED
+    # --------------------------------------------------------
 
     if user.get(
         "email_verified",
@@ -1363,6 +1487,10 @@ def resend_verification():
             }
         ), 400
 
+
+    # --------------------------------------------------------
+    # GENERATE NEW CODE
+    # --------------------------------------------------------
 
     code = generate_code()
 
@@ -1394,9 +1522,43 @@ def resend_verification():
     )
 
 
-    send_verification_email(
+    # --------------------------------------------------------
+    # SEND EMAIL
+    # --------------------------------------------------------
+
+    email_sent = send_verification_email(
         email,
         code
+    )
+
+
+    # --------------------------------------------------------
+    # EMAIL FAILED
+    # --------------------------------------------------------
+
+    if not email_sent:
+
+        print(
+            "RESEND VERIFICATION EMAIL FAILED FOR:",
+            email
+        )
+
+        return jsonify(
+            {
+                "ok": False,
+                "message":
+                    "We could not send the verification email. Please try again later."
+            }
+        ), 500
+
+
+    # --------------------------------------------------------
+    # EMAIL SUCCESS
+    # --------------------------------------------------------
+
+    print(
+        "RESEND VERIFICATION EMAIL SENT:",
+        email
     )
 
 
