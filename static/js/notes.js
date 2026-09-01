@@ -520,57 +520,206 @@ function initializeNotesPage() {
     );
 
 
-// ============================================================
-// NEW NOTE BUTTON
-// Supports the HTML button: #addNoteButton
-// ============================================================
+    // ============================================================
+    // NEW NOTE BUTTON
+    // Supports the HTML button: #addNoteButton
+    // ============================================================
 
-const addNoteButton =
-    getElement("addNoteButton");
+    const addNoteButton =
+        getElement("addNoteButton");
 
-const newNoteButton =
-    getElement("newNoteButton");
+    const newNoteButton =
+        getElement("newNoteButton");
 
-if (addNoteButton) {
+    if (addNoteButton) {
 
-    addNoteButton.addEventListener(
-        "click",
-        () => {
+        addNoteButton.addEventListener(
+            "click",
+            () => {
 
-            console.log(
-                "New Note clicked"
+                console.log(
+                    "New Note clicked"
+                );
+
+                openNoteEditor();
+
+            }
+        );
+
+    }
+
+
+    if (
+        newNoteButton &&
+        newNoteButton !== addNoteButton
+    ) {
+
+        newNoteButton.addEventListener(
+            "click",
+            () => {
+
+                console.log(
+                    "New Note clicked"
+                );
+
+                openNoteEditor();
+
+            }
+        );
+
+    }
+
+
+    // ============================================================
+    // MOBILE SIDEBAR
+    // ============================================================
+
+    const appSidebar =
+        getElement("appSidebar");
+
+    const openSidebar =
+        getElement("openSidebar");
+
+    const closeSidebar =
+        getElement("closeSidebar");
+
+    const sidebarOverlay =
+        getElement("sidebarOverlay");
+
+
+    function openMobileSidebar() {
+
+        if (appSidebar) {
+            appSidebar.classList.add("open");
+        }
+
+        if (sidebarOverlay) {
+            sidebarOverlay.classList.add("active");
+        }
+
+        document.body.classList.add(
+            "sidebar-open"
+        );
+
+        console.log(
+            "Sidebar opened"
+        );
+    }
+
+
+    function closeMobileSidebar() {
+
+        if (appSidebar) {
+            appSidebar.classList.remove("open");
+        }
+
+        if (sidebarOverlay) {
+            sidebarOverlay.classList.remove("active");
+        }
+
+        document.body.classList.remove(
+            "sidebar-open"
+        );
+
+        console.log(
+            "Sidebar closed"
+        );
+    }
+
+
+    // ============================================================
+    // OPEN SIDEBAR BUTTON
+    // ============================================================
+
+    if (openSidebar) {
+
+        openSidebar.addEventListener(
+            "click",
+            openMobileSidebar
+        );
+
+    }
+
+
+    // ============================================================
+    // CLOSE SIDEBAR BUTTON
+    // ============================================================
+
+    if (closeSidebar) {
+
+        closeSidebar.addEventListener(
+            "click",
+            closeMobileSidebar
+        );
+
+    }
+
+
+    // ============================================================
+    // SIDEBAR OVERLAY
+    // ============================================================
+
+    if (sidebarOverlay) {
+
+        sidebarOverlay.addEventListener(
+            "click",
+            closeMobileSidebar
+        );
+
+    }
+
+
+    // ============================================================
+    // CLOSE SIDEBAR WHEN NAVIGATION LINK IS CLICKED
+    // Mobile only
+    // ============================================================
+
+    if (appSidebar) {
+
+        appSidebar
+            .querySelectorAll(".nav-item")
+            .forEach(
+                link => {
+
+                    link.addEventListener(
+                        "click",
+                        () => {
+
+                            closeMobileSidebar();
+
+                        }
+                    );
+
+                }
             );
 
-            openNoteEditor();
+    }
+
+
+    // ============================================================
+    // CLOSE SIDEBAR WITH ESCAPE
+    // ============================================================
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Escape" &&
+                appSidebar?.classList.contains("open")
+            ) {
+
+                closeMobileSidebar();
+
+            }
 
         }
     );
 
-}
 
-if (
-    newNoteButton &&
-    newNoteButton !== addNoteButton
-) {
-
-    newNoteButton.addEventListener(
-        "click",
-        () => {
-
-            console.log(
-                "New Note clicked"
-            );
-
-            openNoteEditor();
-
-        }
-    );
-
-}
-
-    /* --------------------------------------------------------
-       CLOSE EDITOR
-    -------------------------------------------------------- */
+    // ============================================================
+    // CLOSE EDITOR
+    // ============================================================
 
     getElement(
         "closeNoteModal"
@@ -580,24 +729,25 @@ if (
     );
 
 
-getElement(
-    "cancelNote"
-)?.addEventListener(
-    "click",
-    closeNoteEditor
-);
-
-getElement(
-    "cancelNoteButton"
-)?.addEventListener(
-    "click",
-    closeNoteEditor
-);
+    getElement(
+        "cancelNote"
+    )?.addEventListener(
+        "click",
+        closeNoteEditor
+    );
 
 
-    /* --------------------------------------------------------
-       SAVE NOTE
-    -------------------------------------------------------- */
+    getElement(
+        "cancelNoteButton"
+    )?.addEventListener(
+        "click",
+        closeNoteEditor
+    );
+
+
+    // ============================================================
+    // SAVE NOTE
+    // ============================================================
 
     getElement(
         "noteForm"
@@ -607,12 +757,14 @@ getElement(
     );
 
 
-    /* --------------------------------------------------------
-       SEARCH
-    -------------------------------------------------------- */
+    // ============================================================
+    // SEARCH
+    // IMPORTANT: HTML ID = notesSearch
+    // ============================================================
 
     const searchInput =
         getElement("notesSearch");
+
 
     searchInput?.addEventListener(
         "input",
@@ -634,9 +786,9 @@ getElement(
     );
 
 
-    /* --------------------------------------------------------
-       CLEAR SEARCH
-    -------------------------------------------------------- */
+    // ============================================================
+    // CLEAR SEARCH
+    // ============================================================
 
     getElement(
         "clearNoteSearch"
@@ -646,9 +798,9 @@ getElement(
     );
 
 
-    /* --------------------------------------------------------
-       CATEGORY FILTERS
-    -------------------------------------------------------- */
+    // ============================================================
+    // CATEGORY FILTERS
+    // ============================================================
 
     document
         .querySelectorAll(
@@ -672,13 +824,16 @@ getElement(
                                     )
                             );
 
+
                         button.classList.add(
                             "active"
                         );
 
+
                         notesState.category =
                             button.dataset.noteFilter ||
                             "all";
+
 
                         applyNotesFilters();
 
@@ -689,9 +844,9 @@ getElement(
         );
 
 
-    /* --------------------------------------------------------
-       SORT
-    -------------------------------------------------------- */
+    // ============================================================
+    // SORT
+    // ============================================================
 
     getElement(
         "notesSort"
@@ -709,9 +864,9 @@ getElement(
     );
 
 
-    /* --------------------------------------------------------
-       CHARACTER COUNT
-    -------------------------------------------------------- */
+    // ============================================================
+    // CHARACTER COUNT
+    // ============================================================
 
     getElement(
         "noteContent"
@@ -721,9 +876,9 @@ getElement(
     );
 
 
-    /* --------------------------------------------------------
-       DELETE
-    -------------------------------------------------------- */
+    // ============================================================
+    // DELETE
+    // ============================================================
 
     getElement(
         "confirmDeleteNote"
@@ -741,54 +896,141 @@ getElement(
     );
 
 
-    /* --------------------------------------------------------
-       VIEW MODAL CLOSE
-    -------------------------------------------------------- */
+/* ============================================================
+   VIEW MODAL CLOSE BUTTONS
+   ============================================================ */
+
+getElement(
+    "closeNoteViewModal"
+)?.addEventListener(
+    "click",
+    function () {
+
+        closeViewNoteModal();
+
+    }
+);
+
+
+getElement(
+    "closeViewedNote"
+)?.addEventListener(
+    "click",
+    function () {
+
+        closeViewNoteModal();
+
+    }
+);
+
+
+/* ============================================================
+   EDIT NOTE FROM VIEW MODAL
+   ============================================================ */
+
+getElement(
+    "editViewedNote"
+)?.addEventListener(
+    "click",
+    function () {
+
+        console.log(
+            "Edit Note clicked"
+        );
+
+        const viewedNoteId =
+            getElement(
+                "viewedNoteId"
+            )?.value;
+
+        console.log(
+            "Viewed Note ID:",
+            viewedNoteId
+        );
+
+
+        if (!viewedNoteId) {
+
+            showToast(
+                "Unable to identify this note.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        // ------------------------------------------------------
+        // FIRST: CLOSE VIEW MODAL COMPLETELY
+        // ------------------------------------------------------
+
+        const viewModal =
+            getElement(
+                "noteViewModal"
+            );
+
+        if (viewModal) {
+
+            viewModal.classList.add(
+                "hidden"
+            );
+
+            viewModal.style.display =
+                "none";
+
+            viewModal.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+        }
+
+
+        // ------------------------------------------------------
+        // THEN: OPEN EDIT MODAL
+        // ------------------------------------------------------
+
+        // Wait for the browser to finish closing
+        // the View modal before opening Editor.
+
+        requestAnimationFrame(
+            function () {
+
+                console.log(
+                    "Opening editor for:",
+                    viewedNoteId
+                );
+
+                openNoteEditor(
+                    viewedNoteId
+                );
+
+            }
+        );
+
+    }
+);
+
+
+    // ============================================================
+    // EMPTY CREATE NOTE
+    // ============================================================
 
     getElement(
-        "closeViewNoteModal"
-    )?.addEventListener(
-        "click",
-        closeViewNoteModal
-    );
-
-
-    getElement(
-        "closeViewNoteButton"
-    )?.addEventListener(
-        "click",
-        closeViewNoteModal
-    );
-
-
-    /* --------------------------------------------------------
-       EDIT FROM VIEW
-    -------------------------------------------------------- */
-
-    getElement(
-        "editViewedNote"
+        "emptyAddNoteButton"
     )?.addEventListener(
         "click",
         () => {
 
-            const id =
-                getElement(
-                    "viewedNoteId"
-                )?.value;
-
-            closeViewNoteModal();
-
-            if (id) {
-                openNoteEditor(id);
-            }
+            openNoteEditor();
 
         }
     );
 
 
-    /* --------------------------------------------------------
-       MODAL BACKGROUND
-    -------------------------------------------------------- */
+    // ============================================================
+    // NOTE EDITOR BACKGROUND
+    // ============================================================
 
     getElement(
         "noteEditorModal"
@@ -802,11 +1044,16 @@ getElement(
             ) {
 
                 closeNoteEditor();
+
             }
 
         }
     );
 
+
+    // ============================================================
+    // DELETE MODAL BACKGROUND
+    // ============================================================
 
     getElement(
         "deleteNoteModal"
@@ -820,33 +1067,39 @@ getElement(
             ) {
 
                 closeDeleteNoteModal();
+
             }
 
         }
     );
 
 
+    // ============================================================
+    // VIEW MODAL BACKGROUND
+    // ============================================================
+
     getElement(
-        "viewNoteModal"
+        "noteViewModal"
     )?.addEventListener(
         "click",
         event => {
 
             if (
                 event.target.id ===
-                "viewNoteModal"
+                "noteViewModal"
             ) {
 
                 closeViewNoteModal();
+
             }
 
         }
     );
 
 
-    /* --------------------------------------------------------
-       ESCAPE
-    -------------------------------------------------------- */
+    // ============================================================
+    // ESCAPE FOR MODALS
+    // ============================================================
 
     document.addEventListener(
         "keydown",
@@ -855,27 +1108,35 @@ getElement(
             if (
                 event.key !== "Escape"
             ) {
+
                 return;
+
             }
+
 
             const editor =
                 getElement(
                     "noteEditorModal"
                 );
 
+
             const deleteModal =
                 getElement(
                     "deleteNoteModal"
                 );
 
+
             const viewModal =
                 getElement(
-                    "viewNoteModal"
+                    "noteViewModal"
                 );
+
 
             if (
                 editor &&
-                !editor.classList.contains("hidden")
+                !editor.classList.contains(
+                    "hidden"
+                )
             ) {
 
                 closeNoteEditor();
@@ -884,7 +1145,9 @@ getElement(
 
             else if (
                 deleteModal &&
-                !deleteModal.classList.contains("hidden")
+                !deleteModal.classList.contains(
+                    "hidden"
+                )
             ) {
 
                 closeDeleteNoteModal();
@@ -893,19 +1156,22 @@ getElement(
 
             else if (
                 viewModal &&
-                !viewModal.classList.contains("hidden")
+                !viewModal.classList.contains(
+                    "hidden"
+                )
             ) {
 
                 closeViewNoteModal();
+
             }
 
         }
     );
 
 
-    /* --------------------------------------------------------
-       CTRL + N
-    -------------------------------------------------------- */
+    // ============================================================
+    // CTRL + N
+    // ============================================================
 
     document.addEventListener(
         "keydown",
@@ -929,11 +1195,12 @@ getElement(
     );
 
 
-    /* --------------------------------------------------------
-       LOGOUT
-    -------------------------------------------------------- */
+    // ============================================================
+    // LOGOUT
+    // ============================================================
 
     initializeLogout();
+
 }
 
 
@@ -1576,11 +1843,14 @@ function renderNoteCard(note) {
 }
 
 
-/* ============================================================
-   NOTE ACTION
-   ============================================================ */
+// ============================================================
+// NOTE ACTION
+// ============================================================
 
 function handleNoteAction(event) {
+
+    event.preventDefault();
+    event.stopPropagation();
 
     const button =
         event.currentTarget;
@@ -1592,24 +1862,58 @@ function handleNoteAction(event) {
         button.dataset.id;
 
     if (!id) {
+        console.error(
+            "Note action: missing note ID"
+        );
+
         return;
     }
 
+    console.log(
+        "NOTE ACTION:",
+        action,
+        "ID:",
+        id
+    );
+
+
     switch (action) {
 
+        // ----------------------------------------------------
+        // VIEW
+        // ----------------------------------------------------
+
         case "view":
+
+            console.log(
+                "Opening VIEW modal:",
+                id
+            );
 
             viewNote(id);
 
             break;
 
 
+        // ----------------------------------------------------
+        // EDIT
+        // ----------------------------------------------------
+
         case "edit":
+
+            console.log(
+                "Opening EDIT modal:",
+                id
+            );
 
             openNoteEditor(id);
 
             break;
 
+
+        // ----------------------------------------------------
+        // DELETE
+        // ----------------------------------------------------
 
         case "delete":
 
@@ -1618,14 +1922,27 @@ function handleNoteAction(event) {
             break;
 
 
+        // ----------------------------------------------------
+        // PIN
+        // ----------------------------------------------------
+
         case "pin":
 
             togglePinNote(id);
 
             break;
-    }
-}
 
+
+        default:
+
+            console.warn(
+                "Unknown note action:",
+                action
+            );
+
+    }
+
+}
 
 /* ============================================================
    EMPTY STATE
@@ -1863,7 +2180,7 @@ function updateNotesCount() {
 function updateClearSearchButton() {
 
     const input =
-        getElement("noteSearch");
+        getElement("notesSearch");
 
     const button =
         getElement("clearNoteSearch");
@@ -1882,7 +2199,7 @@ function updateClearSearchButton() {
 function clearNoteSearch() {
 
     const input =
-        getElement("noteSearch");
+        getElement("notesSearch");
 
     if (input) {
         input.value = "";
@@ -1907,7 +2224,7 @@ function clearNoteFilters() {
     notesState.category = "all";
 
     const search =
-        getElement("noteSearch");
+        getElement("notesSearch");
 
     if (search) {
         search.value = "";
@@ -1978,8 +2295,10 @@ function openNoteEditor(
         noteId || ""
     );
 
-    
-    
+    setInputValue(
+        "notesSearch",
+        ""
+    );
 
     /* --------------------------------------------------------
        NEW NOTE
@@ -2115,6 +2434,11 @@ function closeNoteEditor() {
     );
 
     notesState.editingId = null;
+
+    setInputValue(
+        "notesSearch",
+        ""
+    );
 
     setInputValue(
         "noteId",
@@ -2379,7 +2703,13 @@ function viewNote(noteId) {
                 String(noteId)
         );
 
+
     if (!note) {
+
+        console.error(
+            "VIEW NOTE: Note not found:",
+            noteId
+        );
 
         showToast(
             "Note not found.",
@@ -2389,15 +2719,36 @@ function viewNote(noteId) {
         return;
     }
 
+
+    console.log(
+        "VIEW NOTE:",
+        note
+    );
+
+
+    /* --------------------------------------------------------
+       STORE NOTE ID
+    -------------------------------------------------------- */
+
     setInputValue(
         "viewedNoteId",
         note.id
     );
 
+
+    /* --------------------------------------------------------
+       TITLE
+    -------------------------------------------------------- */
+
     setText(
         "viewNoteTitle",
-        note.title
+        note.title || "Untitled Note"
     );
+
+
+    /* --------------------------------------------------------
+       CATEGORY
+    -------------------------------------------------------- */
 
     setText(
         "viewNoteCategory",
@@ -2407,10 +2758,20 @@ function viewNote(noteId) {
         )
     );
 
+
+    /* --------------------------------------------------------
+       CONTENT
+    -------------------------------------------------------- */
+
     setText(
         "viewNoteContent",
-        note.content
+        note.content || ""
     );
+
+
+    /* --------------------------------------------------------
+       DATE
+    -------------------------------------------------------- */
 
     setText(
         "viewNoteDate",
@@ -2423,10 +2784,16 @@ function viewNote(noteId) {
             )}`
     );
 
+
+    /* --------------------------------------------------------
+       OPTIONAL PIN STATUS
+    -------------------------------------------------------- */
+
     const pinStatus =
         getElement(
             "viewNotePinned"
         );
+
 
     if (pinStatus) {
 
@@ -2434,39 +2801,89 @@ function viewNote(noteId) {
             note.pinned
                 ? "Pinned"
                 : "";
+
     }
 
-    const modal =
-        getElement(
-            "viewNoteModal"
-        );
 
-    if (!modal) {
+    /* --------------------------------------------------------
+       VIEW MODAL
+    -------------------------------------------------------- */
 
-        openNoteEditor(
-            note.id
-        );
+const modal =
+    getElement(
+        "noteViewModal"
+    );
 
-        return;
-    }
+if (!modal) {
 
-    openModal(modal);
+    console.error(
+        "VIEW NOTE ERROR: #noteViewModal does not exist."
+    );
+
+    showToast(
+        "Note view modal is missing.",
+        "error"
+    );
+
+    return;
+}
+
+modal.style.display = "";
+modal.classList.remove("hidden");
+
+modal.setAttribute(
+    "aria-hidden",
+    "false"
+);
+
+
+    /* --------------------------------------------------------
+       OPEN VIEW MODAL
+    -------------------------------------------------------- */
+
+    console.log(
+        "Opening Note View Modal"
+    );
+
+
+    openModal(
+        modal
+    );
+
 }
 
 
 /* ============================================================
-   CLOSE VIEW NOTE
+   CLOSE VIEW NOTE MODAL
    ============================================================ */
 
 function closeViewNoteModal() {
 
-    closeModal(
-        getElement(
-            "viewNoteModal"
-        )
+    const modal =
+        document.getElementById(
+            "noteViewModal"
+        );
+
+    if (!modal) {
+        return;
+    }
+
+    // Completely close the View modal
+    modal.classList.add("hidden");
+
+    // Remove any inline display that may keep it visible
+    modal.style.display = "none";
+
+    // Prevent it from remaining above/below another modal
+    modal.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+    console.log(
+        "View Note modal closed"
     );
 }
-
 
 /* ============================================================
    PIN / UNPIN
