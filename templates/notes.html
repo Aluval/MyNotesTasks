@@ -57,6 +57,7 @@
 
             </a>
 
+
             <button
                 type="button"
                 id="closeSidebar"
@@ -68,7 +69,9 @@
         </div>
 
 
-        <!-- USER -->
+        <!-- =================================================
+             USER
+        ================================================== -->
 
         <div class="sidebar-user">
 
@@ -94,7 +97,9 @@
         </div>
 
 
-        <!-- NAVIGATION -->
+        <!-- =================================================
+             NAVIGATION
+        ================================================== -->
 
         <nav class="sidebar-nav">
 
@@ -103,6 +108,8 @@
                 WORKSPACE
             </div>
 
+
+            <!-- DASHBOARD -->
 
             <a
                 href="/dashboard"
@@ -119,6 +126,8 @@
 
             </a>
 
+
+            <!-- NOTES -->
 
             <a
                 href="/notes"
@@ -143,6 +152,8 @@
             </a>
 
 
+            <!-- TASKS -->
+
             <a
                 href="/tasks"
                 class="nav-item"
@@ -165,6 +176,8 @@
 
             </a>
 
+
+            <!-- UPCOMING -->
 
             <a
                 href="/upcoming"
@@ -189,6 +202,8 @@
             </a>
 
 
+            <!-- HISTORY -->
+
             <div class="nav-section-title">
                 HISTORY
             </div>
@@ -209,6 +224,8 @@
 
             </a>
 
+
+            <!-- ACCOUNT -->
 
             <div class="nav-section-title">
                 ACCOUNT
@@ -234,7 +251,9 @@
         </nav>
 
 
-        <!-- SIDEBAR BOTTOM -->
+        <!-- =================================================
+             SIDEBAR BOTTOM
+        ================================================== -->
 
         <div class="sidebar-bottom">
 
@@ -254,15 +273,19 @@
 
         </div>
 
+
     </aside>
 
 
-    <!-- MOBILE OVERLAY -->
+    <!-- =================================================
+         MOBILE OVERLAY
+    ================================================== -->
 
     <div
         class="sidebar-overlay"
         id="sidebarOverlay"
     ></div>
+
 
 
     <!-- =================================================
@@ -303,7 +326,6 @@
 
             <div class="topbar-actions">
 
-
                 <a
                     href="/profile"
                     class="topbar-user"
@@ -334,6 +356,7 @@
 
 
         </header>
+
 
 
         <!-- =================================================
@@ -386,6 +409,7 @@
             </section>
 
 
+
             <!-- =================================================
                  SEARCH + FILTER
             ================================================== -->
@@ -393,11 +417,14 @@
             <section class="notes-toolbar">
 
 
+                <!-- SEARCH -->
+
                 <div class="notes-search">
 
                     <span>
                         ⌕
                     </span>
+
 
                     <input
                         type="search"
@@ -406,10 +433,12 @@
                         autocomplete="off"
                     >
 
+
                     <button
                         type="button"
-                        id="clearNotesSearch"
+                        id="clearNoteSearch"
                         class="search-clear hidden"
+                        aria-label="Clear search"
                     >
                         ×
                     </button>
@@ -417,85 +446,107 @@
                 </div>
 
 
+
+                <!-- FILTERS -->
+
                 <div class="notes-filters">
+
 
                     <button
                         type="button"
                         class="filter-button active"
-                        data-category="all"
+                        data-note-filter="all"
                     >
                         All
                     </button>
 
+
                     <button
                         type="button"
                         class="filter-button"
-                        data-category="work"
+                        data-note-filter="work"
                     >
                         Work
                     </button>
 
+
                     <button
                         type="button"
                         class="filter-button"
-                        data-category="personal"
+                        data-note-filter="personal"
                     >
                         Personal
                     </button>
 
+
                     <button
                         type="button"
                         class="filter-button"
-                        data-category="study"
+                        data-note-filter="study"
                     >
                         Study
                     </button>
 
+
                     <button
                         type="button"
                         class="filter-button"
-                        data-category="ideas"
+                        data-note-filter="ideas"
                     >
                         Ideas
                     </button>
 
+
                 </div>
 
 
+
+                <!-- SORT -->
+
                 <div class="notes-sort">
+
 
                     <label for="notesSort">
                         Sort
                     </label>
 
+
                     <select id="notesSort">
 
-                        <option value="updated_desc">
+
+                        <option value="updated">
                             Recently Updated
                         </option>
 
-                        <option value="created_desc">
+
+                        <option value="newest">
                             Newest
                         </option>
 
-                        <option value="created_asc">
+
+                        <option value="oldest">
                             Oldest
                         </option>
 
-                        <option value="title_asc">
+
+                        <option value="title">
                             Title A-Z
                         </option>
 
-                        <option value="title_desc">
-                            Title Z-A
+
+                        <option value="pinned">
+                            Pinned First
                         </option>
 
+
                     </select>
+
 
                 </div>
 
 
             </section>
+
 
 
             <!-- =================================================
@@ -505,11 +556,15 @@
             <section class="mini-stats-grid">
 
 
+                <!-- TOTAL -->
+
                 <div class="mini-stat-card">
+
 
                     <div class="mini-stat-icon purple">
                         ✎
                     </div>
+
 
                     <div>
 
@@ -517,20 +572,27 @@
                             Total Notes
                         </span>
 
+
                         <strong id="totalNotes">
                             0
                         </strong>
 
                     </div>
 
+
                 </div>
 
 
+
+                <!-- PINNED -->
+
                 <div class="mini-stat-card">
+
 
                     <div class="mini-stat-icon orange">
                         ★
                     </div>
+
 
                     <div>
 
@@ -538,20 +600,27 @@
                             Pinned
                         </span>
 
+
                         <strong id="pinnedNotes">
                             0
                         </strong>
 
                     </div>
 
+
                 </div>
 
 
+
+                <!-- UPDATED TODAY -->
+
                 <div class="mini-stat-card">
+
 
                     <div class="mini-stat-icon blue">
                         ◷
                     </div>
+
 
                     <div>
 
@@ -559,16 +628,19 @@
                             Updated Today
                         </span>
 
+
                         <strong id="todayNotes">
                             0
                         </strong>
 
                     </div>
 
+
                 </div>
 
 
             </section>
+
 
 
             <!-- =================================================
@@ -581,7 +653,7 @@
             >
 
 
-                <!-- Loading -->
+                <!-- LOADING -->
 
                 <div
                     id="notesLoading"
@@ -589,6 +661,7 @@
                 >
 
                     <div class="loading-spinner"></div>
+
 
                     <span>
                         Loading notes...
@@ -600,6 +673,7 @@
             </section>
 
 
+
             <!-- =================================================
                  EMPTY STATE
             ================================================== -->
@@ -609,17 +683,21 @@
                 class="empty-state page-empty-state hidden"
             >
 
+
                 <div class="empty-state-icon">
                     ✎
                 </div>
+
 
                 <h3>
                     No notes found
                 </h3>
 
+
                 <p id="notesEmptyText">
                     Create your first note to get started.
                 </p>
+
 
                 <button
                     type="button"
@@ -629,34 +707,44 @@
                     Create Note
                 </button>
 
+
             </section>
 
 
         </main>
 
 
-        <!-- FOOTER -->
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
 
         <footer class="app-footer">
+
 
             <span>
                 MyNotes & Tasks
             </span>
 
+
             <span>
                 © 2026
             </span>
 
+
             <a href="/dashboard">
                 Dashboard
             </a>
+
 
         </footer>
 
 
     </div>
 
+
 </div>
+
 
 
 <!-- =========================================================
@@ -668,11 +756,14 @@
     class="modal-overlay hidden"
 >
 
+
     <div class="modal note-editor-modal">
+
 
         <!-- HEADER -->
 
         <div class="modal-header">
+
 
             <div>
 
@@ -680,21 +771,26 @@
                     NOTE
                 </span>
 
+
                 <h3 id="noteModalTitle">
                     New Note
                 </h3>
 
             </div>
 
+
             <button
                 type="button"
                 id="closeNoteModal"
                 class="modal-close"
+                aria-label="Close note editor"
             >
                 ×
             </button>
 
+
         </div>
+
 
 
         <!-- MESSAGE -->
@@ -706,6 +802,7 @@
         ></div>
 
 
+
         <!-- FORM -->
 
         <form
@@ -713,19 +810,25 @@
             class="note-form"
         >
 
+
+            <!-- NOTE ID -->
+
             <input
                 type="hidden"
                 id="noteId"
             >
 
 
+
             <!-- TITLE -->
 
             <div class="form-group">
 
+
                 <label for="noteTitle">
                     Title
                 </label>
+
 
                 <input
                     type="text"
@@ -736,57 +839,72 @@
                     required
                 >
 
+
                 <small
                     id="noteTitleError"
                     class="field-error"
                 ></small>
 
+
             </div>
+
 
 
             <!-- CATEGORY -->
 
             <div class="form-group">
 
+
                 <label for="noteCategory">
                     Category
                 </label>
+
 
                 <select
                     id="noteCategory"
                     name="category"
                 >
 
+
                     <option value="personal">
                         Personal
                     </option>
+
 
                     <option value="work">
                         Work
                     </option>
 
+
                     <option value="study">
                         Study
                     </option>
+
 
                     <option value="ideas">
                         Ideas
                     </option>
 
+
                 </select>
 
+
             </div>
+
 
 
             <!-- CONTENT -->
 
             <div class="form-group">
 
+
                 <div class="label-row">
+
 
                     <label for="noteContent">
                         Content
                     </label>
+
 
                     <span
                         id="noteCharacterCount"
@@ -795,7 +913,9 @@
                         0 / 10000
                     </span>
 
+
                 </div>
+
 
                 <textarea
                     id="noteContent"
@@ -806,19 +926,24 @@
                     required
                 ></textarea>
 
+
                 <small
                     id="noteContentError"
                     class="field-error"
                 ></small>
 
+
             </div>
+
 
 
             <!-- PIN -->
 
             <div class="note-options">
 
+
                 <label class="checkbox-container">
+
 
                     <input
                         type="checkbox"
@@ -826,20 +951,26 @@
                         name="pinned"
                     >
 
+
                     <span class="custom-checkbox"></span>
+
 
                     <span>
                         Pin this note
                     </span>
 
+
                 </label>
 
+
             </div>
+
 
 
             <!-- ACTIONS -->
 
             <div class="modal-actions">
+
 
                 <button
                     type="button"
@@ -849,26 +980,122 @@
                     Cancel
                 </button>
 
+
                 <button
                     type="submit"
                     id="saveNoteButton"
                     class="btn btn-primary"
                 >
 
+
                     <span id="saveNoteText">
                         Save Note
                     </span>
+
 
                     <span
                         id="saveNoteSpinner"
                         class="button-spinner"
                     ></span>
 
+
                 </button>
+
 
             </div>
 
+
         </form>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     NOTE VIEW MODAL
+========================================================= -->
+
+<div
+    id="noteViewModal"
+    class="modal-overlay hidden"
+>
+
+    <div class="modal note-view-modal">
+
+        <input
+            type="hidden"
+            id="viewedNoteId"
+        >
+
+        <div class="modal-header">
+
+            <div>
+
+                <span class="card-label">
+                    NOTE
+                </span>
+
+                <h3 id="viewNoteTitle">
+                    Note
+                </h3>
+
+            </div>
+
+            <button
+                type="button"
+                id="closeNoteViewModal"
+                class="modal-close"
+                aria-label="Close note"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div class="note-view-meta">
+
+            <span
+                id="viewNoteCategory"
+                class="note-category"
+            >
+                Personal
+            </span>
+
+            <span
+                id="viewNoteDate"
+                class="note-date"
+            ></span>
+
+        </div>
+
+        <div
+            id="viewNoteContent"
+            class="note-view-content"
+        ></div>
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                id="editViewedNote"
+                class="btn btn-primary"
+            >
+                Edit Note
+            </button>
+
+            <button
+                type="button"
+                id="closeViewedNote"
+                class="btn btn-secondary"
+            >
+                Close
+            </button>
+
+        </div>
 
     </div>
 
@@ -906,6 +1133,7 @@
 
         <div class="modal-actions">
 
+
             <button
                 type="button"
                 id="cancelDeleteNote"
@@ -923,12 +1151,15 @@
                 Delete Note
             </button>
 
+
         </div>
 
 
     </div>
 
+
 </div>
+
 
 
 <!-- =========================================================
@@ -943,20 +1174,25 @@
 
     <div class="modal small-modal">
 
+
         <div class="modal-icon danger">
             ↪
         </div>
 
+
         <h3>
             Logout?
         </h3>
+
 
         <p>
             Are you sure you want to logout
             from your account?
         </p>
 
+
         <div class="modal-actions">
+
 
             <button
                 type="button"
@@ -966,6 +1202,7 @@
                 Cancel
             </button>
 
+
             <button
                 type="button"
                 id="confirmLogout"
@@ -974,11 +1211,15 @@
                 Logout
             </button>
 
+
         </div>
+
 
     </div>
 
+
 </div>
+
 
 
 <!-- =========================================================
@@ -991,6 +1232,7 @@
 ></div>
 
 
+
 <!-- =========================================================
      JAVASCRIPT
 ========================================================= -->
@@ -998,6 +1240,7 @@
 <script
     src="{{ url_for('static', filename='js/api.js') }}"
 ></script>
+
 
 <script
     src="{{ url_for('static', filename='js/notes.js') }}"
