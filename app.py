@@ -137,6 +137,13 @@ app.config["SECRET_KEY"] = os.getenv(
     "change-this-secret"
 )
 
+app.config.update(
+    SESSION_COOKIE_SECURE=True,
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SAMESITE="Lax"
+)
+
+
 app.config["MONGO_URI"] = os.getenv(
     "MONGO_URI",
     "mongodb://127.0.0.1:27017/notes_tasks_app"
