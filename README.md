@@ -1273,269 +1273,48 @@ The application includes responsive navigation with a mobile sidebar and overlay
 [ ] AI-powered productivity automation
 ```
 
----
+## 🔮 Future: MCP Integration
 
-# 🤖 Future MCP Integration
-
-A future version of MyNotes & Tasks can integrate **Model Context Protocol (MCP)** so compatible AI assistants can interact with the productivity workspace through controlled, structured tools.
-
-Planned architecture:
-
-```text
-                    AI Assistant
-                         │
-                         ▼
-                  ┌──────────────┐
-                  │  MCP Client  │
-                  └──────┬───────┘
-                         │
-                         ▼
-                  ┌──────────────┐
-                  │ MyNotes MCP  │
-                  │    Server    │
-                  └──────┬───────┘
-                         │
-            ┌────────────┼────────────┐
-            │            │            │
-            ▼            ▼            ▼
-         Notes         Tasks       Calendar
-            │            │            │
-            └────────────┼────────────┘
-                         ▼
-                   Flask Backend
-                         │
-                         ▼
-                   MongoDB Atlas
 ```
+MCP (Model Context Protocol) integration is planned for a future
+version of MyNotes & Tasks.
 
-## 🔧 Planned MCP Tools
-
-Possible future tools include:
-
-```text
-notes.list
-notes.search
-notes.create
-notes.update
-notes.delete
-notes.pin
-notes.unpin
-
-tasks.list
-tasks.search
-tasks.create
-tasks.update
-tasks.complete
-tasks.delete
-
-calendar.list_events
-calendar.create_event
-calendar.update_event
-calendar.delete_event
-
-activity.list
-profile.get
+The future MCP layer is intended to allow AI assistants to securely
+interact with the user's productivity workspace.
 ```
-
----
-
-# 🧠 Example AI + MCP Workflow
-
-A future user could say:
-
-```text
-Create a task to finish my project documentation
-tomorrow at 5:50 PM and remind me 10 minutes
-and 5 minutes before.
+### Planned Capabilities
 ```
-
-Possible workflow:
+- 📝 AI-powered Notes access
+- ✅ AI-powered Task management
+- 📅 Google Calendar interaction
+- 🔔 Smart reminder management
+- 🔎 Unified Notes & Tasks search
+- 📊 Productivity statistics
+- 🤖 Natural-language task creation
+- 🧠 AI task planning and breakdown
+- 🗓️ AI-assisted calendar scheduling
+- 🔄 Task and Calendar synchronization
+- 📜 Activity and productivity summaries
+- 🔐 Permission-based MCP access
+- 🛡️ User-specific data isolation
+- 💬 MCP Tools, Resources and Prompts
+- 🔔 Future MCP event/notification support
+```
+### Planned Architecture
 
 ```text
-User
- │
- ▼
 AI Assistant
- │
- ▼
+     ↓
 MCP Client
- │
- ▼
+     ↓
 MyNotes MCP Server
- │
- ├── Create Task
- ├── Set Due Date
- ├── Set Due Time
- ├── Configure Reminders
- └── Google Calendar
-          │
-          ▼
-    Calendar Event
-          │
-          ├── 5:40 PM → 10 min reminder
-          ├── 5:45 PM → 5 min reminder
-          └── 5:50 PM → Due-time reminder
+     ↓
+Authentication & Authorization
+     ↓
+MyNotes Application API
+     ↓
+MongoDB / Google Calendar / Email
 ```
-
----
-
-# 🔐 Future MCP Security
-
-The MCP implementation should use strict authorization.
-
-```text
-AI Assistant
-     │
-     ▼
-MCP Authentication
-     │
-     ▼
-User Authorization
-     │
-     ▼
-Permission Check
-     │
-     ▼
-MCP Tool
-     │
-     ▼
-Flask API
-     │
-     ▼
-User-specific MongoDB Data
-```
-
-The MCP server should never expose another user's private:
-
-```text
-Notes
-Tasks
-Profile
-Calendar
-Activity Logs
-```
-
----
-
-# 🛡️ Future MCP Permission Model
-
-Possible permissions:
-
-```text
-notes:read
-notes:write
-
-tasks:read
-tasks:write
-
-calendar:read
-calendar:write
-
-profile:read
-
-activity:read
-```
-
----
-
-# 🤖 Future MyNotes AI Assistant
-
-MCP could eventually allow MyNotes & Tasks to become an AI-powered productivity assistant.
-
-Example commands:
-
-```text
-"Show my pending tasks."
-
-"What tasks are due today?"
-
-"Find my notes about Python."
-
-"Create a task for tomorrow."
-
-"Move this task to Friday."
-
-"Mark my documentation task as completed."
-
-"Schedule this task in Google Calendar."
-
-"What do I have scheduled this evening?"
-```
-
-The AI assistant would interact through authorized MCP tools instead of directly accessing MongoDB.
-
----
-
-# 🔌 MCP Design Principle
-
-The future MCP architecture should keep the database behind the application/API layer.
-
-### Avoid
-
-```text
-AI
- ↓
-MongoDB directly
-```
-
-### Recommended
-
-```text
-AI
- ↓
-MCP Server
- ↓
-Application/API Layer
- ↓
-Authorization
- ↓
-MongoDB
-```
-
-This allows authentication, authorization, validation, logging, and user isolation to remain inside the application architecture.
-
----
-
-# 🗺️ Long-Term Roadmap
-
-```text
-Phase 1
-│
-├── Authentication
-├── Notes
-├── Tasks
-├── Reminders
-└── MongoDB
-        │
-        ▼
-Phase 2
-│
-├── Google Calendar
-├── OAuth
-├── Calendar synchronization
-└── Advanced reminders
-        │
-        ▼
-Phase 3
-│
-├── MCP Server
-├── MCP Tools
-├── AI Assistant
-└── Permission System
-        │
-        ▼
-Phase 4
-│
-├── AI-powered task management
-├── AI note search
-├── Natural-language scheduling
-├── Intelligent reminders
-└── Productivity automation
-```
-
-> **MCP integration is planned as a future enhancement and is not currently part of the production implementation.**
-
----
 
 # 📈 Project Status
 
