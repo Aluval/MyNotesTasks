@@ -215,6 +215,7 @@ function initializeGoogleCalendar() {
             "googleCalendarDisconnectButton"
         );
 
+
     connectButton?.addEventListener(
         "click",
         () => {
@@ -229,6 +230,7 @@ function initializeGoogleCalendar() {
         }
     );
 
+
     disconnectButton?.addEventListener(
         "click",
         async () => {
@@ -236,12 +238,15 @@ function initializeGoogleCalendar() {
             try {
 
                 const response =
-                    await apiRequest(
-                        "/api/google/disconnect",
-                        {
-                            method: "POST"
-                        }
+                    await API.post(
+                        "/api/google/disconnect"
                     );
+
+
+                console.log(
+                    "GOOGLE CALENDAR DISCONNECT RESPONSE:",
+                    response
+                );
 
 
                 if (
@@ -250,19 +255,37 @@ function initializeGoogleCalendar() {
                 ) {
 
                     showToast(
-                        "Google Calendar disconnected.",
+                        "Google Calendar disconnected successfully.",
                         "success"
                     );
 
                     await loadGoogleCalendarStatus();
 
                 }
+                else {
 
-            } catch (error) {
+                    showToast(
+                        getResponseMessage(
+                            response,
+                            "Unable to disconnect Google Calendar."
+                        ),
+                        "error"
+                    );
+
+                }
+
+            }
+
+            catch (error) {
 
                 console.error(
                     "Google Calendar disconnect error:",
                     error
+                );
+
+                showToast(
+                    "Unable to disconnect Google Calendar.",
+                    "error"
                 );
 
             }
