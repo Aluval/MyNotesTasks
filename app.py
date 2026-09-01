@@ -46,7 +46,7 @@ from zoneinfo import ZoneInfo
 from google_auth_oauthlib.flow import Flow
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
-
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 GOOGLE_SCOPES = [
     "https://www.googleapis.com/auth/calendar.events"
@@ -131,6 +131,12 @@ load_dotenv()
 # ============================================================
 
 app = Flask(__name__)
+
+app.wsgi_app = ProxyFix(
+    app.wsgi_app,
+    x_proto=1,
+    x_host=1
+)
 
 app.config["SECRET_KEY"] = os.getenv(
     "SECRET_KEY",
