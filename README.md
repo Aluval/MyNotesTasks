@@ -1354,17 +1354,17 @@ MongoDB / Google Calendar / Email
 
 # 🌐 Project Links
 
-### Live Application
+### 🚀 Live Application
 
-https://mynotestasks.onrender.com/
+[![Live Application](https://img.shields.io/badge/Live%20Application-MyNotes%20%26%20Tasks-2EA44F?style=for-the-badge&logo=render&logoColor=white)](https://mynotestasks.onrender.com/)
 
-### GitHub Repository
+### 📦 GitHub Repository
 
-https://github.com/Aluval/MyNotesTasks
+[![Repository](https://img.shields.io/badge/GitHub-MyNotesTasks-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Aluval/MyNotesTasks)
 
-### Developer GitHub
+### 👨‍💻 Developer GitHub
 
-https://github.com/Aluval
+[![Developer GitHub](https://img.shields.io/badge/Developer-Aluval-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Aluval)
 
 ---
 
@@ -1372,13 +1372,14 @@ https://github.com/Aluval
 
 **Aluvala Ediga Harsha Vardhan Goud**
 
-GitHub:
+[![GitHub](https://img.shields.io/badge/GitHub-Aluval-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Aluval)
 
-https://github.com/Aluval
+[![Google Search](https://img.shields.io/badge/Google-Search%20My%20Name-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://www.google.com/search?q=ALUVALA+EDIGA+HARSHA+VARDHAN+GOUD)
 
-Portfolio:
+### 🌐 Portfolio
 
-https://harsha24.online/
+[![Portfolio](https://img.shields.io/badge/Portfolio-harsha24.online-0A66C2?style=for-the-badge&logo=googlechrome&logoColor=white)](https://harsha24.online/)
+
 
 [![Google Search](https://img.shields.io/badge/Google-ALUVALA%20EDIGA%20HARSHA%20VARDHAN%20GOUD-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://www.google.com/search?q=ALUVALA+EDIGA+HARSHA+VARDHAN+GOUD)
 
