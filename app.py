@@ -223,7 +223,7 @@ tasks_collection = mongo.db.tasks
 
 logs_collection = mongo.db.logs
 
-
+google_oauth_collection = mongo.db.google_oauth_states
 # ============================================================
 # TIME HELPERS
 # ============================================================
