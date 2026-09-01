@@ -5108,21 +5108,15 @@ def create_google_calendar_event(
         # START / END TIME
         # ----------------------------------------------------
 
-        start_datetime = (
-            f"{due_date}T{due_time}:00"
-        )
-
-
         start_dt = datetime.fromisoformat(
-            start_datetime
+            f"{due_date}T{due_time}:00"
+        ).replace(
+            tzinfo=ZoneInfo(timezone_name)
         )
-
 
         end_dt = (
             start_dt +
-            timedelta(
-                minutes=30
-            )
+            timedelta(minutes=30)
         )
 
 
@@ -5184,7 +5178,14 @@ def create_google_calendar_event(
 
                         "minutes":
                             5
-                    }
+                    },
+
+                    {
+                        "method": 
+                            "popup",
+                        "minutes": 
+                            0
+                  }
 
                 ]
 
@@ -5216,14 +5217,11 @@ def create_google_calendar_event(
 
         return event_id
 
-
-    except Exception as error:
-
+    except Exception as exc:
         print(
-            "GOOGLE CALENDAR CREATE ERROR:",
-            repr(error)
+            "GOOGLE CALENDAR EVENT CREATION FAILED:",
+            exc
         )
-
         return None
     
 # ============================================================
