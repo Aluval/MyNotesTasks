@@ -21,6 +21,7 @@
 import os,re
 import json
 import secrets
+import base64
 import smtplib
 from datetime import datetime, timedelta, timezone
 from email.message import EmailMessage
@@ -4464,6 +4465,10 @@ def get_google_redirect_uri():
     )
 
 
+# ============================================================
+# GOOGLE CLIENT CONFIG
+# ============================================================
+
 def create_google_flow():
 
     client_config = get_google_client_config()
@@ -4473,15 +4478,10 @@ def create_google_flow():
         scopes=GOOGLE_SCOPES
     )
 
-    flow.redirect_uri = (
-        get_google_redirect_uri()
-    )
+    flow.redirect_uri = get_google_redirect_uri()
 
     return flow
 
-# ============================================================
-# GOOGLE CALENDAR - CONNECT
-# ============================================================
 
 # ============================================================
 # GOOGLE CALENDAR - CONNECT
@@ -4498,47 +4498,43 @@ def google_connect():
 
     flow = create_google_flow()
 
+    code_verifier = (
+        base64.urlsafe_b64encode(
+            secrets.token_bytes(32)
+        )
+        .rstrip(b"=")
+        .decode("utf-8")
+    )
+
+    flow.code_verifier = code_verifier
+
     authorization_url, state = (
         flow.authorization_url(
             access_type="offline",
             include_granted_scopes="true",
-            prompt="consent"
+            prompt="consent",
+            code_challenge_method="S256"
         )
     )
 
-    # --------------------------------------------------------
-    # SAVE GOOGLE OAUTH STATE + PKCE VERIFIER SERVER-SIDE
-    # --------------------------------------------------------
-
     google_oauth_collection.insert_one(
         {
-            "state":
-                state,
-
-            "user_id":
-                user["_id"],
-
-            "code_verifier":
-                flow.code_verifier,
-
-            "created_at":
-                utc_now_naive()
+            "state": state,
+            "user_id": user["_id"],
+            "code_verifier": code_verifier,
+            "created_at": utc_now_naive()
         }
     )
 
     print(
-        "GOOGLE OAUTH STATE SAVED:",
+        "GOOGLE CONNECT STATE:",
         state
     )
 
     print(
-        "GOOGLE PKCE VERIFIER SAVED:",
-        bool(flow.code_verifier)
+        "GOOGLE CODE VERIFIER EXISTS:",
+        bool(code_verifier)
     )
-
-    # --------------------------------------------------------
-    # REDIRECT TO GOOGLE
-    # --------------------------------------------------------
 
     return redirect(
         authorization_url
