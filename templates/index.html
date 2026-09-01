@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -11,791 +12,1773 @@
 
     <meta
         name="description"
-        content="MyNotes & Tasks - Notes, checklists and task management"
+        content="MyNotes & Tasks — notes, tasks, scheduled reminders and Google Calendar integration in one productivity workspace."
     >
 
-    <title>MyNotes & Tasks</title>
+    <meta
+        name="keywords"
+        content="MyNotes, Tasks, Notes, Productivity, Google Calendar, Email Reminders, Task Management"
+    >
+
+    <meta
+        name="author"
+        content="MyNotes & Tasks"
+    >
+
+    <title>
+        MyNotes & Tasks | Notes, Tasks & Reminders
+    </title>
 
     <link
         rel="stylesheet"
         href="{{ url_for('static', filename='css/style.css') }}"
     >
+
 </head>
+
 
 <body>
 
-    <!-- =========================
-         NAVBAR
-    ========================== -->
 
-    <header class="landing-navbar">
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<header class="landing-navbar">
+
+    <a
+        href="/"
+        class="brand"
+        aria-label="MyNotes & Tasks Home"
+    >
+
+        <span class="brand-icon">
+            ✓
+        </span>
+
+        <span>
+            MyNotes
+        </span>
+
+    </a>
+
+
+    <nav
+        class="landing-nav"
+        aria-label="Main navigation"
+    >
+
+        <a href="#features">
+            Features
+        </a>
+
+        <a href="#reminders">
+            Reminders
+        </a>
+
+        <a href="#how-it-works">
+            How it works
+        </a>
+
+        <a href="#security">
+            Security
+        </a>
+
+    </nav>
+
+
+    <div class="landing-actions">
+
+        <a
+            href="/login"
+            class="btn btn-secondary"
+        >
+            Login
+        </a>
+
+        <a
+            href="/signup"
+            class="btn btn-primary"
+        >
+            Get Started
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero-section">
+
+
+    <div class="hero-content">
+
+
+        <div class="hero-badge">
+
+            <span class="hero-badge-dot"></span>
+
+            Your personal productivity workspace
+
+        </div>
+
+
+        <h1>
+
+            Organize your
+
+            <span class="gradient-text">
+                thoughts.
+            </span>
+
+            <br>
+
+            Complete your
+
+            <span class="gradient-text">
+                tasks.
+            </span>
+
+        </h1>
+
+
+        <p class="hero-description">
+
+            Write notes, create tasks, schedule due dates,
+            receive email reminders and connect Google Calendar
+            to keep your work organized in one simple workspace.
+
+        </p>
+
+
+        <div class="hero-buttons">
+
+            <a
+                href="/signup"
+                class="btn btn-primary btn-large"
+            >
+
+                Create Free Account
+
+                <span class="arrow">
+                    →
+                </span>
+
+            </a>
+
+
+            <a
+                href="/login"
+                class="btn btn-secondary btn-large"
+            >
+
+                Sign In
+
+            </a>
+
+        </div>
+
+
+        <div class="hero-trust">
+
+            <span>✓</span>
+            Secure password storage
+
+            <span>✓</span>
+            Email verification
+
+            <span>✓</span>
+            Google Calendar integration
+
+            <span>✓</span>
+            MongoDB powered
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         DASHBOARD PREVIEW
+    ====================================================== -->
+
+    <div class="hero-preview">
+
+        <div class="preview-window">
+
+
+            <div class="preview-topbar">
+
+                <div class="preview-dots">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+
+                <div class="preview-title">
+                    MyNotes Dashboard
+                </div>
+
+            </div>
+
+
+
+            <div class="preview-body">
+
+
+                <!-- SIDEBAR -->
+
+                <aside class="preview-sidebar">
+
+
+                    <div class="preview-logo">
+                        MyNotes
+                    </div>
+
+
+                    <div class="preview-menu active">
+
+                        <span>
+                            ⌂
+                        </span>
+
+                        Dashboard
+
+                    </div>
+
+
+                    <div class="preview-menu">
+
+                        <span>
+                            ✎
+                        </span>
+
+                        Notes
+
+                    </div>
+
+
+                    <div class="preview-menu">
+
+                        <span>
+                            ☑
+                        </span>
+
+                        Tasks
+
+                    </div>
+
+
+                    <div class="preview-menu">
+
+                        <span>
+                            ◷
+                        </span>
+
+                        Upcoming
+
+                    </div>
+
+
+                    <div class="preview-menu">
+
+                        <span>
+                            ◴
+                        </span>
+
+                        Activity
+
+                    </div>
+
+
+                    <div class="preview-menu">
+
+                        <span>
+                            📅
+                        </span>
+
+                        Calendar
+
+                    </div>
+
+
+                </aside>
+
+
+
+                <!-- PREVIEW CONTENT -->
+
+                <div class="preview-content">
+
+
+                    <div class="preview-heading">
+
+
+                        <div>
+
+                            <small>
+                                WORKSPACE
+                            </small>
+
+                            <h3>
+                                Good morning
+                            </h3>
+
+                        </div>
+
+
+                        <div class="preview-avatar">
+                            H
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- STATISTICS -->
+
+                    <div class="preview-stats">
+
+
+                        <div class="preview-stat">
+
+                            <small>
+                                Notes
+                            </small>
+
+                            <strong>
+                                12
+                            </strong>
+
+                        </div>
+
+
+                        <div class="preview-stat">
+
+                            <small>
+                                Tasks
+                            </small>
+
+                            <strong>
+                                18
+                            </strong>
+
+                        </div>
+
+
+                        <div class="preview-stat">
+
+                            <small>
+                                Completed
+                            </small>
+
+                            <strong>
+                                14
+                            </strong>
+
+                        </div>
+
+
+                        <div class="preview-stat">
+
+                            <small>
+                                Pending
+                            </small>
+
+                            <strong>
+                                4
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- TODAY'S TASKS -->
+
+                    <div class="preview-card">
+
+
+                        <div class="preview-card-heading">
+
+                            <strong>
+                                Today's Tasks
+                            </strong>
+
+                            <span>
+                                View all
+                            </span>
+
+                        </div>
+
+
+
+                        <div class="preview-task">
+
+
+                            <div class="preview-checkbox checked">
+                                ✓
+                            </div>
+
+
+                            <div class="preview-task-info">
+
+                                <strong>
+                                    Complete project documentation
+                                </strong>
+
+                                <small>
+                                    Due today · Email reminder sent
+                                </small>
+
+                            </div>
+
+
+                            <span class="preview-priority high">
+                                High
+                            </span>
+
+
+                        </div>
+
+
+
+                        <div class="preview-task">
+
+
+                            <div class="preview-checkbox">
+                            </div>
+
+
+                            <div class="preview-task-info">
+
+                                <strong>
+                                    Review Python project
+                                </strong>
+
+                                <small>
+                                    Today · Google Calendar
+                                </small>
+
+                            </div>
+
+
+                            <span class="preview-priority medium">
+                                Medium
+                            </span>
+
+
+                        </div>
+
+
+
+                        <div class="preview-task">
+
+
+                            <div class="preview-checkbox">
+                            </div>
+
+
+                            <div class="preview-task-info">
+
+                                <strong>
+                                    Prepare tomorrow's tasks
+                                </strong>
+
+                                <small>
+                                    Tomorrow · Scheduled
+                                </small>
+
+                            </div>
+
+
+                            <span class="preview-priority low">
+                                Low
+                            </span>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- REMINDER PREVIEW -->
+
+                    <div class="preview-card">
+
+
+                        <div class="preview-card-heading">
+
+                            <strong>
+                                Reminders
+                            </strong>
+
+                            <span>
+                                Active
+                            </span>
+
+                        </div>
+
+
+                        <div class="preview-task">
+
+
+                            <div class="preview-checkbox">
+                                ✉
+                            </div>
+
+
+                            <div class="preview-task-info">
+
+                                <strong>
+                                    Email reminder
+                                </strong>
+
+                                <small>
+                                    Task approaching its due time
+                                </small>
+
+                            </div>
+
+
+                            <span class="preview-priority medium">
+                                Email
+                            </span>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     FEATURES
+========================================================= -->
+
+<section
+    id="features"
+    class="features-section"
+>
+
+
+    <div class="section-heading">
+
+
+        <span class="section-label">
+            FEATURES
+        </span>
+
+
+        <h2>
+
+            Everything you need
+
+            <br>
+
+            to stay organized.
+
+        </h2>
+
+
+        <p>
+
+            Keep your notes, tasks, schedules and reminders
+            together in one simple productivity workspace.
+
+        </p>
+
+
+    </div>
+
+
+
+    <div class="features-grid">
+
+
+        <!-- NOTES -->
+
+        <article class="feature-card">
+
+
+            <div class="feature-icon purple">
+                ✎
+            </div>
+
+
+            <h3>
+                Smart Notes
+            </h3>
+
+
+            <p>
+
+                Create, edit, search and organize your notes
+                with categories, pinned notes and a simple
+                workspace.
+
+            </p>
+
+
+        </article>
+
+
+
+        <!-- TASKS -->
+
+        <article class="feature-card">
+
+
+            <div class="feature-icon blue">
+                ✓
+            </div>
+
+
+            <h3>
+                Task Management
+            </h3>
+
+
+            <p>
+
+                Create tasks, set priorities and track your
+                progress from creation to completion.
+
+            </p>
+
+
+        </article>
+
+
+
+        <!-- CHECKLISTS -->
+
+        <article class="feature-card">
+
+
+            <div class="feature-icon green">
+                ☑
+            </div>
+
+
+            <h3>
+                Checklists
+            </h3>
+
+
+            <p>
+
+                Break larger work into manageable checklist
+                items and mark each item complete as you progress.
+
+            </p>
+
+
+        </article>
+
+
+
+        <!-- SCHEDULED TASKS -->
+
+        <article class="feature-card">
+
+
+            <div class="feature-icon orange">
+                ◷
+            </div>
+
+
+            <h3>
+                Scheduled Tasks
+            </h3>
+
+
+            <p>
+
+                Set due dates and times so you always know
+                what needs to be completed next.
+
+            </p>
+
+
+        </article>
+
+
+
+        <!-- EMAIL REMINDERS -->
+
+        <article class="feature-card">
+
+
+            <div class="feature-icon red">
+                ✉
+            </div>
+
+
+            <h3>
+                Email Reminders
+            </h3>
+
+
+            <p>
+
+                Receive automatic email reminders when your
+                scheduled tasks are approaching their due time.
+
+            </p>
+
+
+        </article>
+
+
+
+        <!-- GOOGLE CALENDAR -->
+
+        <article class="feature-card">
+
+
+            <div class="feature-icon cyan">
+                📅
+            </div>
+
+
+            <h3>
+                Google Calendar
+            </h3>
+
+
+            <p>
+
+                Connect Google Calendar and add scheduled
+                tasks directly to your calendar for easier planning.
+
+            </p>
+
+
+        </article>
+
+
+
+        <!-- ACTIVITY -->
+
+        <article class="feature-card">
+
+
+            <div class="feature-icon purple">
+                ◴
+            </div>
+
+
+            <h3>
+                Activity History
+            </h3>
+
+
+            <p>
+
+                Keep track of important notes, tasks,
+                completions and account activity.
+
+            </p>
+
+
+        </article>
+
+
+
+        <!-- MONGODB -->
+
+        <article class="feature-card">
+
+
+            <div class="feature-icon blue">
+                ◉
+            </div>
+
+
+            <h3>
+                MongoDB Storage
+            </h3>
+
+
+            <p>
+
+                Store user-specific notes, tasks and workspace
+                information using MongoDB.
+
+            </p>
+
+
+        </article>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     REMINDERS
+========================================================= -->
+
+<section
+    id="reminders"
+    class="steps-section"
+>
+
+
+    <div class="section-heading">
+
+
+        <span class="section-label">
+            REMINDERS & CALENDAR
+        </span>
+
+
+        <h2>
+
+            Never miss
+
+            <br>
+
+            an important task.
+
+        </h2>
+
+
+        <p>
+
+            MyNotes & Tasks gives you two ways to stay aware
+            of scheduled work.
+
+        </p>
+
+
+    </div>
+
+
+
+    <div class="steps-grid">
+
+
+        <!-- EMAIL -->
+
+        <div class="step-card">
+
+
+            <div class="step-number">
+                ✉
+            </div>
+
+
+            <h3>
+                Email Reminder
+            </h3>
+
+
+            <p>
+
+                When a task approaches its due time,
+                MyNotes & Tasks can send a reminder email
+                to your registered email address.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- CALENDAR -->
+
+        <div class="step-card">
+
+
+            <div class="step-number">
+                📅
+            </div>
+
+
+            <h3>
+                Google Calendar
+            </h3>
+
+
+            <p>
+
+                Connect your Google Calendar and add
+                scheduled tasks directly to your calendar
+                so they appear alongside your schedule.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- COMBINED -->
+
+        <div class="step-card">
+
+
+            <div class="step-number">
+                ✓
+            </div>
+
+
+            <h3>
+                One Task, Better Visibility
+            </h3>
+
+
+            <p>
+
+                Use task scheduling, email reminders and
+                calendar integration together to keep
+                important work visible.
+
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     REMINDER FLOW
+========================================================= -->
+
+<section class="security-section">
+
+
+    <div class="security-content">
+
+
+        <div class="security-icon">
+            📅
+        </div>
+
+
+        <span class="section-label">
+            HOW REMINDERS WORK
+        </span>
+
+
+        <h2>
+
+            Schedule once.
+
+            <br>
+
+            Stay informed.
+
+        </h2>
+
+
+        <p>
+
+            Create a task with a due date and time.
+            MyNotes & Tasks keeps the task in your workspace,
+            sends an email reminder when configured, and can
+            add the scheduled task to Google Calendar after
+            you connect your account.
+
+        </p>
+
+
+
+        <div class="security-list">
+
+
+            <div>
+
+                <span>
+                    01
+                </span>
+
+                Create your task
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    02
+                </span>
+
+                Set date and time
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    03
+                </span>
+
+                Receive an email reminder
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    04
+                </span>
+
+                Add it to Google Calendar
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     HOW IT WORKS
+========================================================= -->
+
+<section
+    id="how-it-works"
+    class="steps-section"
+>
+
+
+    <div class="section-heading">
+
+
+        <span class="section-label">
+            HOW IT WORKS
+        </span>
+
+
+        <h2>
+
+            Start organizing
+
+            <br>
+
+            in three steps.
+
+        </h2>
+
+
+    </div>
+
+
+
+    <div class="steps-grid">
+
+
+        <!-- STEP 01 -->
+
+        <div class="step-card">
+
+
+            <div class="step-number">
+                01
+            </div>
+
+
+            <h3>
+                Create your account
+            </h3>
+
+
+            <p>
+
+                Sign up using your email and verify
+                your account to access your workspace.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- STEP 02 -->
+
+        <div class="step-card">
+
+
+            <div class="step-number">
+                02
+            </div>
+
+
+            <h3>
+                Add notes & tasks
+            </h3>
+
+
+            <p>
+
+                Write your ideas and create tasks with
+                priorities, due dates and scheduled times.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- STEP 03 -->
+
+        <div class="step-card">
+
+
+            <div class="step-number">
+                03
+            </div>
+
+
+            <h3>
+                Stay on schedule
+            </h3>
+
+
+            <p>
+
+                Receive email reminders and connect Google
+                Calendar to keep scheduled tasks visible.
+
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     INTEGRATION HIGHLIGHT
+========================================================= -->
+
+<section class="features-section">
+
+
+    <div class="section-heading">
+
+
+        <span class="section-label">
+            INTEGRATIONS
+        </span>
+
+
+        <h2>
+
+            Connect the tools
+
+            <br>
+
+            you already use.
+
+        </h2>
+
+
+        <p>
+
+            MyNotes & Tasks can work with your email and
+            Google Calendar to make scheduled tasks easier
+            to manage.
+
+        </p>
+
+
+    </div>
+
+
+
+    <div class="features-grid">
+
+
+        <article class="feature-card">
+
+
+            <div class="feature-icon red">
+                ✉
+            </div>
+
+
+            <h3>
+                Gmail / Email
+            </h3>
+
+
+            <p>
+
+                Email is used for account verification,
+                password recovery and scheduled task reminders.
+
+            </p>
+
+
+        </article>
+
+
+
+        <article class="feature-card">
+
+
+            <div class="feature-icon cyan">
+                📅
+            </div>
+
+
+            <h3>
+                Google Calendar
+            </h3>
+
+
+            <p>
+
+                Securely connect your Google Calendar and
+                add scheduled tasks to your calendar.
+
+            </p>
+
+
+        </article>
+
+
+
+        <article class="feature-card">
+
+
+            <div class="feature-icon blue">
+                ◉
+            </div>
+
+
+            <h3>
+                MongoDB
+            </h3>
+
+
+            <p>
+
+                User-specific notes, tasks and application
+                information are stored in MongoDB.
+
+            </p>
+
+
+        </article>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     SECURITY
+========================================================= -->
+
+<section
+    id="security"
+    class="security-section"
+>
+
+
+    <div class="security-content">
+
+
+        <div class="security-icon">
+            🔐
+        </div>
+
+
+        <span class="section-label">
+            SECURITY
+        </span>
+
+
+        <h2>
+
+            Your account,
+
+            <br>
+
+            protected.
+
+        </h2>
+
+
+        <p>
+
+            MyNotes & Tasks uses authentication, password
+            hashing, email verification and user-specific
+            data storage to help protect your workspace.
+
+        </p>
+
+
+
+        <div class="security-list">
+
+
+            <div>
+
+                <span>
+                    ✓
+                </span>
+
+                Secure password hashing
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    ✓
+                </span>
+
+                Email verification
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    ✓
+                </span>
+
+                Time-limited password reset links
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    ✓
+                </span>
+
+                User-specific MongoDB data
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    ✓
+                </span>
+
+                Google OAuth Calendar connection
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    ✓
+                </span>
+
+                Server-side Google OAuth credentials
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     PRODUCT SUMMARY
+========================================================= -->
+
+<section class="features-section">
+
+
+    <div class="section-heading">
+
+
+        <span class="section-label">
+            YOUR WORKSPACE
+        </span>
+
+
+        <h2>
+
+            Everything connected
+
+            <br>
+
+            in one place.
+
+        </h2>
+
+
+    </div>
+
+
+
+    <div class="features-grid">
+
+
+        <article class="feature-card">
+
+
+            <div class="feature-icon purple">
+                ✎
+            </div>
+
+
+            <h3>
+                Capture
+            </h3>
+
+
+            <p>
+
+                Store ideas, information and important
+                content in organized notes.
+
+            </p>
+
+
+        </article>
+
+
+
+        <article class="feature-card">
+
+
+            <div class="feature-icon blue">
+                ☑
+            </div>
+
+
+            <h3>
+                Plan
+            </h3>
+
+
+            <p>
+
+                Turn your plans into tasks with priorities,
+                due dates and scheduled times.
+
+            </p>
+
+
+        </article>
+
+
+
+        <article class="feature-card">
+
+
+            <div class="feature-icon orange">
+                ◷
+            </div>
+
+
+            <h3>
+                Schedule
+            </h3>
+
+
+            <p>
+
+                Keep upcoming tasks visible and know
+                what needs your attention next.
+
+            </p>
+
+
+        </article>
+
+
+
+        <article class="feature-card">
+
+
+            <div class="feature-icon red">
+                ✉
+            </div>
+
+
+            <h3>
+                Remember
+            </h3>
+
+
+            <p>
+
+                Get email reminders for tasks approaching
+                their scheduled due time.
+
+            </p>
+
+
+        </article>
+
+
+
+        <article class="feature-card">
+
+
+            <div class="feature-icon cyan">
+                📅
+            </div>
+
+
+            <h3>
+                Synchronize
+            </h3>
+
+
+            <p>
+
+                Connect Google Calendar and place scheduled
+                tasks directly into your calendar.
+
+            </p>
+
+
+        </article>
+
+
+
+        <article class="feature-card">
+
+
+            <div class="feature-icon green">
+                ✓
+            </div>
+
+
+            <h3>
+                Complete
+            </h3>
+
+
+            <p>
+
+                Mark work complete and review your activity
+                history whenever you need it.
+
+            </p>
+
+
+        </article>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     CTA
+========================================================= -->
+
+<section class="cta-section">
+
+
+    <div class="cta-box">
+
+
+        <span class="section-label">
+            GET STARTED
+        </span>
+
+
+        <h2>
+            Ready to get organized?
+        </h2>
+
+
+        <p>
+
+            Create your account and start managing
+            your notes, tasks, reminders and schedule today.
+
+        </p>
+
+
+        <a
+            href="/signup"
+            class="btn btn-white btn-large"
+        >
+
+            Create Free Account
+
+            <span>
+                →
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+</section>
+
+
+</main>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="landing-footer">
+
+
+    <div class="footer-brand">
+
 
         <a
             href="/"
             class="brand"
         >
-            <span class="brand-icon">✓</span>
-            <span>MyNotes</span>
+
+            <span class="brand-icon">
+                ✓
+            </span>
+
+            <span>
+                MyNotes
+            </span>
+
         </a>
 
-        <nav class="landing-nav">
 
-            <a href="#features">
-                Features
-            </a>
+        <p>
 
-            <a href="#how-it-works">
-                How it works
-            </a>
+            Notes, tasks, reminders and
+            productivity in one simple workspace.
 
-            <a href="#about">
-                About
-            </a>
+        </p>
 
-        </nav>
 
-        <div class="landing-actions">
+    </div>
 
-            <a
-                href="/login"
-                class="btn btn-secondary"
-            >
-                Login
-            </a>
 
-            <a
-                href="/signup"
-                class="btn btn-primary"
-            >
-                Get Started
-            </a>
 
-        </div>
+    <div class="footer-links">
 
-    </header>
 
+        <a href="/login">
+            Login
+        </a>
 
-    <!-- =========================
-         HERO
-    ========================== -->
 
-    <main>
+        <a href="/signup">
+            Signup
+        </a>
 
-        <section class="hero-section">
 
-            <div class="hero-content">
+        <a href="#features">
+            Features
+        </a>
 
-                <div class="hero-badge">
 
-                    <span class="hero-badge-dot"></span>
+        <a href="#reminders">
+            Reminders
+        </a>
 
-                    Your personal productivity workspace
 
-                </div>
+        <a href="#security">
+            Security
+        </a>
 
 
-                <h1>
+    </div>
 
-                    Organize your
 
-                    <span class="gradient-text">
-                        thoughts.
-                    </span>
 
-                    <br>
+    <div class="footer-copy">
 
-                    Complete your
+        © 2026 MyNotes & Tasks
 
-                    <span class="gradient-text">
-                        tasks.
-                    </span>
+    </div>
 
-                </h1>
 
-
-                <p class="hero-description">
-
-                    Write notes, create checklists, manage upcoming
-                    tasks and keep track of everything you've completed
-                    — all in one simple workspace.
-
-                </p>
-
-
-                <div class="hero-buttons">
-
-                    <a
-                        href="/signup"
-                        class="btn btn-primary btn-large"
-                    >
-
-                        Create Free Account
-
-                        <span class="arrow">
-                            →
-                        </span>
-
-                    </a>
-
-
-                    <a
-                        href="/login"
-                        class="btn btn-secondary btn-large"
-                    >
-
-                        Sign In
-
-                    </a>
-
-                </div>
-
-
-                <div class="hero-trust">
-
-                    <span>✓</span>
-                    Secure password storage
-
-                    <span>✓</span>
-                    Email verification
-
-                    <span>✓</span>
-                    MongoDB powered
-
-                </div>
-
-            </div>
-
-
-            <!-- =========================
-                 DASHBOARD PREVIEW
-            ========================== -->
-
-            <div class="hero-preview">
-
-                <div class="preview-window">
-
-                    <div class="preview-topbar">
-
-                        <div class="preview-dots">
-
-                            <span></span>
-                            <span></span>
-                            <span></span>
-
-                        </div>
-
-                        <div class="preview-title">
-                            MyNotes Dashboard
-                        </div>
-
-                    </div>
-
-
-                    <div class="preview-body">
-
-                        <!-- Sidebar -->
-
-                        <aside class="preview-sidebar">
-
-                            <div class="preview-logo">
-                                MyNotes
-                            </div>
-
-                            <div class="preview-menu active">
-                                <span>⌂</span>
-                                Dashboard
-                            </div>
-
-                            <div class="preview-menu">
-                                <span>▤</span>
-                                Notes
-                            </div>
-
-                            <div class="preview-menu">
-                                <span>☑</span>
-                                Tasks
-                            </div>
-
-                            <div class="preview-menu">
-                                <span>◷</span>
-                                Upcoming
-                            </div>
-
-                            <div class="preview-menu">
-                                <span>◴</span>
-                                Activity
-                            </div>
-
-                        </aside>
-
-
-                        <!-- Preview Content -->
-
-                        <div class="preview-content">
-
-                            <div class="preview-heading">
-
-                                <div>
-
-                                    <small>
-                                        WORKSPACE
-                                    </small>
-
-                                    <h3>
-                                        Good morning, Harsha 👋
-                                    </h3>
-
-                                </div>
-
-                                <div class="preview-avatar">
-                                    H
-                                </div>
-
-                            </div>
-
-
-                            <!-- Statistics -->
-
-                            <div class="preview-stats">
-
-                                <div class="preview-stat">
-
-                                    <small>
-                                        Notes
-                                    </small>
-
-                                    <strong>
-                                        12
-                                    </strong>
-
-                                </div>
-
-
-                                <div class="preview-stat">
-
-                                    <small>
-                                        Tasks
-                                    </small>
-
-                                    <strong>
-                                        18
-                                    </strong>
-
-                                </div>
-
-
-                                <div class="preview-stat">
-
-                                    <small>
-                                        Completed
-                                    </small>
-
-                                    <strong>
-                                        14
-                                    </strong>
-
-                                </div>
-
-
-                                <div class="preview-stat">
-
-                                    <small>
-                                        Pending
-                                    </small>
-
-                                    <strong>
-                                        4
-                                    </strong>
-
-                                </div>
-
-                            </div>
-
-
-                            <!-- Tasks Preview -->
-
-                            <div class="preview-card">
-
-                                <div class="preview-card-heading">
-
-                                    <strong>
-                                        Today's Tasks
-                                    </strong>
-
-                                    <span>
-                                        View all
-                                    </span>
-
-                                </div>
-
-
-                                <div class="preview-task">
-
-                                    <div class="preview-checkbox checked">
-                                        ✓
-                                    </div>
-
-                                    <div class="preview-task-info">
-
-                                        <strong>
-                                            Complete project documentation
-                                        </strong>
-
-                                        <small>
-                                            Due today
-                                        </small>
-
-                                    </div>
-
-                                    <span class="preview-priority high">
-                                        High
-                                    </span>
-
-                                </div>
-
-
-                                <div class="preview-task">
-
-                                    <div class="preview-checkbox">
-                                    </div>
-
-                                    <div class="preview-task-info">
-
-                                        <strong>
-                                            Review Python project
-                                        </strong>
-
-                                        <small>
-                                            Due today
-                                        </small>
-
-                                    </div>
-
-                                    <span class="preview-priority medium">
-                                        Medium
-                                    </span>
-
-                                </div>
-
-
-                                <div class="preview-task">
-
-                                    <div class="preview-checkbox">
-                                    </div>
-
-                                    <div class="preview-task-info">
-
-                                        <strong>
-                                            Prepare tomorrow's tasks
-                                        </strong>
-
-                                        <small>
-                                            Due today
-                                        </small>
-
-                                    </div>
-
-                                    <span class="preview-priority low">
-                                        Low
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             FEATURES
-        ========================== -->
-
-        <section
-            id="features"
-            class="features-section"
-        >
-
-            <div class="section-heading">
-
-                <span class="section-label">
-                    FEATURES
-                </span>
-
-                <h2>
-                    Everything you need
-                    <br>
-                    to stay organized.
-                </h2>
-
-                <p>
-                    A simple workspace designed to keep your
-                    notes and tasks together.
-                </p>
-
-            </div>
-
-
-            <div class="features-grid">
-
-
-                <article class="feature-card">
-
-                    <div class="feature-icon purple">
-                        ✎
-                    </div>
-
-                    <h3>
-                        Smart Notes
-                    </h3>
-
-                    <p>
-                        Create, edit, search and organize your
-                        notes with categories and pinned notes.
-                    </p>
-
-                </article>
-
-
-                <article class="feature-card">
-
-                    <div class="feature-icon blue">
-                        ✓
-                    </div>
-
-                    <h3>
-                        Checklists
-                    </h3>
-
-                    <p>
-                        Break your work into tasks and mark
-                        each item complete as you progress.
-                    </p>
-
-                </article>
-
-
-                <article class="feature-card">
-
-                    <div class="feature-icon orange">
-                        ◷
-                    </div>
-
-                    <h3>
-                        Upcoming Tasks
-                    </h3>
-
-                    <p>
-                        Add due dates and times so you always
-                        know what needs to be done next.
-                    </p>
-
-                </article>
-
-
-                <article class="feature-card">
-
-                    <div class="feature-icon green">
-                        ◴
-                    </div>
-
-                    <h3>
-                        Activity History
-                    </h3>
-
-                    <p>
-                        Keep a history of your notes, tasks,
-                        completions and account activity.
-                    </p>
-
-                </article>
-
-
-                <article class="feature-card">
-
-                    <div class="feature-icon red">
-                        @
-                    </div>
-
-                    <h3>
-                        Email Security
-                    </h3>
-
-                    <p>
-                        Verify your email and securely reset
-                        your password through Gmail.
-                    </p>
-
-                </article>
-
-
-                <article class="feature-card">
-
-                    <div class="feature-icon cyan">
-                        ◉
-                    </div>
-
-                    <h3>
-                        MongoDB Storage
-                    </h3>
-
-                    <p>
-                        Your notes, tasks and account data are
-                        stored securely in MongoDB.
-                    </p>
-
-                </article>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             HOW IT WORKS
-        ========================== -->
-
-        <section
-            id="how-it-works"
-            class="steps-section"
-        >
-
-            <div class="section-heading">
-
-                <span class="section-label">
-                    HOW IT WORKS
-                </span>
-
-                <h2>
-                    Start organizing
-                    <br>
-                    in three steps.
-                </h2>
-
-            </div>
-
-
-            <div class="steps-grid">
-
-
-                <div class="step-card">
-
-                    <div class="step-number">
-                        01
-                    </div>
-
-                    <h3>
-                        Create your account
-                    </h3>
-
-                    <p>
-                        Sign up using your email and verify
-                        your account through Gmail.
-                    </p>
-
-                </div>
-
-
-                <div class="step-card">
-
-                    <div class="step-number">
-                        02
-                    </div>
-
-                    <h3>
-                        Add notes & tasks
-                    </h3>
-
-                    <p>
-                        Write your ideas and create tasks
-                        with priorities and due dates.
-                    </p>
-
-                </div>
-
-
-                <div class="step-card">
-
-                    <div class="step-number">
-                        03
-                    </div>
-
-                    <h3>
-                        Get things done
-                    </h3>
-
-                    <p>
-                        Complete tasks, review your history
-                        and keep everything organized.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             SECURITY
-        ========================== -->
-
-        <section
-            id="about"
-            class="security-section"
-        >
-
-            <div class="security-content">
-
-                <div class="security-icon">
-                    🔐
-                </div>
-
-                <span class="section-label">
-                    SECURITY
-                </span>
-
-                <h2>
-                    Your account,
-                    <br>
-                    protected.
-                </h2>
-
-                <p>
-                    Passwords are stored using secure hashing.
-                    Signup requires email verification, while
-                    password recovery uses time-limited reset
-                    links sent to your email.
-                </p>
-
-
-                <div class="security-list">
-
-                    <div>
-                        <span>✓</span>
-                        Secure password hashing
-                    </div>
-
-                    <div>
-                        <span>✓</span>
-                        Gmail email verification
-                    </div>
-
-                    <div>
-                        <span>✓</span>
-                        Expiring password reset links
-                    </div>
-
-                    <div>
-                        <span>✓</span>
-                        User-specific MongoDB data
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             CTA
-        ========================== -->
-
-        <section class="cta-section">
-
-            <div class="cta-box">
-
-                <span class="section-label">
-                    GET STARTED
-                </span>
-
-                <h2>
-                    Ready to get organized?
-                </h2>
-
-                <p>
-                    Create your account and start managing
-                    your notes and tasks today.
-                </p>
-
-                <a
-                    href="/signup"
-                    class="btn btn-white btn-large"
-                >
-                    Create Free Account
-                    <span>→</span>
-                </a>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- =========================
-         FOOTER
-    ========================== -->
-
-    <footer class="landing-footer">
-
-        <div class="footer-brand">
-
-            <a
-                href="/"
-                class="brand"
-            >
-
-                <span class="brand-icon">
-                    ✓
-                </span>
-
-                <span>
-                    MyNotes
-                </span>
-
-            </a>
-
-            <p>
-                Notes, tasks and productivity
-                in one simple workspace.
-            </p>
-
-        </div>
-
-
-        <div class="footer-links">
-
-            <a href="/login">
-                Login
-            </a>
-
-            <a href="/signup">
-                Signup
-            </a>
-
-            <a href="#features">
-                Features
-            </a>
-
-        </div>
-
-
-        <div class="footer-copy">
-
-            © 2026 MyNotes & Tasks
-
-        </div>
-
-    </footer>
+</footer>
 
 
 </body>
