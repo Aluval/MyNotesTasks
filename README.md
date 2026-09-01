@@ -1362,6 +1362,15 @@ MongoDB / Google Calendar / Email
 
 [![Repository](https://img.shields.io/badge/GitHub-MyNotesTasks-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Aluval/MyNotesTasks)
 
+### 📄 Project Documentation 
+
+[![Documentation PDF](https://img.shields.io/badge/Documentation-PDF-red?style=for-the-badge&logo=adobeacrobatreader)](docs/MyNotes&Tasks Project Documentation.pdf)
+
+> Complete project documentation including system architecture,
+> workflows, UML diagrams, database design, security,
+> Google Calendar integration, email reminders,
+> implementation details, testing, deployment and application screenshots.
+
 ### 👨‍💻 Developer GitHub
 
 [![Developer GitHub](https://img.shields.io/badge/Developer-Aluval-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Aluval)
