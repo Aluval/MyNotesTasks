@@ -1651,6 +1651,10 @@ def current_user_api():
 # FORGOT PASSWORD
 # ============================================================
 
+# ============================================================
+# FORGOT PASSWORD
+# ============================================================
+
 @app.route(
     "/api/auth/forgot-password",
     methods=["POST"]
@@ -1661,7 +1665,6 @@ def forgot_password():
         silent=True
     ) or {}
 
-
     email = str(
         data.get(
             "email",
@@ -1669,17 +1672,13 @@ def forgot_password():
         )
     ).strip().lower()
 
-
     user = users_collection.find_one(
         {
             "email": email
         }
     )
 
-
     # Generic response prevents email enumeration.
-
-
     if not user:
 
         return jsonify(
@@ -1690,17 +1689,15 @@ def forgot_password():
             }
         )
 
-
+    # Generate 6-digit reset code
     code = generate_code()
 
-
+    # Store reset code and expiry in MongoDB
     users_collection.update_one(
-
         {
             "_id":
                 user["_id"]
         },
-
         {
             "$set": {
 
@@ -1713,25 +1710,38 @@ def forgot_password():
                         minutes=
                             RESET_EXPIRY_MINUTES
                     )
-
             }
-
         }
-
     )
 
-
-    send_password_reset_email(
+    # Send reset email
+    email_sent = send_password_reset_email(
         email,
         code
     )
 
+    # Check whether email was actually sent
+    if not email_sent:
 
+        print(
+            "PASSWORD RESET EMAIL FAILED FOR:",
+            email
+        )
+
+        return jsonify(
+            {
+                "ok": False,
+                "message":
+                    "We could not send the reset email. Please try again later."
+            }
+        ), 500
+
+    # Email successfully sent
     return jsonify(
         {
             "ok": True,
             "message":
-                "If an account exists for this email, a reset code has been sent."
+                "Password reset code sent successfully. Please check your email."
         }
     )
 
@@ -1748,7 +1758,6 @@ def send_password_reset_email(
     subject = (
         "Reset your MyNotes & Tasks password"
     )
-
 
     body = f"""
 Hello,
@@ -1770,13 +1779,11 @@ Regards,
 {MAIL_FROM_NAME}
 """
 
-
     return send_email(
         email,
         subject,
         body
     )
-
 
 # ============================================================
 # RESET PASSWORD
