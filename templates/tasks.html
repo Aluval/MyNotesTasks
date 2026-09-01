@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Manage tasks and checklists"
+    >
+
+    <title>Tasks | MyNotes & Tasks</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+
+<body class="app-page">
+
+
+<div class="app-layout">
+    <div id="tasksPage">
+
+
+    <!-- =================================================
+         SIDEBAR
+    ================================================== -->
+
+    <aside
+        class="app-sidebar"
+        id="appSidebar"
+    >
+
+        <div class="sidebar-header">
+
+            <a
+                href="/dashboard"
+                class="app-logo"
+            >
+
+                <span class="brand-icon">
+                    ✓
+                </span>
+
+                <span>
+                    MyNotes
+                </span>
+
+            </a>
+
+            <button
+                type="button"
+                id="closeSidebar"
+                class="mobile-sidebar-close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- USER -->
+
+        <div class="sidebar-user">
+
+            <div
+                class="sidebar-avatar"
+                id="sidebarAvatar"
+            >
+                U
+            </div>
+
+            <div class="sidebar-user-info">
+
+                <strong id="sidebarUserName">
+                    User
+                </strong>
+
+                <span id="sidebarUserEmail">
+                    Loading...
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+
+            <div class="nav-section-title">
+                WORKSPACE
+            </div>
+
+
+            <a
+                href="/dashboard"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ⌂
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <a
+                href="/notes"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ✎
+                </span>
+
+                <span>
+                    Notes
+                </span>
+
+                <span
+                    class="nav-count"
+                    id="notesCount"
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <a
+                href="/tasks"
+                class="nav-item active"
+            >
+
+                <span class="nav-icon">
+                    ☑
+                </span>
+
+                <span>
+                    Tasks
+                </span>
+
+                <span
+                    class="nav-count"
+                    id="tasksCount"
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <a
+                href="/upcoming"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ◷
+                </span>
+
+                <span>
+                    Upcoming
+                </span>
+
+                <span
+                    class="nav-count"
+                    id="upcomingCount"
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <div class="nav-section-title">
+                HISTORY
+            </div>
+
+
+            <a
+                href="/logs"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ◴
+                </span>
+
+                <span>
+                    Activity Logs
+                </span>
+
+            </a>
+
+
+            <div class="nav-section-title">
+                ACCOUNT
+            </div>
+
+
+            <a
+                href="/profile"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ◉
+                </span>
+
+                <span>
+                    Profile
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+        <!-- SIDEBAR BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+            <button
+                type="button"
+                id="logoutButton"
+                class="sidebar-logout"
+            >
+
+                <span>
+                    ↪
+                </span>
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MOBILE OVERLAY -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+    <!-- =================================================
+         MAIN
+    ================================================== -->
+
+    <div class="app-main">
+
+
+        <!-- =================================================
+             TOPBAR
+        ================================================== -->
+
+        <header class="app-topbar">
+
+
+            <button
+                type="button"
+                id="openSidebar"
+                class="mobile-menu-button"
+            >
+                ☰
+            </button>
+
+
+            <div class="topbar-title">
+
+                <span>
+                    WORKSPACE
+                </span>
+
+                <h1>
+                    Tasks
+                </h1>
+
+            </div>
+
+
+            <div class="topbar-actions">
+
+
+                <button
+                    type="button"
+                    id="taskSearchButton"
+                    class="topbar-icon-button"
+                    title="Search tasks"
+                >
+                    ⌕
+                </button>
+
+
+                <a
+                    href="/profile"
+                    class="topbar-user"
+                >
+
+                    <div
+                        class="topbar-avatar"
+                        id="topbarAvatar"
+                    >
+                        U
+                    </div>
+
+                    <div class="topbar-user-info">
+
+                        <strong id="topbarUserName">
+                            User
+                        </strong>
+
+                        <span>
+                            View profile
+                        </span>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+
+        </header>
+
+
+        <!-- =================================================
+             PAGE CONTENT
+        ================================================== -->
+
+        <main class="page-content">
+
+
+            <!-- =================================================
+                 PAGE HEADER
+            ================================================== -->
+
+            <section class="page-header">
+
+                <div class="page-header-content">
+
+                    <span class="card-label">
+                        TASK MANAGEMENT
+                    </span>
+
+                    <h2>
+                        Tasks & Checklists
+                    </h2>
+
+                    <p>
+                        Create tasks, set deadlines and
+                        track your progress.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="addTaskButton"
+                    class="btn btn-primary"
+                >
+
+                    <span>
+                        +
+                    </span>
+
+                    New Task
+
+                </button>
+
+            </section>
+
+
+            <!-- =================================================
+                 TASK STATISTICS
+            ================================================== -->
+
+            <section class="mini-stats-grid">
+
+
+                <div class="mini-stat-card">
+
+                    <div class="mini-stat-icon blue">
+                        ☑
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Total Tasks
+                        </span>
+
+                        <strong id="totalTasks">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mini-stat-card">
+
+                    <div class="mini-stat-icon orange">
+                        ◷
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Pending
+                        </span>
+
+                        <strong id="pendingTasks">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mini-stat-card">
+
+                    <div class="mini-stat-icon green">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Completed
+                        </span>
+
+                        <strong id="completedTasks">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mini-stat-card">
+
+                    <div class="mini-stat-icon red">
+                        !
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Overdue
+                        </span>
+
+                        <strong id="overdueTasks">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 TASK TOOLBAR
+            ================================================== -->
+
+            <section class="tasks-toolbar">
+
+
+                <!-- SEARCH -->
+
+                <div class="notes-search task-search">
+
+                    <span>
+                        ⌕
+                    </span>
+
+                    <input
+                        type="search"
+                        id="taskSearch"
+                        placeholder="Search tasks..."
+                        autocomplete="off"
+                    >
+
+                    <button
+                        type="button"
+                        id="clearTaskSearch"
+                        class="search-clear hidden"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <!-- STATUS FILTER -->
+
+                <div class="task-filters">
+
+                    <button
+                        type="button"
+                        class="filter-button active"
+                        data-status="all"
+                    >
+                        All
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter-button"
+                        data-status="pending"
+                    >
+                        Pending
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter-button"
+                        data-status="completed"
+                    >
+                        Completed
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter-button"
+                        data-status="overdue"
+                    >
+                        Overdue
+                    </button>
+
+                </div>
+
+
+                <!-- PRIORITY -->
+
+                <div class="tasks-sort">
+
+                    <label for="priorityFilter">
+                        Priority
+                    </label>
+
+                    <select id="priorityFilter">
+
+                        <option value="all">
+                            All
+                        </option>
+
+                        <option value="high">
+                            High
+                        </option>
+
+                        <option value="medium">
+                            Medium
+                        </option>
+
+                        <option value="low">
+                            Low
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- SORT -->
+
+                <div class="tasks-sort">
+
+                    <label for="taskSort">
+                        Sort
+                    </label>
+
+                    <select id="taskSort">
+
+                        <option value="due_asc">
+                            Due Date
+                        </option>
+
+                        <option value="created_desc">
+                            Newest
+                        </option>
+
+                        <option value="created_asc">
+                            Oldest
+                        </option>
+
+                        <option value="priority">
+                            Priority
+                        </option>
+
+                        <option value="title">
+                            A-Z
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 TASK LIST
+            ================================================== -->
+
+            <section class="tasks-section">
+
+
+                <div class="section-inline-header">
+
+                    <div>
+
+                        <span class="card-label">
+                            YOUR TASKS
+                        </span>
+
+                        <h3>
+                            Task List
+                        </h3>
+
+                    </div>
+
+
+                    <span
+                        id="taskResultCount"
+                        class="result-count"
+                    >
+                        0 tasks
+                    </span>
+
+                </div>
+
+
+                <!-- Loading -->
+
+                <div
+                    id="tasksLoading"
+                    class="loading-state"
+                >
+
+                    <div class="loading-spinner"></div>
+
+                    <span>
+                        Loading tasks...
+                    </span>
+
+                </div>
+
+
+                <!-- Task list -->
+
+                <div
+                    id="tasksList"
+                    class="tasks-list"
+                ></div>
+
+
+                <!-- Empty -->
+
+                <div
+                    id="tasksEmpty"
+                    class="empty-state page-empty-state hidden"
+                >
+
+                    <div class="empty-state-icon">
+                        ✓
+                    </div>
+
+                    <h3>
+                        No tasks found
+                    </h3>
+
+                    <p id="tasksEmptyText">
+                        Create your first task to get started.
+                    </p>
+
+                    <button
+                        type="button"
+                        id="emptyAddTaskButton"
+                        class="btn btn-primary"
+                    >
+                        Create Task
+                    </button>
+
+                </div>
+
+
+            </section>
+
+
+        </main>
+
+
+        <!-- FOOTER -->
+
+        <footer class="app-footer">
+
+            <span>
+                MyNotes & Tasks
+            </span>
+
+            <span>
+                © 2026
+            </span>
+
+            <a href="/dashboard">
+                Dashboard
+            </a>
+
+        </footer>
+
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     TASK MODAL
+========================================================= -->
+
+<div
+    id="taskModal"
+    class="modal-overlay hidden"
+>
+
+
+    <div class="modal task-editor-modal">
+
+
+        <!-- HEADER -->
+
+        <div class="modal-header">
+
+            <div>
+
+                <span class="card-label">
+                    TASK
+                </span>
+
+                <h3 id="taskModalTitle">
+                    New Task
+                </h3>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="closeTaskModal"
+                class="modal-close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- MESSAGE -->
+
+        <div
+            id="taskMessage"
+            class="auth-message"
+            role="alert"
+        ></div>
+
+
+        <!-- FORM -->
+
+        <form
+            id="taskForm"
+            class="task-form"
+        >
+
+
+            <!-- Hidden task ID -->
+
+            <input
+                type="hidden"
+                id="taskId"
+            >
+
+
+            <!-- TITLE -->
+
+            <div class="form-group">
+
+                <label for="taskTitle">
+                    Task Title
+                </label>
+
+                <input
+                    type="text"
+                    id="taskTitle"
+                    name="title"
+                    placeholder="What needs to be done?"
+                    maxlength="200"
+                    required
+                >
+
+                <small
+                    id="taskTitleError"
+                    class="field-error"
+                ></small>
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <div class="form-group">
+
+                <div class="label-row">
+
+                    <label for="taskDescription">
+                        Description
+                    </label>
+
+                    <span
+                        id="taskDescriptionCount"
+                        class="character-count"
+                    >
+                        0 / 2000
+                    </span>
+
+                </div>
+
+                <textarea
+                    id="taskDescription"
+                    name="description"
+                    rows="5"
+                    maxlength="2000"
+                    placeholder="Add more details..."
+                ></textarea>
+
+            </div>
+
+
+            <!-- DATE + TIME -->
+
+            <div class="form-row">
+
+
+                <div class="form-group">
+
+                    <label for="taskDueDate">
+                        Due Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="taskDueDate"
+                        name="due_date"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="taskDueTime">
+                        Due Time
+                    </label>
+
+                    <input
+                        type="time"
+                        id="taskDueTime"
+                        name="due_time"
+                    >
+
+                </div>
+
+
+            </div>
+
+
+            <!-- PRIORITY + CATEGORY -->
+
+            <div class="form-row">
+
+
+                <div class="form-group">
+
+                    <label for="taskPriority">
+                        Priority
+                    </label>
+
+                    <select
+                        id="taskPriority"
+                        name="priority"
+                    >
+
+                        <option value="low">
+                            Low
+                        </option>
+
+                        <option
+                            value="medium"
+                            selected
+                        >
+                            Medium
+                        </option>
+
+                        <option value="high">
+                            High
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="taskCategory">
+                        Category
+                    </label>
+
+                    <select
+                        id="taskCategory"
+                        name="category"
+                    >
+
+                        <option value="personal">
+                            Personal
+                        </option>
+
+                        <option value="work">
+                            Work
+                        </option>
+
+                        <option value="study">
+                            Study
+                        </option>
+
+                        <option value="shopping">
+                            Shopping
+                        </option>
+
+                        <option value="other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- CHECKLIST -->
+
+            <div class="form-group">
+
+                <div class="label-row">
+
+                    <label>
+                        Checklist Items
+                    </label>
+
+                    <button
+                        type="button"
+                        id="addChecklistItem"
+                        class="text-button"
+                    >
+                        + Add item
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="checklistItems"
+                    class="checklist-editor"
+                >
+
+                    <!-- JS adds checklist items -->
+
+                </div>
+
+
+                <small class="input-hint">
+                    Optional. Break this task into smaller steps.
+                </small>
+
+            </div>
+
+
+<!-- =================================================
+     TASK OPTIONS
+================================================== -->
+
+<div class="task-options">
+
+
+    <!-- EMAIL REMINDER -->
+
+    <label class="checkbox-container">
+
+        <input
+            type="checkbox"
+            id="taskReminder"
+            name="reminder"
+        >
+
+        <span class="custom-checkbox"></span>
+
+        <span>
+            Enable email reminder
+        </span>
+
+    </label>
+
+
+    <!-- GOOGLE CALENDAR -->
+
+    <label class="checkbox-container">
+
+        <input
+            type="checkbox"
+            id="taskGoogleCalendar"
+            name="google_calendar"
+        >
+
+        <span class="custom-checkbox"></span>
+
+        <span>
+            Add to Google Calendar
+        </span>
+
+    </label>
+
+
+</div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    id="cancelTask"
+                    class="btn btn-secondary"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="submit"
+                    id="saveTaskButton"
+                    class="btn btn-primary"
+                >
+
+                    <span id="saveTaskText">
+                        Save Task
+                    </span>
+
+                    <span
+                        id="saveTaskSpinner"
+                        class="button-spinner"
+                    ></span>
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     DELETE TASK MODAL
+========================================================= -->
+
+<div
+    id="deleteTaskModal"
+    class="modal-overlay hidden"
+>
+
+
+    <div class="modal small-modal">
+
+
+        <div class="modal-icon danger">
+            !
+        </div>
+
+
+        <h3>
+            Delete this task?
+        </h3>
+
+
+        <p>
+            This task and its checklist will be
+            permanently deleted.
+        </p>
+
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                id="cancelDeleteTask"
+                class="btn btn-secondary"
+            >
+                Cancel
+            </button>
+
+
+            <button
+                type="button"
+                id="confirmDeleteTask"
+                class="btn btn-danger"
+            >
+                Delete Task
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     LOGOUT MODAL
+========================================================= -->
+
+<div
+    id="logoutModal"
+    class="modal-overlay hidden"
+>
+
+
+    <div class="modal small-modal">
+
+        <div class="modal-icon danger">
+            ↪
+        </div>
+
+        <h3>
+            Logout?
+        </h3>
+
+        <p>
+            Are you sure you want to logout
+            from your account?
+        </p>
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                id="cancelLogout"
+                class="btn btn-secondary"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                id="confirmLogout"
+                class="btn btn-danger"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     TOAST
+========================================================= -->
+
+<div
+    id="toastContainer"
+    class="toast-container"
+></div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script
+    src="{{ url_for('static', filename='js/api.js') }}"
+></script>
+
+<script
+    src="{{ url_for('static', filename='js/tasks.js') }}"
+></script>
+
+
+</body>
+
+</html>

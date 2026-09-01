@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Create your MyNotes & Tasks account"
+    >
+
+    <title>Sign Up | MyNotes & Tasks</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+
+<body class="auth-page">
+
+
+    <!-- ==========================================
+         BACKGROUND
+    =========================================== -->
+
+    <div class="auth-background">
+
+        <div class="auth-orb auth-orb-one"></div>
+
+        <div class="auth-orb auth-orb-two"></div>
+
+    </div>
+
+
+    <!-- ==========================================
+         MAIN AUTH CONTAINER
+    =========================================== -->
+
+    <main class="auth-container signup-container">
+
+
+        <!-- ======================================
+             BRAND
+        ======================================= -->
+
+        <a
+            href="/"
+            class="auth-brand"
+        >
+
+            <span class="brand-icon">
+                ✓
+            </span>
+
+            <span>
+                MyNotes
+            </span>
+
+        </a>
+
+
+        <!-- ======================================
+             SIGNUP CARD
+        ======================================= -->
+
+        <section class="auth-card signup-card">
+
+
+            <!-- Header -->
+
+            <div class="auth-header">
+
+                <div class="auth-icon signup-icon">
+                    ✨
+                </div>
+
+                <h1>
+                    Create your account
+                </h1>
+
+                <p>
+                    Start organizing your notes and tasks.
+                </p>
+
+            </div>
+
+
+            <!-- ==================================
+                 MESSAGE
+            =================================== -->
+
+            <div
+                id="authMessage"
+                class="auth-message"
+                role="alert"
+                aria-live="polite"
+            ></div>
+
+
+            <!-- ==================================
+                 SIGNUP FORM
+            =================================== -->
+
+            <form
+                id="signupForm"
+                class="auth-form"
+                novalidate
+            >
+
+
+                <!-- =================================
+                     NAME
+                ================================== -->
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Full Name
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ♙
+                        </span>
+
+                        <input
+                            id="name"
+                            name="name"
+                            type="text"
+                            placeholder="Enter your full name"
+                            autocomplete="name"
+                            minlength="2"
+                            maxlength="80"
+                            required
+                        >
+
+                    </div>
+
+                    <small
+                        id="nameError"
+                        class="field-error"
+                    ></small>
+
+                </div>
+
+
+                <!-- =================================
+                     USERNAME
+                ================================== -->
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            @
+                        </span>
+
+                        <input
+                            id="username"
+                            name="username"
+                            type="text"
+                            placeholder="Choose a username"
+                            autocomplete="username"
+                            minlength="3"
+                            maxlength="30"
+                            pattern="[A-Za-z0-9_.]+"
+                            required
+                        >
+
+                    </div>
+
+                    <small class="input-hint">
+                        3–30 characters: letters, numbers, _
+                        and .
+                    </small>
+
+                    <small
+                        id="usernameError"
+                        class="field-error"
+                    ></small>
+
+                </div>
+
+
+                <!-- =================================
+                     EMAIL
+                ================================== -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Gmail / Email Address
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ✉
+                        </span>
+
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="you@gmail.com"
+                            autocomplete="email"
+                            maxlength="120"
+                            required
+                        >
+
+                    </div>
+
+                    <small class="input-hint">
+                        We'll send a verification link to this
+                        email.
+                    </small>
+
+                    <small
+                        id="emailError"
+                        class="field-error"
+                    ></small>
+
+                </div>
+
+
+                <!-- =================================
+                     PASSWORD
+                ================================== -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ●
+                        </span>
+
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            placeholder="Create a strong password"
+                            autocomplete="new-password"
+                            minlength="6"
+                            maxlength="128"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="togglePassword"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+
+                    <!-- Password Strength -->
+
+                    <div class="password-strength">
+
+                        <div class="strength-bars">
+
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+
+                        </div>
+
+                        <span
+                            id="strengthText"
+                            class="strength-text"
+                        >
+                            Enter a password
+                        </span>
+
+                    </div>
+
+
+                    <small
+                        id="passwordError"
+                        class="field-error"
+                    ></small>
+
+                </div>
+
+
+                <!-- =================================
+                     CONFIRM PASSWORD
+                ================================== -->
+
+                <div class="form-group">
+
+                    <label for="confirmPassword">
+                        Confirm Password
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ●
+                        </span>
+
+                        <input
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            type="password"
+                            placeholder="Enter your password again"
+                            autocomplete="new-password"
+                            minlength="6"
+                            maxlength="128"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="toggleConfirmPassword"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                    <small
+                        id="confirmPasswordError"
+                        class="field-error"
+                    ></small>
+
+                </div>
+
+
+                <!-- =================================
+                     TERMS
+                ================================== -->
+
+                <div class="terms-row">
+
+                    <label class="checkbox-container">
+
+                        <input
+                            type="checkbox"
+                            id="terms"
+                            name="terms"
+                            required
+                        >
+
+                        <span class="custom-checkbox"></span>
+
+                        <span>
+
+                            I agree to the
+                            <a href="#terms">
+                                Terms
+                            </a>
+                            and
+                            <a href="#privacy">
+                                Privacy Policy
+                            </a>
+
+                        </span>
+
+                    </label>
+
+                </div>
+
+
+                <!-- =================================
+                     SUBMIT
+                ================================== -->
+
+                <button
+                    type="submit"
+                    id="signupButton"
+                    class="btn btn-primary btn-auth"
+                >
+
+                    <span id="signupButtonText">
+                        Create Account
+                    </span>
+
+                    <span
+                        id="signupSpinner"
+                        class="button-spinner"
+                    ></span>
+
+                </button>
+
+
+            </form>
+
+
+            <!-- ==================================
+                 DIVIDER
+            =================================== -->
+
+            <div class="auth-divider">
+
+                <span>
+                    OR
+                </span>
+
+            </div>
+
+
+            <!-- ==================================
+                 LOGIN LINK
+            =================================== -->
+
+            <div class="auth-footer">
+
+                <span>
+                    Already have an account?
+                </span>
+
+                <a href="/login">
+                    Login
+                </a>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ======================================
+             SECURITY
+        ======================================= -->
+
+        <div class="auth-security">
+
+            <span>
+                🔒
+            </span>
+
+            <span>
+                Your password is securely hashed
+            </span>
+
+        </div>
+
+
+        <!-- ======================================
+             BACK HOME
+        ======================================= -->
+
+        <a
+            href="/"
+            class="back-home"
+        >
+
+            ← Back to home
+
+        </a>
+
+
+    </main>
+
+
+    <!-- ==========================================
+         JAVASCRIPT
+    =========================================== -->
+
+    <script
+        src="{{ url_for('static', filename='js/api.js') }}"
+    ></script>
+
+    <script
+        src="{{ url_for('static', filename='js/auth.js') }}"
+    ></script>
+
+
+    <!-- ==========================================
+         PASSWORD UI
+    =========================================== -->
+
+    <script>
+
+        const password =
+            document.getElementById("password");
+
+        const confirmPassword =
+            document.getElementById("confirmPassword");
+
+        const togglePassword =
+            document.getElementById("togglePassword");
+
+        const toggleConfirmPassword =
+            document.getElementById(
+                "toggleConfirmPassword"
+            );
+
+
+        /* =========================================
+           PASSWORD TOGGLE
+        ========================================== */
+
+        togglePassword?.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    password.type === "password"
+                ) {
+
+                    password.type = "text";
+
+                    togglePassword.textContent =
+                        "Hide";
+
+                } else {
+
+                    password.type =
+                        "password";
+
+                    togglePassword.textContent =
+                        "Show";
+
+                }
+
+            }
+        );
+
+
+        /* =========================================
+           CONFIRM PASSWORD TOGGLE
+        ========================================== */
+
+        toggleConfirmPassword?.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    confirmPassword.type === "password"
+                ) {
+
+                    confirmPassword.type = "text";
+
+                    toggleConfirmPassword.textContent =
+                        "Hide";
+
+                } else {
+
+                    confirmPassword.type =
+                        "password";
+
+                    toggleConfirmPassword.textContent =
+                        "Show";
+
+                }
+
+            }
+        );
+
+
+        /* =========================================
+           PASSWORD STRENGTH
+        ========================================== */
+
+        password?.addEventListener(
+            "input",
+            function () {
+
+                const value =
+                    password.value;
+
+                const bars =
+                    document.querySelectorAll(
+                        ".strength-bars span"
+                    );
+
+                const strengthText =
+                    document.getElementById(
+                        "strengthText"
+                    );
+
+
+                let score = 0;
+
+
+                if (value.length >= 6) {
+                    score++;
+                }
+
+                if (value.length >= 10) {
+                    score++;
+                }
+
+                if (
+                    /[A-Z]/.test(value) &&
+                    /[a-z]/.test(value)
+                ) {
+                    score++;
+                }
+
+                if (
+                    /\d/.test(value) &&
+                    /[^A-Za-z0-9]/.test(value)
+                ) {
+                    score++;
+                }
+
+
+                bars.forEach(
+                    function (bar, index) {
+
+                        bar.classList.toggle(
+                            "filled",
+                            index < score
+                        );
+
+                    }
+                );
+
+
+                if (!value) {
+
+                    strengthText.textContent =
+                        "Enter a password";
+
+                    strengthText.className =
+                        "strength-text";
+
+                }
+
+                else if (score <= 1) {
+
+                    strengthText.textContent =
+                        "Weak password";
+
+                    strengthText.className =
+                        "strength-text weak";
+
+                }
+
+                else if (score === 2) {
+
+                    strengthText.textContent =
+                        "Fair password";
+
+                    strengthText.className =
+                        "strength-text fair";
+
+                }
+
+                else if (score === 3) {
+
+                    strengthText.textContent =
+                        "Good password";
+
+                    strengthText.className =
+                        "strength-text good";
+
+                }
+
+                else {
+
+                    strengthText.textContent =
+                        "Strong password";
+
+                    strengthText.className =
+                        "strength-text strong";
+
+                }
+
+            }
+        );
+
+
+        /* =========================================
+           CONFIRM PASSWORD CHECK
+        ========================================== */
+
+        confirmPassword?.addEventListener(
+            "input",
+            function () {
+
+                const error =
+                    document.getElementById(
+                        "confirmPasswordError"
+                    );
+
+
+                if (
+                    confirmPassword.value &&
+                    confirmPassword.value !==
+                    password.value
+                ) {
+
+                    error.textContent =
+                        "Passwords do not match.";
+
+                } else {
+
+                    error.textContent =
+                        "";
+
+                }
+
+            }
+        );
+
+
+    </script>
+
+
+</body>
+
+</html>

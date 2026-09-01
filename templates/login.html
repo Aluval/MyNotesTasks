@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Login to MyNotes & Tasks"
+    >
+
+    <title>Login | MyNotes & Tasks</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+
+<body class="auth-page">
+
+
+    <!-- ==========================================
+         BACKGROUND DECORATION
+    =========================================== -->
+
+    <div class="auth-background">
+
+        <div class="auth-orb auth-orb-one"></div>
+
+        <div class="auth-orb auth-orb-two"></div>
+
+    </div>
+
+
+    <!-- ==========================================
+         AUTH CONTAINER
+    =========================================== -->
+
+    <main class="auth-container">
+
+
+        <!-- ======================================
+             BRAND
+        ======================================= -->
+
+        <a
+            href="/"
+            class="auth-brand"
+        >
+
+            <span class="brand-icon">
+                ✓
+            </span>
+
+            <span>
+                MyNotes
+            </span>
+
+        </a>
+
+
+        <!-- ======================================
+             LOGIN CARD
+        ======================================= -->
+
+        <section class="auth-card">
+
+
+            <!-- Header -->
+
+            <div class="auth-header">
+
+                <div class="auth-icon">
+                    👋
+                </div>
+
+                <h1>
+                    Welcome back
+                </h1>
+
+                <p>
+                    Sign in to continue to your workspace.
+                </p>
+
+            </div>
+
+
+            <!-- ==================================
+                 ERROR / SUCCESS MESSAGE
+            =================================== -->
+
+            <div
+                id="authMessage"
+                class="auth-message"
+                role="alert"
+                aria-live="polite"
+            ></div>
+
+
+            <!-- ==================================
+                 LOGIN FORM
+            =================================== -->
+
+            <form
+                id="loginForm"
+                class="auth-form"
+                novalidate
+            >
+
+
+                <!-- Email / Username -->
+
+                <div class="form-group">
+
+                    <label
+                        for="login"
+                    >
+                        Email or Username
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            @
+                        </span>
+
+                        <input
+                            id="login"
+                            name="login"
+                            type="text"
+                            placeholder="Enter your email or username"
+                            autocomplete="username"
+                            required
+                        >
+
+                    </div>
+
+                    <small
+                        id="loginError"
+                        class="field-error"
+                    ></small>
+
+                </div>
+
+
+                <!-- Password -->
+
+                <div class="form-group">
+
+                    <div class="label-row">
+
+                        <label
+                            for="password"
+                        >
+                            Password
+                        </label>
+
+                        <a
+                            href="/forgot-password"
+                            class="forgot-link"
+                        >
+                            Forgot password?
+                        </a>
+
+                    </div>
+
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ●
+                        </span>
+
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="togglePassword"
+                            aria-label="Show password"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                    <small
+                        id="passwordError"
+                        class="field-error"
+                    ></small>
+
+                </div>
+
+
+                <!-- Remember Me -->
+
+                <div class="remember-row">
+
+                    <label class="checkbox-container">
+
+                        <input
+                            type="checkbox"
+                            id="remember"
+                            name="remember"
+                        >
+
+                        <span class="custom-checkbox"></span>
+
+                        <span>
+                            Remember me
+                        </span>
+
+                    </label>
+
+                </div>
+
+
+                <!-- Login Button -->
+
+                <button
+                    type="submit"
+                    id="loginButton"
+                    class="btn btn-primary btn-auth"
+                >
+
+                    <span id="loginButtonText">
+                        Login
+                    </span>
+
+                    <span
+                        id="loginSpinner"
+                        class="button-spinner"
+                    ></span>
+
+                </button>
+
+
+            </form>
+
+
+            <!-- ==================================
+                 DIVIDER
+            =================================== -->
+
+            <div class="auth-divider">
+
+                <span>
+                    OR
+                </span>
+
+            </div>
+
+
+            <!-- ==================================
+                 SIGNUP
+            =================================== -->
+
+            <div class="auth-footer">
+
+                <span>
+                    Don't have an account?
+                </span>
+
+                <a href="/signup">
+                    Create an account
+                </a>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ======================================
+             SECURITY MESSAGE
+        ======================================= -->
+
+        <div class="auth-security">
+
+            <span>
+                🔒
+            </span>
+
+            <span>
+                Your connection is secure
+            </span>
+
+        </div>
+
+
+        <!-- Back -->
+
+        <a
+            href="/"
+            class="back-home"
+        >
+
+            ← Back to home
+
+        </a>
+
+
+    </main>
+
+
+    <!-- ==========================================
+         JAVASCRIPT
+    =========================================== -->
+
+    <script
+        src="{{ url_for('static', filename='js/api.js') }}"
+    ></script>
+
+    <script
+        src="{{ url_for('static', filename='js/auth.js') }}"
+    ></script>
+
+
+    <!-- ==========================================
+         PASSWORD TOGGLE
+    =========================================== -->
+
+    <script>
+
+        const passwordInput =
+            document.getElementById("password");
+
+        const togglePassword =
+            document.getElementById("togglePassword");
+
+
+        if (togglePassword) {
+
+            togglePassword.addEventListener(
+                "click",
+                function () {
+
+                    if (
+                        passwordInput.type === "password"
+                    ) {
+
+                        passwordInput.type = "text";
+
+                        togglePassword.textContent =
+                            "Hide";
+
+                        togglePassword.setAttribute(
+                            "aria-label",
+                            "Hide password"
+                        );
+
+                    } else {
+
+                        passwordInput.type =
+                            "password";
+
+                        togglePassword.textContent =
+                            "Show";
+
+                        togglePassword.setAttribute(
+                            "aria-label",
+                            "Show password"
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

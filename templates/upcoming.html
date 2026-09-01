@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="View upcoming tasks and deadlines"
+    >
+
+    <title>Upcoming | MyNotes & Tasks</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+
+<body class="app-page">
+
+
+<div class="app-layout">
+
+
+    <!-- =================================================
+         SIDEBAR
+    ================================================== -->
+
+    <aside
+        class="app-sidebar"
+        id="appSidebar"
+    >
+
+        <div class="sidebar-header">
+
+            <a
+                href="/dashboard"
+                class="app-logo"
+            >
+
+                <span class="brand-icon">
+                    ✓
+                </span>
+
+                <span>
+                    MyNotes
+                </span>
+
+            </a>
+
+
+            <button
+                type="button"
+                id="closeSidebar"
+                class="mobile-sidebar-close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- USER -->
+
+        <div class="sidebar-user">
+
+            <div
+                class="sidebar-avatar"
+                id="sidebarAvatar"
+            >
+                U
+            </div>
+
+            <div class="sidebar-user-info">
+
+                <strong id="sidebarUserName">
+                    User
+                </strong>
+
+                <span id="sidebarUserEmail">
+                    Loading...
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+
+            <div class="nav-section-title">
+                WORKSPACE
+            </div>
+
+
+            <a
+                href="/dashboard"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ⌂
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <a
+                href="/notes"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ✎
+                </span>
+
+                <span>
+                    Notes
+                </span>
+
+                <span
+                    class="nav-count"
+                    id="notesCount"
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <a
+                href="/tasks"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ☑
+                </span>
+
+                <span>
+                    Tasks
+                </span>
+
+                <span
+                    class="nav-count"
+                    id="tasksCount"
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <a
+                href="/upcoming"
+                class="nav-item active"
+            >
+
+                <span class="nav-icon">
+                    ◷
+                </span>
+
+                <span>
+                    Upcoming
+                </span>
+
+                <span
+                    class="nav-count"
+                    id="upcomingCount"
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <div class="nav-section-title">
+                HISTORY
+            </div>
+
+
+            <a
+                href="/logs"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ◴
+                </span>
+
+                <span>
+                    Activity Logs
+                </span>
+
+            </a>
+
+
+            <div class="nav-section-title">
+                ACCOUNT
+            </div>
+
+
+            <a
+                href="/profile"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ◉
+                </span>
+
+                <span>
+                    Profile
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+        <!-- SIDEBAR BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+            <button
+                type="button"
+                id="logoutButton"
+                class="sidebar-logout"
+            >
+
+                <span>
+                    ↪
+                </span>
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MOBILE OVERLAY -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+    <!-- =================================================
+         MAIN
+    ================================================== -->
+
+    <div class="app-main">
+
+
+        <!-- =================================================
+             TOPBAR
+        ================================================== -->
+
+        <header class="app-topbar">
+
+
+            <button
+                type="button"
+                id="openSidebar"
+                class="mobile-menu-button"
+            >
+                ☰
+            </button>
+
+
+            <div class="topbar-title">
+
+                <span>
+                    PLANNING
+                </span>
+
+                <h1>
+                    Upcoming
+                </h1>
+
+            </div>
+
+
+            <div class="topbar-actions">
+
+
+                <a
+                    href="/profile"
+                    class="topbar-user"
+                >
+
+                    <div
+                        class="topbar-avatar"
+                        id="topbarAvatar"
+                    >
+                        U
+                    </div>
+
+                    <div class="topbar-user-info">
+
+                        <strong id="topbarUserName">
+                            User
+                        </strong>
+
+                        <span>
+                            View profile
+                        </span>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+
+        </header>
+
+
+        <!-- =================================================
+             CONTENT
+        ================================================== -->
+
+        <main
+            id="upcomingPage"
+            class="page-content">
+                            
+
+
+            <!-- PAGE HEADER -->
+
+            <section class="page-header">
+
+
+                <div class="page-header-content">
+
+                    <span class="card-label">
+                        PLAN AHEAD
+                    </span>
+
+                    <h2>
+                        Upcoming Tasks
+                    </h2>
+
+                    <p>
+                        Stay ahead of your deadlines and
+                        know what's coming next.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="/tasks?action=new"
+                    class="btn btn-primary"
+                >
+
+                    <span>
+                        +
+                    </span>
+
+                    New Task
+
+                </a>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 OVERVIEW
+            ================================================== -->
+
+            <section class="upcoming-overview">
+
+
+                <div class="upcoming-overview-card">
+
+                    <div class="upcoming-overview-icon blue">
+                        ◷
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Upcoming
+                        </span>
+
+                        <strong id="upcomingTotal">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="upcoming-overview-card">
+
+                    <div class="upcoming-overview-icon red">
+                        !
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Due Soon
+                        </span>
+
+                        <strong id="dueSoonTotal">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="upcoming-overview-card">
+
+                    <div class="upcoming-overview-icon orange">
+                        ◷
+                    </div>
+
+                    <div>
+
+                        <span>
+                            This Week
+                        </span>
+
+                        <strong id="thisWeekTotal">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="upcoming-overview-card">
+
+                    <div class="upcoming-overview-icon green">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Completed
+                        </span>
+
+                        <strong id="upcomingCompleted">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 TOOLBAR
+            ================================================== -->
+
+            <section class="upcoming-toolbar">
+
+
+                <div class="notes-search">
+
+                    <span>
+                        ⌕
+                    </span>
+
+                    <input
+                        type="search"
+                        id="upcomingSearch"
+                        placeholder="Search upcoming tasks..."
+                        autocomplete="off"
+                    >
+
+                    <button
+                        type="button"
+                        id="clearUpcomingSearch"
+                        class="search-clear hidden"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <div class="upcoming-range">
+
+                    <button
+                        type="button"
+                        class="filter-button active"
+                        data-range="all"
+                    >
+                        All
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter-button"
+                        data-range="today"
+                    >
+                        Today
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter-button"
+                        data-range="tomorrow"
+                    >
+                        Tomorrow
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter-button"
+                        data-range="week"
+                    >
+                        This Week
+                    </button>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 UPCOMING TIMELINE
+            ================================================== -->
+
+            <section class="upcoming-timeline-section">
+
+
+                <!-- Loading -->
+
+                <div
+                    id="upcomingLoading"
+                    class="loading-state"
+                >
+
+                    <div class="loading-spinner"></div>
+
+                    <span>
+                        Loading upcoming tasks...
+                    </span>
+
+                </div>
+
+
+                <!-- TODAY -->
+
+                <div
+                    id="todayGroup"
+                    class="timeline-group hidden"
+                >
+
+                    <div class="timeline-date">
+
+                        <div class="timeline-date-icon today">
+                            TODAY
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Today
+                            </strong>
+
+                            <span id="todayDateLabel">
+                                —
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="todayTasks"
+                        class="timeline-tasks"
+                    ></div>
+
+                </div>
+
+
+                <!-- TOMORROW -->
+
+                <div
+                    id="tomorrowGroup"
+                    class="timeline-group hidden"
+                >
+
+                    <div class="timeline-date">
+
+                        <div class="timeline-date-icon">
+                            01
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Tomorrow
+                            </strong>
+
+                            <span id="tomorrowDateLabel">
+                                —
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="tomorrowTasks"
+                        class="timeline-tasks"
+                    ></div>
+
+                </div>
+
+
+                <!-- THIS WEEK -->
+
+                <div
+                    id="weekGroup"
+                    class="timeline-group hidden"
+                >
+
+                    <div class="timeline-date">
+
+                        <div class="timeline-date-icon">
+                            WEEK
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                This Week
+                            </strong>
+
+                            <span>
+                                Upcoming deadlines
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="weekTasks"
+                        class="timeline-tasks"
+                    ></div>
+
+                </div>
+
+
+                <!-- LATER -->
+
+                <div
+                    id="laterGroup"
+                    class="timeline-group hidden"
+                >
+
+                    <div class="timeline-date">
+
+                        <div class="timeline-date-icon">
+                            →
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Later
+                            </strong>
+
+                            <span>
+                                Future tasks
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="laterTasks"
+                        class="timeline-tasks"
+                    ></div>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 EMPTY STATE
+            ================================================== -->
+
+            <section
+                id="upcomingEmpty"
+                class="empty-state page-empty-state hidden"
+            >
+
+                <div class="empty-state-icon">
+                    ◷
+                </div>
+
+                <h3>
+                    Nothing upcoming
+                </h3>
+
+                <p>
+                    You don't have any future tasks.
+                    Enjoy the free time!
+                </p>
+
+                <a
+                    href="/tasks?action=new"
+                    class="btn btn-primary"
+                >
+                    Add a Task
+                </a>
+
+            </section>
+
+
+        </main>
+
+
+        <!-- FOOTER -->
+
+        <footer class="app-footer">
+
+            <span>
+                MyNotes & Tasks
+            </span>
+
+            <span>
+                © 2026
+            </span>
+
+            <a href="/dashboard">
+                Dashboard
+            </a>
+
+        </footer>
+
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     TASK QUICK VIEW MODAL
+========================================================= -->
+
+<div
+    id="taskViewModal"
+    class="modal-overlay hidden"
+>
+
+
+    <div class="modal task-view-modal">
+
+
+        <div class="modal-header">
+
+            <div>
+
+                <span class="card-label">
+                    TASK DETAILS
+                </span>
+
+                <h3 id="viewTaskTitle">
+                    Task
+                </h3>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="closeTaskView"
+                class="modal-close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="task-view-body">
+
+
+            <!-- STATUS -->
+
+            <div class="task-view-status-row">
+
+                <span
+                    id="viewTaskStatus"
+                    class="task-status pending"
+                >
+                    Pending
+                </span>
+
+                <span
+                    id="viewTaskPriority"
+                    class="preview-priority medium"
+                >
+                    Medium
+                </span>
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <div
+                id="viewTaskDescription"
+                class="task-view-description"
+            >
+            </div>
+
+
+            <!-- DATE -->
+
+            <div class="task-view-meta">
+
+                <div>
+
+                    <span>
+                        DUE DATE
+                    </span>
+
+                    <strong id="viewTaskDate">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        DUE TIME
+                    </span>
+
+                    <strong id="viewTaskTime">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        CATEGORY
+                    </span>
+
+                    <strong id="viewTaskCategory">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- CHECKLIST -->
+
+            <div class="task-view-checklist">
+
+                <div class="label-row">
+
+                    <strong>
+                        Checklist
+                    </strong>
+
+                    <span id="viewChecklistProgress">
+                        0 / 0
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="viewChecklistItems"
+                    class="checklist-view-list"
+                ></div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                id="viewTaskComplete"
+                class="btn btn-primary"
+            >
+                Mark Complete
+            </button>
+
+            <button
+                type="button"
+                id="viewTaskEdit"
+                class="btn btn-secondary"
+            >
+                Edit Task
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     LOGOUT MODAL
+========================================================= -->
+
+<div
+    id="logoutModal"
+    class="modal-overlay hidden"
+>
+
+
+    <div class="modal small-modal">
+
+        <div class="modal-icon danger">
+            ↪
+        </div>
+
+        <h3>
+            Logout?
+        </h3>
+
+        <p>
+            Are you sure you want to logout
+            from your account?
+        </p>
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                id="cancelLogout"
+                class="btn btn-secondary"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                id="confirmLogout"
+                class="btn btn-danger"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     TOAST
+========================================================= -->
+
+<div
+    id="toastContainer"
+    class="toast-container"
+></div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script
+    src="{{ url_for('static', filename='js/api.js') }}"
+></script>
+
+<script
+    src="{{ url_for('static', filename='js/upcoming.js') }}"
+></script>
+
+
+</body>
+
+</html>

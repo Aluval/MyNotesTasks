@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="MyNotes & Tasks Dashboard"
+    >
+
+    <title>Dashboard | MyNotes & Tasks</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+
+<body class="app-page">
+
+
+    <!-- ==========================================
+         APPLICATION LAYOUT
+    =========================================== -->
+
+    <div class="app-layout">
+
+
+        <!-- ======================================
+             SIDEBAR
+        ======================================= -->
+
+        <aside
+            class="app-sidebar"
+            id="appSidebar"
+        >
+
+
+            <!-- Logo -->
+
+            <div class="sidebar-header">
+
+                <a
+                    href="/dashboard"
+                    class="app-logo"
+                >
+
+                    <span class="brand-icon">
+                        ✓
+                    </span>
+
+                    <span>
+                        MyNotes
+                    </span>
+
+                </a>
+
+
+                <button
+                    type="button"
+                    id="closeSidebar"
+                    class="mobile-sidebar-close"
+                    aria-label="Close menu"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <!-- ==================================
+                 USER MINI PROFILE
+            =================================== -->
+
+            <div class="sidebar-user">
+
+                <div
+                    class="sidebar-avatar"
+                    id="sidebarAvatar"
+                >
+                    U
+                </div>
+
+                <div class="sidebar-user-info">
+
+                    <strong id="sidebarUserName">
+                        User
+                    </strong>
+
+                    <span id="sidebarUserEmail">
+                        Loading...
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================
+                 NAVIGATION
+            =================================== -->
+
+            <nav class="sidebar-nav">
+
+
+                <div class="nav-section-title">
+                    WORKSPACE
+                </div>
+
+
+                <a
+                    href="/dashboard"
+                    class="nav-item active"
+                >
+
+                    <span class="nav-icon">
+                        ⌂
+                    </span>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="/notes"
+                    class="nav-item"
+                >
+
+                    <span class="nav-icon">
+                        ✎
+                    </span>
+
+                    <span>
+                        Notes
+                    </span>
+
+                    <span
+                        class="nav-count"
+                        id="notesCount"
+                    >
+                        0
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="/tasks"
+                    class="nav-item"
+                >
+
+                    <span class="nav-icon">
+                        ☑
+                    </span>
+
+                    <span>
+                        Tasks
+                    </span>
+
+                    <span
+                        class="nav-count"
+                        id="tasksCount"
+                    >
+                        0
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="/upcoming"
+                    class="nav-item"
+                >
+
+                    <span class="nav-icon">
+                        ◷
+                    </span>
+
+                    <span>
+                        Upcoming
+                    </span>
+
+                    <span
+                        class="nav-count"
+                        id="upcomingCount"
+                    >
+                        0
+                    </span>
+
+                </a>
+
+
+                <div class="nav-section-title">
+                    HISTORY
+                </div>
+
+
+                <a
+                    href="/logs"
+                    class="nav-item"
+                >
+
+                    <span class="nav-icon">
+                        ◴
+                    </span>
+
+                    <span>
+                        Activity Logs
+                    </span>
+
+                </a>
+
+
+                <div class="nav-section-title">
+                    ACCOUNT
+                </div>
+
+
+                <a
+                    href="/profile"
+                    class="nav-item"
+                >
+
+                    <span class="nav-icon">
+                        ◉
+                    </span>
+
+                    <span>
+                        Profile
+                    </span>
+
+                </a>
+
+
+            </nav>
+
+
+            <!-- ==================================
+                 SIDEBAR BOTTOM
+            =================================== -->
+
+            <div class="sidebar-bottom">
+
+
+                <div class="sidebar-tip">
+
+                    <div class="tip-icon">
+                        💡
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Productivity tip
+                        </strong>
+
+                        <p>
+                            Break large tasks into
+                            smaller checklists.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="logoutButton"
+                    class="sidebar-logout"
+                >
+
+                    <span>
+                        ↪
+                    </span>
+
+                    Logout
+
+                </button>
+
+
+            </div>
+
+
+        </aside>
+
+
+        <!-- ======================================
+             SIDEBAR OVERLAY MOBILE
+        ======================================= -->
+
+        <div
+            class="sidebar-overlay"
+            id="sidebarOverlay"
+        ></div>
+
+
+        <!-- ======================================
+             MAIN AREA
+        ======================================= -->
+
+        <div class="app-main">
+
+
+            <!-- ==================================
+                 TOPBAR
+            =================================== -->
+
+            <header class="app-topbar">
+
+
+                <button
+                    type="button"
+                    id="openSidebar"
+                    class="mobile-menu-button"
+                    aria-label="Open menu"
+                >
+                    ☰
+                </button>
+
+
+                <div class="topbar-title">
+
+                    <span>
+                        WORKSPACE
+                    </span>
+
+                    <h1>
+                        Dashboard
+                    </h1>
+
+                </div>
+
+
+                <div class="topbar-actions">
+
+
+                    <!-- Search -->
+
+                    <button
+                        type="button"
+                        class="topbar-icon-button"
+                        id="globalSearchButton"
+                        aria-label="Search"
+                    >
+                        ⌕
+                    </button>
+
+
+                    <!-- Notifications -->
+
+                    <button
+                        type="button"
+                        class="topbar-icon-button notification-button"
+                        id="notificationButton"
+                        aria-label="Notifications"
+                    >
+
+                        ♢
+
+                        <span
+                            id="notificationDot"
+                            class="notification-dot"
+                        ></span>
+
+                    </button>
+
+
+                    <!-- User -->
+
+                    <a
+                        href="/profile"
+                        class="topbar-user"
+                    >
+
+                        <div
+                            class="topbar-avatar"
+                            id="topbarAvatar"
+                        >
+                            U
+                        </div>
+
+                        <div class="topbar-user-info">
+
+                            <strong id="topbarUserName">
+                                User
+                            </strong>
+
+                            <span>
+                                View profile
+                            </span>
+
+                        </div>
+
+                    </a>
+
+
+                </div>
+
+
+            </header>
+
+
+            <!-- ==================================
+                 PAGE CONTENT
+            =================================== -->
+
+            <main class="dashboard-content">
+
+
+                <!-- ==================================
+                     WELCOME
+                =================================== -->
+
+                <section class="dashboard-welcome">
+
+
+                    <div>
+
+                        <div class="welcome-label">
+                            <span
+                                id="currentGreetingIcon"
+                            >
+                                ☀
+                            </span>
+
+                            <span
+                                id="currentGreeting"
+                            >
+                                Good morning
+                            </span>
+
+                        </div>
+
+                        <h2>
+
+                            Welcome back,
+                            <span id="welcomeUserName">
+                                User
+                            </span>
+                            👋
+
+                        </h2>
+
+                        <p>
+                            Here's what's happening
+                            with your workspace today.
+                        </p>
+
+                    </div>
+
+
+                    <div class="welcome-date">
+
+                        <span>
+                            TODAY
+                        </span>
+
+                        <strong id="todayDate">
+                            Loading...
+                        </strong>
+
+                    </div>
+
+
+                </section>
+
+
+                <!-- ==================================
+                     STATISTICS
+                =================================== -->
+
+                <section class="stats-grid">
+
+
+                    <!-- Notes -->
+
+                    <article class="stat-card">
+
+                        <div class="stat-card-top">
+
+                            <div class="stat-icon purple">
+                                ✎
+                            </div>
+
+                            <span class="stat-label">
+                                NOTES
+                            </span>
+
+                        </div>
+
+                        <div class="stat-value">
+                            <strong id="totalNotes">
+                                0
+                            </strong>
+                        </div>
+
+                        <div class="stat-footer">
+
+                            <span class="stat-neutral">
+                                Total notes
+                            </span>
+
+                            <a href="/notes">
+                                View →
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Total Tasks -->
+
+                    <article class="stat-card">
+
+                        <div class="stat-card-top">
+
+                            <div class="stat-icon blue">
+                                ☑
+                            </div>
+
+                            <span class="stat-label">
+                                TASKS
+                            </span>
+
+                        </div>
+
+                        <div class="stat-value">
+                            <strong id="totalTasks">
+                                0
+                            </strong>
+                        </div>
+
+                        <div class="stat-footer">
+
+                            <span class="stat-neutral">
+                                All tasks
+                            </span>
+
+                            <a href="/tasks">
+                                View →
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Completed -->
+
+                    <article class="stat-card">
+
+                        <div class="stat-card-top">
+
+                            <div class="stat-icon green">
+                                ✓
+                            </div>
+
+                            <span class="stat-label">
+                                COMPLETED
+                            </span>
+
+                        </div>
+
+                        <div class="stat-value">
+
+                            <strong id="completedTasks">
+                                0
+                            </strong>
+
+                        </div>
+
+                        <div class="stat-footer">
+
+                            <span class="stat-positive">
+                                Completed tasks
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Pending -->
+
+                    <article class="stat-card">
+
+                        <div class="stat-card-top">
+
+                            <div class="stat-icon orange">
+                                ◷
+                            </div>
+
+                            <span class="stat-label">
+                                PENDING
+                            </span>
+
+                        </div>
+
+                        <div class="stat-value">
+
+                            <strong id="pendingTasks">
+                                0
+                            </strong>
+
+                        </div>
+
+                        <div class="stat-footer">
+
+                            <span class="stat-warning">
+                                Need attention
+                            </span>
+
+                            <a href="/tasks">
+                                View →
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                </section>
+
+
+                <!-- ==================================
+                     MAIN DASHBOARD GRID
+                =================================== -->
+
+                <div class="dashboard-grid">
+
+
+                    <!-- =================================
+                         TODAY'S TASKS
+                    ================================== -->
+
+                    <section class="dashboard-card tasks-dashboard-card">
+
+
+                        <div class="dashboard-card-header">
+
+                            <div>
+
+                                <span class="card-label">
+                                    TASK MANAGEMENT
+                                </span>
+
+                                <h3>
+                                    Today's Tasks
+                                </h3>
+
+                            </div>
+
+
+                            <a
+                                href="/tasks"
+                                class="card-header-link"
+                            >
+                                View all →
+                            </a>
+
+                        </div>
+
+
+                        <!-- Task List -->
+
+                        <div
+                            id="todayTasks"
+                            class="dashboard-task-list"
+                        >
+
+                            <!-- JavaScript will populate -->
+
+                            <div class="loading-state">
+
+                                <div class="loading-spinner"></div>
+
+                                <span>
+                                    Loading tasks...
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Empty state -->
+
+                        <div
+                            id="emptyTodayTasks"
+                            class="empty-state hidden"
+                        >
+
+                            <div class="empty-state-icon">
+                                ✓
+                            </div>
+
+                            <h4>
+                                No tasks for today
+                            </h4>
+
+                            <p>
+                                You're all caught up!
+                            </p>
+
+                            <a
+                                href="/tasks"
+                                class="btn btn-primary btn-small"
+                            >
+                                Add Task
+                            </a>
+
+                        </div>
+
+
+                    </section>
+
+
+                    <!-- =================================
+                         UPCOMING
+                    ================================== -->
+
+                    <section class="dashboard-card upcoming-dashboard-card">
+
+
+                        <div class="dashboard-card-header">
+
+                            <div>
+
+                                <span class="card-label">
+                                    PLANNING
+                                </span>
+
+                                <h3>
+                                    Upcoming
+                                </h3>
+
+                            </div>
+
+
+                            <a
+                                href="/upcoming"
+                                class="card-header-link"
+                            >
+                                View all →
+                            </a>
+
+                        </div>
+
+
+                        <div
+                            id="upcomingTasks"
+                            class="upcoming-list"
+                        >
+
+                            <div class="loading-state">
+
+                                <div class="loading-spinner"></div>
+
+                                <span>
+                                    Loading...
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                    </section>
+
+
+                </div>
+
+
+                <!-- ==================================
+                     BOTTOM GRID
+                =================================== -->
+
+                <div class="dashboard-grid dashboard-grid-bottom">
+
+
+                    <!-- =================================
+                         QUICK ACTIONS
+                    ================================== -->
+
+                    <section class="dashboard-card">
+
+
+                        <div class="dashboard-card-header">
+
+                            <div>
+
+                                <span class="card-label">
+                                    PRODUCTIVITY
+                                </span>
+
+                                <h3>
+                                    Quick Actions
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="quick-actions">
+
+
+                            <a
+                                href="/notes?action=new"
+                                class="quick-action"
+                            >
+
+                                <div class="quick-action-icon purple">
+                                    ✎
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        New Note
+                                    </strong>
+
+                                    <span>
+                                        Write something
+                                    </span>
+
+                                </div>
+
+                                <span class="quick-arrow">
+                                    →
+                                </span>
+
+                            </a>
+
+
+                            <a
+                                href="/tasks?action=new"
+                                class="quick-action"
+                            >
+
+                                <div class="quick-action-icon blue">
+                                    +
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        New Task
+                                    </strong>
+
+                                    <span>
+                                        Add something to do
+                                    </span>
+
+                                </div>
+
+                                <span class="quick-arrow">
+                                    →
+                                </span>
+
+                            </a>
+
+
+                            <a
+                                href="/upcoming"
+                                class="quick-action"
+                            >
+
+                                <div class="quick-action-icon orange">
+                                    ◷
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Plan Ahead
+                                    </strong>
+
+                                    <span>
+                                        See upcoming tasks
+                                    </span>
+
+                                </div>
+
+                                <span class="quick-arrow">
+                                    →
+                                </span>
+
+                            </a>
+
+
+                        </div>
+
+
+                    </section>
+
+
+                    <!-- =================================
+                         RECENT ACTIVITY
+                    ================================== -->
+
+                    <section class="dashboard-card">
+
+
+                        <div class="dashboard-card-header">
+
+                            <div>
+
+                                <span class="card-label">
+                                    HISTORY
+                                </span>
+
+                                <h3>
+                                    Recent Activity
+                                </h3>
+
+                            </div>
+
+
+                            <a
+                                href="/logs"
+                                class="card-header-link"
+                            >
+                                View logs →
+                            </a>
+
+                        </div>
+
+
+                        <div
+                            id="recentActivity"
+                            class="activity-list"
+                        >
+
+                            <div class="loading-state">
+
+                                <div class="loading-spinner"></div>
+
+                                <span>
+                                    Loading activity...
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                    </section>
+
+
+                </div>
+
+
+                <!-- ==================================
+                     PRODUCTIVITY PROGRESS
+                =================================== -->
+
+                <section class="dashboard-card progress-card">
+
+
+                    <div class="progress-header">
+
+                        <div>
+
+                            <span class="card-label">
+                                PRODUCTIVITY
+                            </span>
+
+                            <h3>
+                                Task Completion
+                            </h3>
+
+                        </div>
+
+
+                        <div class="progress-percentage">
+
+                            <strong
+                                id="completionPercentage"
+                            >
+                                0%
+                            </strong>
+
+                            <span>
+                                completed
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress-bar">
+
+                        <div
+                            id="completionProgress"
+                            class="progress-fill"
+                            style="width: 0%"
+                        ></div>
+
+                    </div>
+
+
+                    <div class="progress-footer">
+
+                        <span>
+                            <strong id="progressCompleted">
+                                0
+                            </strong>
+                            completed
+                        </span>
+
+                        <span>
+                            <strong id="progressPending">
+                                0
+                            </strong>
+                            remaining
+                        </span>
+
+                    </div>
+
+
+                </section>
+
+
+            </main>
+
+
+            <!-- ==================================
+                 FOOTER
+            =================================== -->
+
+            <footer class="app-footer">
+
+                <span>
+                    MyNotes & Tasks
+                </span>
+
+                <span>
+                    © 2026
+                </span>
+
+                <a href="/profile">
+                    Profile
+                </a>
+
+            </footer>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         GLOBAL SEARCH MODAL
+    =========================================== -->
+
+    <div
+        id="searchModal"
+        class="modal-overlay hidden"
+    >
+
+        <div class="modal search-modal">
+
+
+            <div class="modal-header">
+
+                <div>
+
+                    <span class="card-label">
+                        SEARCH
+                    </span>
+
+                    <h3>
+                        Search your workspace
+                    </h3>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="modal-close"
+                    id="closeSearchModal"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="search-input-wrapper">
+
+                <span>
+                    ⌕
+                </span>
+
+                <input
+                    type="search"
+                    id="globalSearch"
+                    placeholder="Search notes and tasks..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <div
+                id="searchResults"
+                class="search-results"
+            >
+
+                <div class="search-empty">
+
+                    <span>
+                        ⌕
+                    </span>
+
+                    <p>
+                        Start typing to search
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+<!-- =========================================================
+     NOTIFICATION PANEL
+========================================================= -->
+
+<div
+    id="notificationPanel"
+    class="notification-panel hidden"
+>
+
+    <div class="notification-panel-header">
+
+        <div class="notification-header-content">
+
+            <span class="notification-header-label">
+                UPDATES
+            </span>
+
+            <h3>
+                Notifications
+            </h3>
+
+            <p>
+                Stay updated with your workspace
+            </p>
+
+        </div>
+
+        <button
+            type="button"
+            id="closeNotifications"
+            class="notification-close"
+            aria-label="Close notifications"
+        >
+            ×
+        </button>
+
+    </div>
+
+
+    <div
+        id="notificationList"
+        class="notification-list"
+    >
+
+        <div class="notification-empty">
+
+            <div class="notification-empty-icon">
+                ✓
+            </div>
+
+            <strong>
+                You're all caught up
+            </strong>
+
+            <p>
+                New task and workspace updates will
+                appear here.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+    <!-- ==========================================
+         LOGOUT CONFIRMATION
+    =========================================== -->
+
+    <div
+        id="logoutModal"
+        class="modal-overlay hidden"
+    >
+
+        <div class="modal small-modal">
+
+            <div class="modal-icon danger">
+                ↪
+            </div>
+
+            <h3>
+                Logout?
+            </h3>
+
+            <p>
+                Are you sure you want to logout
+                from your account?
+            </p>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    id="cancelLogout"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-danger"
+                    id="confirmLogout"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         TOAST
+    =========================================== -->
+
+    <div
+        id="toastContainer"
+        class="toast-container"
+    ></div>
+
+
+    <!-- ==========================================
+         JAVASCRIPT
+    =========================================== -->
+
+    <script
+        src="{{ url_for('static', filename='js/api.js') }}"
+    ></script>
+
+    <script
+        src="{{ url_for('static', filename='js/dashboard.js') }}"
+    ></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,522 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Verify your MyNotes & Tasks email address"
+    >
+
+    <title>Verify Email | MyNotes & Tasks</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+
+<body class="auth-page">
+
+
+    <!-- =====================================================
+         BACKGROUND
+    ====================================================== -->
+
+    <div class="auth-background">
+
+        <div class="auth-orb auth-orb-one"></div>
+
+        <div class="auth-orb auth-orb-two"></div>
+
+    </div>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main
+        class="auth-container"
+        id="verificationPage"
+    >
+
+
+        <!-- =================================================
+             BRAND
+        ================================================== -->
+
+        <a
+            href="/"
+            class="auth-brand"
+        >
+
+            <span class="brand-icon">
+                ✓
+            </span>
+
+            <span>
+                MyNotes
+            </span>
+
+        </a>
+
+
+        <!-- =================================================
+             VERIFICATION CARD
+        ================================================== -->
+
+        <section
+            class="auth-card verification-card"
+        >
+
+
+            <!-- =================================================
+                 VERIFICATION FORM
+            ================================================== -->
+
+            <div
+                id="verificationFormContainer"
+            >
+
+
+                <!-- HEADER -->
+
+                <div class="auth-header">
+
+                    <div class="auth-icon email-icon">
+                        ✉
+                    </div>
+
+                    <h1>
+                        Verify your email
+                    </h1>
+
+                    <p>
+                        Enter the 6-digit verification code
+                        sent to your email address.
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     MESSAGE
+                ================================================== -->
+
+                <div
+                    id="authError"
+                    class="auth-message error-message"
+                    role="alert"
+                    aria-live="polite"
+                    hidden
+                ></div>
+
+
+                <div
+                    id="authSuccess"
+                    class="auth-message success-message"
+                    role="status"
+                    aria-live="polite"
+                    hidden
+                ></div>
+
+
+                <!-- =================================================
+                     FORM
+                ================================================== -->
+
+                <form
+                    id="verificationForm"
+                    class="auth-form"
+                    novalidate
+                >
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label
+                            for="verificationEmail"
+                        >
+                            Email Address
+                        </label>
+
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                @
+                            </span>
+
+                            <input
+                                id="verificationEmail"
+                                name="email"
+                                type="email"
+                                placeholder="you@gmail.com"
+                                autocomplete="email"
+                                readonly
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         CODE
+                    ================================================== -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Verification Code
+                        </label>
+
+                        <p class="verification-help">
+                            Enter the 6-digit code from your email.
+                        </p>
+
+
+                        <div
+                            class="verification-code"
+                            aria-label="Verification code"
+                        >
+
+                            <input
+                                class="verification-code-input"
+                                type="text"
+                                maxlength="1"
+                                inputmode="numeric"
+                                aria-label="Verification digit 1"
+                            >
+
+                            <input
+                                class="verification-code-input"
+                                type="text"
+                                maxlength="1"
+                                inputmode="numeric"
+                                aria-label="Verification digit 2"
+                            >
+
+                            <input
+                                class="verification-code-input"
+                                type="text"
+                                maxlength="1"
+                                inputmode="numeric"
+                                aria-label="Verification digit 3"
+                            >
+
+                            <input
+                                class="verification-code-input"
+                                type="text"
+                                maxlength="1"
+                                inputmode="numeric"
+                                aria-label="Verification digit 4"
+                            >
+
+                            <input
+                                class="verification-code-input"
+                                type="text"
+                                maxlength="1"
+                                inputmode="numeric"
+                                aria-label="Verification digit 5"
+                            >
+
+                            <input
+                                class="verification-code-input"
+                                type="text"
+                                maxlength="1"
+                                inputmode="numeric"
+                                aria-label="Verification digit 6"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         VERIFY BUTTON
+                    ================================================== -->
+
+                    <button
+                        type="submit"
+                        id="verifyEmailButton"
+                        class="btn btn-primary btn-auth"
+                    >
+
+                        <span>
+                            Verify Email
+                        </span>
+
+                        <span
+                            class="button-spinner"
+                            aria-hidden="true"
+                        ></span>
+
+                    </button>
+
+
+                </form>
+
+
+                <!-- =================================================
+                     RESEND
+                ================================================== -->
+
+                <div class="verification-resend">
+
+                    <p>
+                        Didn't receive the code?
+                    </p>
+
+
+                    <button
+                        type="button"
+                        id="resendVerificationButton"
+                        class="btn-link"
+                        disabled
+                    >
+                        Resend Code
+                    </button>
+
+
+                    <p
+                        id="verificationCountdown"
+                        class="verification-countdown"
+                    >
+                        Resend code in 60s
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     INFORMATION
+                ================================================== -->
+
+                <div class="verification-info">
+
+                    <div class="verification-info-icon">
+                        ✓
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Check your inbox
+                        </strong>
+
+                        <p>
+                            We sent a 6-digit verification
+                            code to your registered email.
+                            The code expires automatically.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 SUCCESS
+            ================================================== -->
+
+            <div
+                id="verificationSuccess"
+                class="verification-result hidden"
+            >
+
+                <div class="result-icon success">
+                    ✓
+                </div>
+
+                <h1>
+                    Email verified!
+                </h1>
+
+                <p>
+                    Your email address has been successfully
+                    verified. Your account is now ready.
+                </p>
+
+                <a
+                    href="/login"
+                    class="btn btn-primary btn-auth"
+                >
+                    Continue to Login
+                </a>
+
+            </div>
+
+
+            <!-- =================================================
+                 ERROR
+            ================================================== -->
+
+            <div
+                id="verificationError"
+                class="verification-result hidden"
+            >
+
+                <div class="result-icon error">
+                    !
+                </div>
+
+                <h1>
+                    Verification failed
+                </h1>
+
+                <p id="verificationErrorText">
+                    This verification code is invalid
+                    or has expired.
+                </p>
+
+                <button
+                    type="button"
+                    class="btn btn-primary btn-auth"
+                    onclick="showVerificationForm()"
+                >
+                    Try Again
+                </button>
+
+            </div>
+
+
+            <!-- =================================================
+                 FOOTER
+            ================================================== -->
+
+            <div class="auth-divider">
+
+                <span>
+                    OR
+                </span>
+
+            </div>
+
+
+            <div class="auth-footer">
+
+                <span>
+                    Already verified?
+                </span>
+
+                <a href="/login">
+                    Login
+                </a>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             SECURITY
+        ================================================== -->
+
+        <div class="auth-security">
+
+            <span>
+                🔒
+            </span>
+
+            <span>
+                Your verification code expires automatically
+            </span>
+
+        </div>
+
+
+        <!-- =================================================
+             BACK HOME
+        ================================================== -->
+
+        <a
+            href="/"
+            class="back-home"
+        >
+            ← Back to home
+        </a>
+
+
+    </main>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script
+        src="{{ url_for('static', filename='js/api.js') }}"
+    ></script>
+
+    <script
+        src="{{ url_for('static', filename='js/verify.js') }}"
+    ></script>
+
+
+    <!-- =====================================================
+         SMALL UI HELPERS
+    ====================================================== -->
+
+    <script>
+
+        function showVerificationForm() {
+
+            const formContainer =
+                document.getElementById(
+                    "verificationFormContainer"
+                );
+
+            const successContainer =
+                document.getElementById(
+                    "verificationSuccess"
+                );
+
+            const errorContainer =
+                document.getElementById(
+                    "verificationError"
+                );
+
+
+            successContainer?.classList.add(
+                "hidden"
+            );
+
+            errorContainer?.classList.add(
+                "hidden"
+            );
+
+            formContainer?.classList.remove(
+                "hidden"
+            );
+
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>
+

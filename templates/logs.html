@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Activity logs and completed tasks"
+    >
+
+    <title>Activity Logs | MyNotes & Tasks</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+
+<body class="app-page">
+
+
+<div class="app-layout">
+
+
+    <!-- =================================================
+         SIDEBAR
+    ================================================== -->
+
+    <aside
+        class="app-sidebar"
+        id="appSidebar"
+    >
+
+        <div class="sidebar-header">
+
+            <a
+                href="/dashboard"
+                class="app-logo"
+            >
+
+                <span class="brand-icon">
+                    ✓
+                </span>
+
+                <span>
+                    MyNotes
+                </span>
+
+            </a>
+
+            <button
+                type="button"
+                id="closeSidebar"
+                class="mobile-sidebar-close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- USER -->
+
+        <div class="sidebar-user">
+
+            <div
+                class="sidebar-avatar"
+                id="sidebarAvatar"
+            >
+                U
+            </div>
+
+            <div class="sidebar-user-info">
+
+                <strong id="sidebarUserName">
+                    User
+                </strong>
+
+                <span id="sidebarUserEmail">
+                    Loading...
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+            <div class="nav-section-title">
+                WORKSPACE
+            </div>
+
+
+            <a
+                href="/dashboard"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ⌂
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <a
+                href="/notes"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ✎
+                </span>
+
+                <span>
+                    Notes
+                </span>
+
+            </a>
+
+
+            <a
+                href="/tasks"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ☑
+                </span>
+
+                <span>
+                    Tasks
+                </span>
+
+                <span
+                    class="nav-count"
+                    id="tasksCount"
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <a
+                href="/upcoming"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ◷
+                </span>
+
+                <span>
+                    Upcoming
+                </span>
+
+                <span
+                    class="nav-count"
+                    id="upcomingCount"
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <div class="nav-section-title">
+                HISTORY
+            </div>
+
+
+            <a
+                href="/logs"
+                class="nav-item active"
+            >
+
+                <span class="nav-icon">
+                    ◴
+                </span>
+
+                <span>
+                    Activity Logs
+                </span>
+
+            </a>
+
+
+            <div class="nav-section-title">
+                ACCOUNT
+            </div>
+
+
+            <a
+                href="/profile"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ◉
+                </span>
+
+                <span>
+                    Profile
+                </span>
+
+            </a>
+
+        </nav>
+
+
+        <!-- SIDEBAR BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+            <button
+                type="button"
+                id="logoutButton"
+                class="sidebar-logout"
+            >
+
+                <span>
+                    ↪
+                </span>
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MOBILE OVERLAY -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+    <!-- =================================================
+         MAIN
+    ================================================== -->
+
+    <div class="app-main">
+
+
+        <!-- =================================================
+             TOPBAR
+        ================================================== -->
+
+        <header class="app-topbar">
+
+
+            <button
+                type="button"
+                id="openSidebar"
+                class="mobile-menu-button"
+            >
+                ☰
+            </button>
+
+
+            <div class="topbar-title">
+
+                <span>
+                    HISTORY
+                </span>
+
+                <h1>
+                    Activity Logs
+                </h1>
+
+            </div>
+
+
+            <div class="topbar-actions">
+
+                <button
+                    type="button"
+                    id="logsSearchButton"
+                    class="topbar-icon-button"
+                    title="Search activity"
+                >
+                    ⌕
+                </button>
+
+
+                <a
+                    href="/profile"
+                    class="topbar-user"
+                >
+
+                    <div
+                        class="topbar-avatar"
+                        id="topbarAvatar"
+                    >
+                        U
+                    </div>
+
+                    <div class="topbar-user-info">
+
+                        <strong id="topbarUserName">
+                            User
+                        </strong>
+
+                        <span>
+                            View profile
+                        </span>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+
+        </header>
+
+
+        <!-- =================================================
+             CONTENT
+        ================================================== -->
+
+        <main class="page-content">
+
+
+            <!-- PAGE HEADER -->
+
+            <section class="page-header">
+
+                <div class="page-header-content">
+
+                    <span class="card-label">
+                        HISTORY
+                    </span>
+
+                    <h2>
+                        Activity Logs
+                    </h2>
+
+                    <p>
+                        See what you've completed and
+                        everything that happened in your workspace.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 SUMMARY
+            ================================================== -->
+
+            <section class="mini-stats-grid">
+
+
+                <div class="mini-stat-card">
+
+                    <div class="mini-stat-icon green">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Completed Tasks
+                        </span>
+
+                        <strong id="completedCount">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mini-stat-card">
+
+                    <div class="mini-stat-icon purple">
+                        ✎
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Notes Created
+                        </span>
+
+                        <strong id="notesCreatedCount">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mini-stat-card">
+
+                    <div class="mini-stat-icon blue">
+                        ☑
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Tasks Created
+                        </span>
+
+                        <strong id="tasksCreatedCount">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mini-stat-card">
+
+                    <div class="mini-stat-icon orange">
+                        ◴
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Activities
+                        </span>
+
+                        <strong id="activityCount">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 FILTER TOOLBAR
+            ================================================== -->
+
+            <section class="logs-toolbar">
+
+
+                <!-- SEARCH -->
+
+                <div class="notes-search">
+
+                    <span>
+                        ⌕
+                    </span>
+
+                    <input
+                        type="search"
+                        id="logsSearch"
+                        placeholder="Search activity..."
+                        autocomplete="off"
+                    >
+
+                    <button
+                        type="button"
+                        id="clearLogsSearch"
+                        class="search-clear hidden"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <!-- TYPE FILTER -->
+
+                <div class="logs-filters">
+
+                    <button
+                        type="button"
+                        class="filter-button active"
+                        data-log-type="all"
+                    >
+                        All
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter-button"
+                        data-log-type="task"
+                    >
+                        Tasks
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter-button"
+                        data-log-type="note"
+                    >
+                        Notes
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter-button"
+                        data-log-type="account"
+                    >
+                        Account
+                    </button>
+
+                </div>
+
+
+                <!-- DATE FILTER -->
+
+                <div class="logs-date-filter">
+
+                    <label for="logDateFilter">
+                        Period
+                    </label>
+
+                    <select id="logDateFilter">
+
+                        <option value="all">
+                            All Time
+                        </option>
+
+                        <option value="today">
+                            Today
+                        </option>
+
+                        <option value="week">
+                            This Week
+                        </option>
+
+                        <option value="month">
+                            This Month
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 COMPLETED TASKS
+            ================================================== -->
+
+            <section class="dashboard-card completed-section">
+
+
+                <div class="dashboard-card-header">
+
+                    <div>
+
+                        <span class="card-label">
+                            COMPLETED
+                        </span>
+
+                        <h3>
+                            Completed Tasks
+                        </h3>
+
+                    </div>
+
+
+                    <span
+                        id="completedResultCount"
+                        class="result-count"
+                    >
+                        0 tasks
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="completedTasksList"
+                    class="completed-task-list"
+                >
+
+                    <div class="loading-state">
+
+                        <div class="loading-spinner"></div>
+
+                        <span>
+                            Loading completed tasks...
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="completedEmpty"
+                    class="empty-state hidden"
+                >
+
+                    <div class="empty-state-icon">
+                        ✓
+                    </div>
+
+                    <h4>
+                        No completed tasks yet
+                    </h4>
+
+                    <p>
+                        Completed tasks will appear here.
+                    </p>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 ACTIVITY TIMELINE
+            ================================================== -->
+
+            <section class="dashboard-card activity-history-card">
+
+
+                <div class="dashboard-card-header">
+
+                    <div>
+
+                        <span class="card-label">
+                            ACTIVITY
+                        </span>
+
+                        <h3>
+                            Activity Timeline
+                        </h3>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="refreshLogs"
+                        class="text-button"
+                    >
+                        ↻ Refresh
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="activityTimeline"
+                    class="activity-timeline"
+                >
+
+                    <div class="loading-state">
+
+                        <div class="loading-spinner"></div>
+
+                        <span>
+                            Loading activity...
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMPTY -->
+
+                <div
+                    id="activityEmpty"
+                    class="empty-state hidden"
+                >
+
+                    <div class="empty-state-icon">
+                        ◴
+                    </div>
+
+                    <h4>
+                        No activity yet
+                    </h4>
+
+                    <p>
+                        Your workspace activity will
+                        appear here.
+                    </p>
+
+                </div>
+
+
+            </section>
+
+
+        </main>
+
+
+        <!-- FOOTER -->
+
+        <footer class="app-footer">
+
+            <span>
+                MyNotes & Tasks
+            </span>
+
+            <span>
+                © 2026
+            </span>
+
+            <a href="/dashboard">
+                Dashboard
+            </a>
+
+        </footer>
+
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     ACTIVITY DETAILS MODAL
+========================================================= -->
+
+<div
+    id="activityModal"
+    class="modal-overlay hidden"
+>
+
+
+    <div class="modal">
+
+
+        <div class="modal-header">
+
+            <div>
+
+                <span class="card-label">
+                    ACTIVITY
+                </span>
+
+                <h3>
+                    Activity Details
+                </h3>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="closeActivityModal"
+                class="modal-close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            id="activityDetails"
+            class="activity-details"
+        >
+
+            <!-- JavaScript fills this -->
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                id="closeActivityButton"
+                class="btn btn-secondary"
+            >
+                Close
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     LOGOUT MODAL
+========================================================= -->
+
+<div
+    id="logoutModal"
+    class="modal-overlay hidden"
+>
+
+
+    <div class="modal small-modal">
+
+        <div class="modal-icon danger">
+            ↪
+        </div>
+
+        <h3>
+            Logout?
+        </h3>
+
+        <p>
+            Are you sure you want to logout
+            from your account?
+        </p>
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                id="cancelLogout"
+                class="btn btn-secondary"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                id="confirmLogout"
+                class="btn btn-danger"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     TOAST
+========================================================= -->
+
+<div
+    id="toastContainer"
+    class="toast-container"
+></div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script
+    src="{{ url_for('static', filename='js/api.js') }}"
+></script>
+
+<script
+    src="{{ url_for('static', filename='js/logs.js') }}"
+></script>
+
+
+</body>
+
+</html>

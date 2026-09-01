@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Server Error | MyNotes & Tasks</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+<body class="auth-page">
+
+    <div class="auth-background">
+
+        <div class="auth-orb auth-orb-one"></div>
+
+        <div class="auth-orb auth-orb-two"></div>
+
+    </div>
+
+
+    <main class="auth-container">
+
+        <a
+            href="/"
+            class="auth-brand"
+        >
+
+            <span class="brand-icon">
+                ✓
+            </span>
+
+            <span>
+                MyNotes
+            </span>
+
+        </a>
+
+
+        <section class="auth-card">
+
+            <div class="auth-header">
+
+                <div class="auth-icon">
+                    500
+                </div>
+
+                <h1>
+                    Something went wrong
+                </h1>
+
+                <p>
+                    The server encountered an unexpected
+                    error. Please try again.
+                </p>
+
+            </div>
+
+
+            <div class="auth-form">
+
+                <a
+                    href="/"
+                    class="btn btn-primary btn-auth"
+                >
+                    Back to Home
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <a
+            href="/"
+            class="back-home"
+        >
+            ← Back to home
+        </a>
+
+    </main>
+
+</body>
+
+</html>
+

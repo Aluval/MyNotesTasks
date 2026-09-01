@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Manage your MyNotes profile"
+    >
+
+    <title>Profile | MyNotes & Tasks</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+
+<body class="app-page">
+
+
+<div class="app-layout">
+
+
+    <!-- =================================================
+         SIDEBAR
+    ================================================== -->
+
+    <aside
+        class="app-sidebar"
+        id="appSidebar"
+    >
+
+        <div class="sidebar-header">
+
+            <a
+                href="/dashboard"
+                class="app-logo"
+            >
+
+                <span class="brand-icon">
+                    ✓
+                </span>
+
+                <span>
+                    MyNotes
+                </span>
+
+            </a>
+
+
+            <button
+                type="button"
+                id="closeSidebar"
+                class="mobile-sidebar-close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- USER -->
+
+        <div class="sidebar-user">
+
+            <div
+                class="sidebar-avatar"
+                id="sidebarAvatar"
+            >
+                U
+            </div>
+
+            <div class="sidebar-user-info">
+
+                <strong id="sidebarUserName">
+                    User
+                </strong>
+
+                <span id="sidebarUserEmail">
+                    Loading...
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+
+            <div class="nav-section-title">
+                WORKSPACE
+            </div>
+
+
+            <a
+                href="/dashboard"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ⌂
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <a
+                href="/notes"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ✎
+                </span>
+
+                <span>
+                    Notes
+                </span>
+
+            </a>
+
+
+            <a
+                href="/tasks"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ☑
+                </span>
+
+                <span>
+                    Tasks
+                </span>
+
+            </a>
+
+
+            <a
+                href="/upcoming"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ◷
+                </span>
+
+                <span>
+                    Upcoming
+                </span>
+
+            </a>
+
+
+            <div class="nav-section-title">
+                HISTORY
+            </div>
+
+
+            <a
+                href="/logs"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ◴
+                </span>
+
+                <span>
+                    Activity Logs
+                </span>
+
+            </a>
+
+
+            <div class="nav-section-title">
+                ACCOUNT
+            </div>
+
+
+            <a
+                href="/profile"
+                class="nav-item active"
+            >
+
+                <span class="nav-icon">
+                    ◉
+                </span>
+
+                <span>
+                    Profile
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+        <!-- SIDEBAR BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+            <button
+                type="button"
+                id="logoutButton"
+                class="sidebar-logout"
+            >
+
+                <span>
+                    ↪
+                </span>
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MOBILE OVERLAY -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+    <!-- =================================================
+         MAIN
+    ================================================== -->
+
+    <div class="app-main">
+
+
+        <!-- =================================================
+             TOPBAR
+        ================================================== -->
+
+        <header class="app-topbar">
+
+
+            <button
+                type="button"
+                id="openSidebar"
+                class="mobile-menu-button"
+            >
+                ☰
+            </button>
+
+
+            <div class="topbar-title">
+
+                <span>
+                    ACCOUNT
+                </span>
+
+                <h1>
+                    Profile
+                </h1>
+
+            </div>
+
+
+            <div class="topbar-actions">
+
+
+                <a
+                    href="/dashboard"
+                    class="topbar-dashboard-link"
+                >
+                    ← Dashboard
+                </a>
+
+
+            </div>
+
+
+        </header>
+
+
+        <!-- =================================================
+             CONTENT
+        ================================================== -->
+
+        <main class="page-content profile-page">
+
+
+            <!-- =================================================
+                 PROFILE HEADER
+            ================================================== -->
+
+            <section class="profile-header-card">
+
+
+                <div class="profile-avatar-large">
+
+                    <span id="profileAvatar">
+                        U
+                    </span>
+
+                </div>
+
+
+                <div class="profile-header-info">
+
+                    <span class="card-label">
+                        MY ACCOUNT
+                    </span>
+
+                    <h2 id="profileDisplayName">
+                        Loading...
+                    </h2>
+
+                    <p id="profileDisplayUsername">
+                        @username
+                    </p>
+
+                    <div class="profile-email-status">
+
+                        <span id="profileEmail">
+                            Loading...
+                        </span>
+
+                        <span
+                            id="emailVerifiedBadge"
+                            class="status-badge success hidden"
+                        >
+                            ✓ Email Verified
+                        </span>
+
+                        <span
+                            id="emailUnverifiedBadge"
+                            class="status-badge warning hidden"
+                        >
+                            ! Email Not Verified
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-header-action">
+
+                    <span id="memberSince">
+                        Member since —
+                    </span>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 PROFILE GRID
+            ================================================== -->
+
+            <div class="profile-grid">
+
+
+                <!-- =================================================
+                     PERSONAL INFORMATION
+                ================================================== -->
+
+                <section class="dashboard-card">
+
+
+                    <div class="dashboard-card-header">
+
+                        <div>
+
+                            <span class="card-label">
+                                PERSONAL
+                            </span>
+
+                            <h3>
+                                Personal Information
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="profileMessage"
+                        class="auth-message"
+                        role="alert"
+                    ></div>
+
+
+                    <form
+                        id="profileForm"
+                        class="profile-form"
+                    >
+
+
+                        <!-- NAME -->
+
+                        <div class="form-group">
+
+                            <label for="profileName">
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="profileName"
+                                name="name"
+                                placeholder="Your full name"
+                                maxlength="80"
+                                required
+                            >
+
+                            <small
+                                id="profileNameError"
+                                class="field-error"
+                            ></small>
+
+                        </div>
+
+
+                        <!-- USERNAME -->
+
+                        <div class="form-group">
+
+                            <label for="profileUsername">
+                                Username
+                            </label>
+
+                            <div class="input-with-prefix">
+
+                                <span>
+                                    @
+                                </span>
+
+                                <input
+                                    type="text"
+                                    id="profileUsername"
+                                    name="username"
+                                    placeholder="username"
+                                    maxlength="30"
+                                    required
+                                >
+
+                            </div>
+
+                            <small class="input-hint">
+                                3–30 characters.
+                            </small>
+
+                            <small
+                                id="profileUsernameError"
+                                class="field-error"
+                            ></small>
+
+                        </div>
+
+
+                        <!-- EMAIL -->
+
+                        <div class="form-group">
+
+                            <label for="profileEmailInput">
+                                Email Address
+                            </label>
+
+                            <div class="input-with-status">
+
+                                <input
+                                    type="email"
+                                    id="profileEmailInput"
+                                    name="email"
+                                    readonly
+                                >
+
+                                <span
+                                    id="profileEmailInputStatus"
+                                    class="input-status"
+                                >
+                                    Verified
+                                </span>
+
+                            </div>
+
+                            <small class="input-hint">
+                                Email address cannot be changed here.
+                            </small>
+
+                        </div>
+
+
+                        <!-- SAVE -->
+
+                        <div class="form-actions">
+
+                            <button
+                                type="submit"
+                                id="saveProfileButton"
+                                class="btn btn-primary"
+                            >
+
+                                <span id="saveProfileText">
+                                    Save Changes
+                                </span>
+
+                                <span
+                                    id="saveProfileSpinner"
+                                    class="button-spinner"
+                                ></span>
+
+                            </button>
+
+                        </div>
+
+
+                    </form>
+
+
+                </section>
+
+
+                <!-- =================================================
+                     ACCOUNT STATISTICS
+                ================================================== -->
+
+                <section class="dashboard-card">
+
+
+                    <div class="dashboard-card-header">
+
+                        <div>
+
+                            <span class="card-label">
+                                STATISTICS
+                            </span>
+
+                            <h3>
+                                Your Workspace
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-stat-list">
+
+
+                        <div class="profile-stat-row">
+
+                            <div class="profile-stat-icon purple">
+                                ✎
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Total Notes
+                                </span>
+
+                                <strong id="profileNotesCount">
+                                    0
+                                </strong>
+
+                            </div>
+
+                            <a href="/notes">
+                                View →
+                            </a>
+
+                        </div>
+
+
+                        <div class="profile-stat-row">
+
+                            <div class="profile-stat-icon blue">
+                                ☑
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Total Tasks
+                                </span>
+
+                                <strong id="profileTasksCount">
+                                    0
+                                </strong>
+
+                            </div>
+
+                            <a href="/tasks">
+                                View →
+                            </a>
+
+                        </div>
+
+
+                        <div class="profile-stat-row">
+
+                            <div class="profile-stat-icon green">
+                                ✓
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Completed
+                                </span>
+
+                                <strong id="profileCompletedCount">
+                                    0
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-stat-row">
+
+                            <div class="profile-stat-icon orange">
+                                ◷
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Pending
+                                </span>
+
+                                <strong id="profilePendingCount">
+                                    0
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                </section>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 SECURITY
+            ================================================== -->
+
+            <section class="dashboard-card security-card">
+
+
+                <div class="dashboard-card-header">
+
+                    <div>
+
+                        <span class="card-label">
+                            SECURITY
+                        </span>
+
+                        <h3>
+                            Password & Security
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="security-items">
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="security-item">
+
+                        <div class="security-item-icon">
+                            🔐
+                        </div>
+
+                        <div class="security-item-content">
+
+                            <strong>
+                                Password
+                            </strong>
+
+                            <span>
+                                Keep your password strong
+                                and unique.
+                            </span>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            id="changePasswordButton"
+                            class="btn btn-secondary btn-small"
+                        >
+                            Change Password
+                        </button>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="security-item">
+
+                        <div class="security-item-icon">
+                            ✉
+                        </div>
+
+                        <div class="security-item-content">
+
+                            <strong>
+                                Email Verification
+                            </strong>
+
+                            <span id="securityEmailText">
+                                Checking verification status...
+                            </span>
+
+                        </div>
+
+
+                        <a
+                            href="/verify-email"
+                            id="resendVerificationLink"
+                            class="btn btn-secondary btn-small hidden"
+                        >
+                            Verify Email
+                        </a>
+
+                        <span
+                            id="verifiedSecurityBadge"
+                            class="status-badge success"
+                        >
+                            ✓ Verified
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 DANGER ZONE
+            ================================================== -->
+
+            <section class="dashboard-card danger-zone">
+
+
+                <div class="dashboard-card-header">
+
+                    <div>
+
+                        <span class="card-label danger-label">
+                            ACCOUNT
+                        </span>
+
+                        <h3>
+                            Account Actions
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="danger-zone-content">
+
+                    <div>
+
+                        <strong>
+                            Logout from this device
+                        </strong>
+
+                        <p>
+                            End your current session on this device.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="profileLogoutButton"
+                        class="btn btn-danger"
+                    >
+                        Logout
+                    </button>
+
+                </div>
+
+
+            </section>
+
+
+        </main>
+
+
+        <!-- FOOTER -->
+
+        <footer class="app-footer">
+
+            <span>
+                MyNotes & Tasks
+            </span>
+
+            <span>
+                © 2026
+            </span>
+
+            <a href="/dashboard">
+                Dashboard
+            </a>
+
+        </footer>
+
+
+    </div>
+
+</div>
+
+<!-- ================================================= 
+     GOOGLE CALENDAR 
+================================================= -->
+
+<section class="dashboard-card google-calendar-card">
+
+    <div class="dashboard-card-header">
+
+        <div>
+
+            <span class="card-label">
+                INTEGRATIONS
+            </span>
+
+            <h3>
+                Google Calendar
+            </h3>
+
+        </div>
+
+    </div>
+
+
+    <div class="security-items">
+
+        <div class="security-item">
+
+            <div class="security-item-icon">
+                📅
+            </div>
+
+            <div class="security-item-content">
+
+                <strong>
+                    Google Calendar
+                </strong>
+
+                <span id="googleCalendarStatusText">
+                    Checking connection...
+                </span>
+
+            </div>
+
+
+            <!-- CONNECT -->
+
+            <button
+                type="button"
+                id="googleCalendarConnectButton"
+                class="btn btn-primary btn-small"
+            >
+                Connect
+            </button>
+
+
+            <!-- DISCONNECT -->
+
+            <button
+                type="button"
+                id="googleCalendarDisconnectButton"
+                class="btn btn-danger btn-small hidden"
+                title="Disconnect Google Calendar"
+            >
+                <span aria-hidden="true">↪</span>
+                Disconnect
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================================================
+     CHANGE PASSWORD MODAL
+========================================================= -->
+
+<div
+    id="changePasswordModal"
+    class="modal-overlay hidden"
+>
+
+
+    <div class="modal">
+
+
+        <div class="modal-header">
+
+            <div>
+
+                <span class="card-label">
+                    SECURITY
+                </span>
+
+                <h3>
+                    Change Password
+                </h3>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="closePasswordModal"
+                class="modal-close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            id="passwordMessage"
+            class="auth-message"
+            role="alert"
+        ></div>
+
+
+        <form
+            id="changePasswordForm"
+            class="auth-form"
+        >
+
+
+            <!-- CURRENT PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="currentPassword">
+                    Current Password
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        ●
+                    </span>
+
+                    <input
+                        type="password"
+                        id="currentPassword"
+                        name="current_password"
+                        placeholder="Enter current password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        data-target="currentPassword"
+                    >
+                        Show
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- NEW PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="newPassword">
+                    New Password
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        ●
+                    </span>
+
+                    <input
+                        type="password"
+                        id="newPassword"
+                        name="new_password"
+                        placeholder="Enter new password"
+                        autocomplete="new-password"
+                        minlength="6"
+                        maxlength="128"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        data-target="newPassword"
+                    >
+                        Show
+                    </button>
+
+                </div>
+
+
+                <div class="password-strength">
+
+                    <div class="strength-bars">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                    </div>
+
+                    <span
+                        id="changeStrengthText"
+                        class="strength-text"
+                    >
+                        Enter a password
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONFIRM -->
+
+            <div class="form-group">
+
+                <label for="confirmNewPassword">
+                    Confirm New Password
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        ●
+                    </span>
+
+                    <input
+                        type="password"
+                        id="confirmNewPassword"
+                        name="confirm_password"
+                        placeholder="Confirm new password"
+                        autocomplete="new-password"
+                        minlength="6"
+                        maxlength="128"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        data-target="confirmNewPassword"
+                    >
+                        Show
+                    </button>
+
+                </div>
+
+                <small
+                    id="changeConfirmError"
+                    class="field-error"
+                ></small>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    id="cancelPasswordChange"
+                    class="btn btn-secondary"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="submit"
+                    id="savePasswordButton"
+                    class="btn btn-primary"
+                >
+
+                    <span id="savePasswordText">
+                        Change Password
+                    </span>
+
+                    <span
+                        id="savePasswordSpinner"
+                        class="button-spinner"
+                    ></span>
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     LOGOUT MODAL
+========================================================= -->
+
+<div
+    id="logoutModal"
+    class="modal-overlay hidden"
+>
+
+
+    <div class="modal small-modal">
+
+        <div class="modal-icon danger">
+            ↪
+        </div>
+
+        <h3>
+            Logout?
+        </h3>
+
+        <p>
+            Are you sure you want to logout
+            from your account?
+        </p>
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                id="cancelLogout"
+                class="btn btn-secondary"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                id="confirmLogout"
+                class="btn btn-danger"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     TOAST
+========================================================= -->
+
+<div
+    id="toastContainer"
+    class="toast-container"
+></div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script
+    src="{{ url_for('static', filename='js/api.js') }}"
+></script>
+
+<script
+    src="{{ url_for('static', filename='js/profile.js') }}"
+></script>
+
+
+</body>
+
+</html>

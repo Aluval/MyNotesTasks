@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Manage your personal notes"
+    >
+
+    <title>Notes | MyNotes & Tasks</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+
+<body class="app-page">
+
+
+<div class="app-layout">
+
+
+    <!-- =================================================
+         SIDEBAR
+    ================================================== -->
+
+    <aside
+        class="app-sidebar"
+        id="appSidebar"
+    >
+
+        <div class="sidebar-header">
+
+            <a
+                href="/dashboard"
+                class="app-logo"
+            >
+
+                <span class="brand-icon">
+                    ✓
+                </span>
+
+                <span>
+                    MyNotes
+                </span>
+
+            </a>
+
+            <button
+                type="button"
+                id="closeSidebar"
+                class="mobile-sidebar-close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- USER -->
+
+        <div class="sidebar-user">
+
+            <div
+                class="sidebar-avatar"
+                id="sidebarAvatar"
+            >
+                U
+            </div>
+
+            <div class="sidebar-user-info">
+
+                <strong id="sidebarUserName">
+                    User
+                </strong>
+
+                <span id="sidebarUserEmail">
+                    Loading...
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+
+            <div class="nav-section-title">
+                WORKSPACE
+            </div>
+
+
+            <a
+                href="/dashboard"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ⌂
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <a
+                href="/notes"
+                class="nav-item active"
+            >
+
+                <span class="nav-icon">
+                    ✎
+                </span>
+
+                <span>
+                    Notes
+                </span>
+
+                <span
+                    class="nav-count"
+                    id="notesCount"
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <a
+                href="/tasks"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ☑
+                </span>
+
+                <span>
+                    Tasks
+                </span>
+
+                <span
+                    class="nav-count"
+                    id="tasksCount"
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <a
+                href="/upcoming"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ◷
+                </span>
+
+                <span>
+                    Upcoming
+                </span>
+
+                <span
+                    class="nav-count"
+                    id="upcomingCount"
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <div class="nav-section-title">
+                HISTORY
+            </div>
+
+
+            <a
+                href="/logs"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ◴
+                </span>
+
+                <span>
+                    Activity Logs
+                </span>
+
+            </a>
+
+
+            <div class="nav-section-title">
+                ACCOUNT
+            </div>
+
+
+            <a
+                href="/profile"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ◉
+                </span>
+
+                <span>
+                    Profile
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+        <!-- SIDEBAR BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+            <button
+                type="button"
+                id="logoutButton"
+                class="sidebar-logout"
+            >
+
+                <span>
+                    ↪
+                </span>
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MOBILE OVERLAY -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+    <!-- =================================================
+         MAIN
+    ================================================== -->
+
+    <div class="app-main">
+
+
+        <!-- =================================================
+             TOPBAR
+        ================================================== -->
+
+        <header class="app-topbar">
+
+
+            <button
+                type="button"
+                id="openSidebar"
+                class="mobile-menu-button"
+            >
+                ☰
+            </button>
+
+
+            <div class="topbar-title">
+
+                <span>
+                    WORKSPACE
+                </span>
+
+                <h1>
+                    Notes
+                </h1>
+
+            </div>
+
+
+            <div class="topbar-actions">
+
+
+                <a
+                    href="/profile"
+                    class="topbar-user"
+                >
+
+                    <div
+                        class="topbar-avatar"
+                        id="topbarAvatar"
+                    >
+                        U
+                    </div>
+
+                    <div class="topbar-user-info">
+
+                        <strong id="topbarUserName">
+                            User
+                        </strong>
+
+                        <span>
+                            View profile
+                        </span>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+
+        </header>
+
+
+        <!-- =================================================
+             CONTENT
+        ================================================== -->
+
+        <main class="page-content">
+
+
+            <!-- =================================================
+                 PAGE HEADER
+            ================================================== -->
+
+            <section class="page-header">
+
+
+                <div class="page-header-content">
+
+                    <span class="card-label">
+                        YOUR NOTES
+                    </span>
+
+                    <h2>
+                        Notes
+                    </h2>
+
+                    <p>
+                        Capture ideas, information and
+                        important thoughts in one place.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="addNoteButton"
+                    class="btn btn-primary"
+                >
+
+                    <span>
+                        +
+                    </span>
+
+                    New Note
+
+                </button>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 SEARCH + FILTER
+            ================================================== -->
+
+            <section class="notes-toolbar">
+
+
+                <div class="notes-search">
+
+                    <span>
+                        ⌕
+                    </span>
+
+                    <input
+                        type="search"
+                        id="notesSearch"
+                        placeholder="Search your notes..."
+                        autocomplete="off"
+                    >
+
+                    <button
+                        type="button"
+                        id="clearNotesSearch"
+                        class="search-clear hidden"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <div class="notes-filters">
+
+                    <button
+                        type="button"
+                        class="filter-button active"
+                        data-category="all"
+                    >
+                        All
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter-button"
+                        data-category="work"
+                    >
+                        Work
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter-button"
+                        data-category="personal"
+                    >
+                        Personal
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter-button"
+                        data-category="study"
+                    >
+                        Study
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter-button"
+                        data-category="ideas"
+                    >
+                        Ideas
+                    </button>
+
+                </div>
+
+
+                <div class="notes-sort">
+
+                    <label for="notesSort">
+                        Sort
+                    </label>
+
+                    <select id="notesSort">
+
+                        <option value="updated_desc">
+                            Recently Updated
+                        </option>
+
+                        <option value="created_desc">
+                            Newest
+                        </option>
+
+                        <option value="created_asc">
+                            Oldest
+                        </option>
+
+                        <option value="title_asc">
+                            Title A-Z
+                        </option>
+
+                        <option value="title_desc">
+                            Title Z-A
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 NOTES STATISTICS
+            ================================================== -->
+
+            <section class="mini-stats-grid">
+
+
+                <div class="mini-stat-card">
+
+                    <div class="mini-stat-icon purple">
+                        ✎
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Total Notes
+                        </span>
+
+                        <strong id="totalNotes">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mini-stat-card">
+
+                    <div class="mini-stat-icon orange">
+                        ★
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Pinned
+                        </span>
+
+                        <strong id="pinnedNotes">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mini-stat-card">
+
+                    <div class="mini-stat-icon blue">
+                        ◷
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Updated Today
+                        </span>
+
+                        <strong id="todayNotes">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 NOTES GRID
+            ================================================== -->
+
+            <section
+                id="notesGrid"
+                class="notes-grid"
+            >
+
+
+                <!-- Loading -->
+
+                <div
+                    id="notesLoading"
+                    class="loading-state notes-loading"
+                >
+
+                    <div class="loading-spinner"></div>
+
+                    <span>
+                        Loading notes...
+                    </span>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 EMPTY STATE
+            ================================================== -->
+
+            <section
+                id="notesEmpty"
+                class="empty-state page-empty-state hidden"
+            >
+
+                <div class="empty-state-icon">
+                    ✎
+                </div>
+
+                <h3>
+                    No notes found
+                </h3>
+
+                <p id="notesEmptyText">
+                    Create your first note to get started.
+                </p>
+
+                <button
+                    type="button"
+                    id="emptyAddNoteButton"
+                    class="btn btn-primary"
+                >
+                    Create Note
+                </button>
+
+            </section>
+
+
+        </main>
+
+
+        <!-- FOOTER -->
+
+        <footer class="app-footer">
+
+            <span>
+                MyNotes & Tasks
+            </span>
+
+            <span>
+                © 2026
+            </span>
+
+            <a href="/dashboard">
+                Dashboard
+            </a>
+
+        </footer>
+
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     NOTE EDITOR MODAL
+========================================================= -->
+
+<div
+    id="noteEditorModal"
+    class="modal-overlay hidden"
+>
+
+    <div class="modal note-editor-modal">
+
+        <!-- HEADER -->
+
+        <div class="modal-header">
+
+            <div>
+
+                <span class="card-label">
+                    NOTE
+                </span>
+
+                <h3 id="noteModalTitle">
+                    New Note
+                </h3>
+
+            </div>
+
+            <button
+                type="button"
+                id="closeNoteModal"
+                class="modal-close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- MESSAGE -->
+
+        <div
+            id="noteMessage"
+            class="auth-message"
+            role="alert"
+        ></div>
+
+
+        <!-- FORM -->
+
+        <form
+            id="noteForm"
+            class="note-form"
+        >
+
+            <input
+                type="hidden"
+                id="noteId"
+            >
+
+
+            <!-- TITLE -->
+
+            <div class="form-group">
+
+                <label for="noteTitle">
+                    Title
+                </label>
+
+                <input
+                    type="text"
+                    id="noteTitle"
+                    name="title"
+                    placeholder="Enter note title..."
+                    maxlength="150"
+                    required
+                >
+
+                <small
+                    id="noteTitleError"
+                    class="field-error"
+                ></small>
+
+            </div>
+
+
+            <!-- CATEGORY -->
+
+            <div class="form-group">
+
+                <label for="noteCategory">
+                    Category
+                </label>
+
+                <select
+                    id="noteCategory"
+                    name="category"
+                >
+
+                    <option value="personal">
+                        Personal
+                    </option>
+
+                    <option value="work">
+                        Work
+                    </option>
+
+                    <option value="study">
+                        Study
+                    </option>
+
+                    <option value="ideas">
+                        Ideas
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- CONTENT -->
+
+            <div class="form-group">
+
+                <div class="label-row">
+
+                    <label for="noteContent">
+                        Content
+                    </label>
+
+                    <span
+                        id="noteCharacterCount"
+                        class="character-count"
+                    >
+                        0 / 10000
+                    </span>
+
+                </div>
+
+                <textarea
+                    id="noteContent"
+                    name="content"
+                    rows="12"
+                    maxlength="10000"
+                    placeholder="Write your note here..."
+                    required
+                ></textarea>
+
+                <small
+                    id="noteContentError"
+                    class="field-error"
+                ></small>
+
+            </div>
+
+
+            <!-- PIN -->
+
+            <div class="note-options">
+
+                <label class="checkbox-container">
+
+                    <input
+                        type="checkbox"
+                        id="notePinned"
+                        name="pinned"
+                    >
+
+                    <span class="custom-checkbox"></span>
+
+                    <span>
+                        Pin this note
+                    </span>
+
+                </label>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    id="cancelNote"
+                    class="btn btn-secondary"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    id="saveNoteButton"
+                    class="btn btn-primary"
+                >
+
+                    <span id="saveNoteText">
+                        Save Note
+                    </span>
+
+                    <span
+                        id="saveNoteSpinner"
+                        class="button-spinner"
+                    ></span>
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     DELETE NOTE MODAL
+========================================================= -->
+
+<div
+    id="deleteNoteModal"
+    class="modal-overlay hidden"
+>
+
+
+    <div class="modal small-modal">
+
+
+        <div class="modal-icon danger">
+            !
+        </div>
+
+
+        <h3>
+            Delete this note?
+        </h3>
+
+
+        <p>
+            This action cannot be undone.
+            The note will be permanently removed.
+        </p>
+
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                id="cancelDeleteNote"
+                class="btn btn-secondary"
+            >
+                Cancel
+            </button>
+
+
+            <button
+                type="button"
+                id="confirmDeleteNote"
+                class="btn btn-danger"
+            >
+                Delete Note
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     LOGOUT MODAL
+========================================================= -->
+
+<div
+    id="logoutModal"
+    class="modal-overlay hidden"
+>
+
+
+    <div class="modal small-modal">
+
+        <div class="modal-icon danger">
+            ↪
+        </div>
+
+        <h3>
+            Logout?
+        </h3>
+
+        <p>
+            Are you sure you want to logout
+            from your account?
+        </p>
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                id="cancelLogout"
+                class="btn btn-secondary"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                id="confirmLogout"
+                class="btn btn-danger"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     TOAST
+========================================================= -->
+
+<div
+    id="toastContainer"
+    class="toast-container"
+></div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script
+    src="{{ url_for('static', filename='js/api.js') }}"
+></script>
+
+<script
+    src="{{ url_for('static', filename='js/notes.js') }}"
+></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Page Not Found | MyNotes & Tasks</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+<body class="auth-page">
+
+    <div class="auth-background">
+
+        <div class="auth-orb auth-orb-one"></div>
+
+        <div class="auth-orb auth-orb-two"></div>
+
+    </div>
+
+
+    <main class="auth-container">
+
+        <a
+            href="/"
+            class="auth-brand"
+        >
+
+            <span class="brand-icon">
+                ✓
+            </span>
+
+            <span>
+                MyNotes
+            </span>
+
+        </a>
+
+
+        <section class="auth-card">
+
+            <div class="auth-header">
+
+                <div class="auth-icon">
+                    404
+                </div>
+
+                <h1>
+                    Page not found
+                </h1>
+
+                <p>
+                    Sorry, the page you're looking for
+                    doesn't exist or may have been moved.
+                </p>
+
+            </div>
+
+
+            <div class="auth-form">
+
+                <a
+                    href="/"
+                    class="btn btn-primary btn-auth"
+                >
+                    Back to Home
+                </a>
+
+
+                <a
+                    href="/dashboard"
+                    class="btn btn-secondary btn-auth"
+                >
+                    Go to Dashboard
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <a
+            href="/"
+            class="back-home"
+        >
+            ← Back to home
+        </a>
+
+    </main>
+
+</body>
+
+</html>
+
