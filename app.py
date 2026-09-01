@@ -65,6 +65,53 @@ GOOGLE_CLIENT_SECRET_FILE = os.path.join(
     "client_secret.json"
 )
 
+
+def get_google_client_config():
+
+    google_client_json = os.getenv(
+        "GOOGLE_CLIENT_SECRET_JSON"
+    )
+
+    # --------------------------------------------------------
+    # RENDER / PRODUCTION
+    # --------------------------------------------------------
+
+    if google_client_json:
+
+        try:
+
+            return json.loads(
+                google_client_json
+            )
+
+        except json.JSONDecodeError as error:
+
+            raise RuntimeError(
+                "GOOGLE_CLIENT_SECRET_JSON contains invalid JSON."
+            ) from error
+
+    # --------------------------------------------------------
+    # LOCAL DEVELOPMENT
+    # --------------------------------------------------------
+
+    if os.path.exists(
+        GOOGLE_CLIENT_SECRET_FILE
+    ):
+
+        with open(
+            GOOGLE_CLIENT_SECRET_FILE,
+            "r",
+            encoding="utf-8"
+        ) as file:
+
+            return json.load(file)
+
+    raise FileNotFoundError(
+        "Google OAuth credentials not found. "
+        "Set GOOGLE_CLIENT_SECRET_JSON in the environment "
+        "or provide credentials/client_secret.json locally."
+    )
+
 # ============================================================
 # GOOGLE OAUTH - LOCAL DEVELOPMENT
 # ============================================================
@@ -4405,8 +4452,10 @@ def get_google_redirect_uri():
 
 def create_google_flow():
 
-    flow = Flow.from_client_secrets_file(
-        GOOGLE_CLIENT_SECRET_FILE,
+    client_config = get_google_client_config()
+
+    flow = Flow.from_client_config(
+        client_config,
         scopes=GOOGLE_SCOPES
     )
 
@@ -4501,15 +4550,17 @@ def google_callback():
     # CREATE FLOW
     # --------------------------------------------------------
 
-    flow = Flow.from_client_secrets_file(
+    client_config = get_google_client_config()
 
-        GOOGLE_CLIENT_SECRET_FILE,
+    flow = Flow.from_client_config(
+
+        client_config,
 
         scopes=GOOGLE_SCOPES,
 
         state=state
 
-    )
+)
 
     flow.redirect_uri = (
         get_google_redirect_uri()
