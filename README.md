@@ -1374,8 +1374,6 @@ MongoDB / Google Calendar / Email
 
 [![GitHub](https://img.shields.io/badge/GitHub-Aluval-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Aluval)
 
-[![Google Search](https://img.shields.io/badge/Google-Search%20My%20Name-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://www.google.com/search?q=ALUVALA+EDIGA+HARSHA+VARDHAN+GOUD)
-
 ### 🌐 Portfolio
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-harsha24.online-0A66C2?style=for-the-badge&logo=googlechrome&logoColor=white)](https://harsha24.online/)
