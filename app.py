@@ -4483,6 +4483,10 @@ def create_google_flow():
 # GOOGLE CALENDAR - CONNECT
 # ============================================================
 
+# ============================================================
+# GOOGLE CALENDAR - CONNECT
+# ============================================================
+
 @app.route(
     "/api/google/connect",
     methods=["GET"]
@@ -4503,17 +4507,38 @@ def google_connect():
     )
 
     # --------------------------------------------------------
-    # SAVE OAUTH STATE + PKCE VERIFIER SERVER-SIDE
+    # SAVE GOOGLE OAUTH STATE + PKCE VERIFIER SERVER-SIDE
     # --------------------------------------------------------
 
     google_oauth_collection.insert_one(
         {
-            "state": state,
-            "user_id": user["_id"],
-            "code_verifier": flow.code_verifier,
-            "created_at": utc_now_naive()
+            "state":
+                state,
+
+            "user_id":
+                user["_id"],
+
+            "code_verifier":
+                flow.code_verifier,
+
+            "created_at":
+                utc_now_naive()
         }
     )
+
+    print(
+        "GOOGLE OAUTH STATE SAVED:",
+        state
+    )
+
+    print(
+        "GOOGLE PKCE VERIFIER SAVED:",
+        bool(flow.code_verifier)
+    )
+
+    # --------------------------------------------------------
+    # REDIRECT TO GOOGLE
+    # --------------------------------------------------------
 
     return redirect(
         authorization_url
