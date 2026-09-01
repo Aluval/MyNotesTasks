@@ -4,125 +4,9 @@
    FORGOT PASSWORD
 ========================================================= */
 
-const forgotState = {
-    email: ""
-};
-
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    const page =
-        document.getElementById(
-            "forgotPasswordPage"
-        );
-
-    if (!page) {
-        return;
-    }
-
-    initializeForgotPassword();
-
-});
-
-
-/* =========================================================
-   INITIALIZE
-========================================================= */
-
-function initializeForgotPassword() {
-
-    const form =
-        document.getElementById(
-            "forgotPasswordForm"
-        );
-
-
-    if (form) {
-
-        form.addEventListener(
-            "submit",
-            sendResetCode
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   SEND RESET CODE
-========================================================= */
-
-async function sendResetCode(event) {
-
-    event.preventDefault();
-
-
-    const email =
-        document
-            .getElementById(
-                "forgotEmail"
-            )
-            ?.value
-            .trim()
-            .toLowerCase();
-
-
-    if (
-        !email ||
-        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-    ) {
-
-        showForgotError(
-            "Please enter a valid email address."
-        );
-
-        return;
-
-    }
-
-
-    const button =
-        document.getElementById(
-            "forgotPasswordButton"
-        );
-
-
-    setButtonLoading(
-        button,
-        true,
-        "Sending..."
-    );
-
-
-    const result =
-        await API.post(
-            "/api/auth/forgot-password",
-            {
-                email: email
-            }
-        );
-
-
-"use strict";
-
-/* =========================================================
-   FORGOT PASSWORD
-   MyNotes & Tasks
-========================================================= */
-
-const forgotState = {
-    email: ""
-};
-
-
-/* =========================================================
-   PAGE INITIALIZATION
-========================================================= */
-
 document.addEventListener(
     "DOMContentLoaded",
-    () => {
+    function () {
 
         const page =
             document.getElementById(
@@ -151,6 +35,7 @@ function initializeForgotPassword() {
         );
 
     if (!form) {
+
         console.error(
             "Forgot password form not found."
         );
@@ -158,28 +43,26 @@ function initializeForgotPassword() {
         return;
     }
 
+
     form.addEventListener(
         "submit",
         sendResetCode
     );
 
 
-    /* -----------------------------------------------------
-       Clear error while typing
-    ----------------------------------------------------- */
-
     const emailInput =
         document.getElementById(
             "forgotEmail"
         );
 
+
     if (emailInput) {
 
         emailInput.addEventListener(
             "input",
-            () => {
+            function () {
 
-                hideForgotMessages();
+                clearForgotMessages();
 
             }
         );
@@ -204,14 +87,19 @@ async function sendResetCode(event) {
         );
 
 
+    const button =
+        document.getElementById(
+            "forgotPasswordButton"
+        );
+
+
     if (!emailInput) {
 
         showForgotError(
-            "Email input was not found."
+            "Email input not found."
         );
 
         return;
-
     }
 
 
@@ -222,7 +110,7 @@ async function sendResetCode(event) {
 
 
     /* -----------------------------------------------------
-       VALIDATE EMAIL
+       VALIDATION
     ----------------------------------------------------- */
 
     if (!email) {
@@ -234,7 +122,6 @@ async function sendResetCode(event) {
         emailInput.focus();
 
         return;
-
     }
 
 
@@ -251,154 +138,145 @@ async function sendResetCode(event) {
         emailInput.focus();
 
         return;
-
     }
 
 
     /* -----------------------------------------------------
-       BUTTON
+       LOADING
     ----------------------------------------------------- */
 
-    const button =
-        document.getElementById(
-            "forgotPasswordButton"
-        );
-
-
-    setForgotButtonLoading(
+    setForgotLoading(
         button,
         true
     );
 
 
-    hideForgotMessages();
+    clearForgotMessages();
 
 
     try {
 
-        /* -------------------------------------------------
-           API REQUEST
-        ------------------------------------------------- */
-
-        let result;
+        console.log(
+            "Sending password reset request..."
+        );
 
 
-        /*
-         * Use existing API helper if available.
-         */
-
-        if (
-            typeof API !== "undefined" &&
-            typeof API.post === "function"
-        ) {
-
-            result =
-                await API.post(
-                    "/api/auth/forgot-password",
-                    {
-                        email: email
-                    }
-                );
-
-        }
-
-        /*
-         * Fallback to fetch if API helper
-         * is not available.
-         */
-
-        else {
-
-            const response =
-                await fetch(
-                    "/api/auth/forgot-password",
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
-
-                        body:
-                            JSON.stringify({
-                                email: email
-                            })
-                    }
-                );
-
-
-            let data = {};
-
-            try {
-
-                data =
-                    await response.json();
-
-            } catch (error) {
-
-                data = {};
-
-            }
-
-
-            result = {
-
-                ok:
-                    response.ok,
-
-                status:
-                    response.status,
-
-                data:
-                    data,
-
-                message:
-                    data.message ||
-                    data.error ||
-                    ""
-
-            };
-
-        }
+        console.log(
+            "Email:",
+            email
+        );
 
 
         /* -------------------------------------------------
-           API ERROR
+           DIRECT FETCH
         ------------------------------------------------- */
 
-        if (!result || !result.ok) {
+        const response =
+            await fetch(
+                "/api/auth/forgot-password",
+                {
 
-            const message =
-                getForgotResponseMessage(
-                    result,
-                    "Unable to process your request. Please try again."
-                );
+                    method: "POST",
 
+                    headers: {
 
-            showForgotError(
-                message
+                        "Content-Type":
+                            "application/json",
+
+                        "Accept":
+                            "application/json"
+
+                    },
+
+                    credentials:
+                        "same-origin",
+
+                    body:
+                        JSON.stringify({
+
+                            email:
+                                email
+
+                        })
+
+                }
             );
 
 
-            setForgotButtonLoading(
+        console.log(
+            "Forgot password HTTP status:",
+            response.status
+        );
+
+
+        /* -------------------------------------------------
+           READ RESPONSE
+        ------------------------------------------------- */
+
+        let data = {};
+
+
+        try {
+
+            data =
+                await response.json();
+
+        }
+
+        catch (jsonError) {
+
+            console.error(
+                "Invalid JSON response:",
+                jsonError
+            );
+
+            showForgotError(
+                "Server returned an invalid response."
+            );
+
+            setForgotLoading(
+                button,
+                false
+            );
+
+            return;
+        }
+
+
+        console.log(
+            "Forgot password response:",
+            data
+        );
+
+
+        /* -------------------------------------------------
+           SERVER ERROR
+        ------------------------------------------------- */
+
+        if (!response.ok || data.ok === false) {
+
+            showForgotError(
+
+                data.message ||
+                data.error ||
+                "Unable to send reset code."
+
+            );
+
+
+            setForgotLoading(
                 button,
                 false
             );
 
 
             return;
-
         }
 
 
         /* -------------------------------------------------
            SAVE EMAIL
         ------------------------------------------------- */
-
-        forgotState.email =
-            email;
-
 
         sessionStorage.setItem(
             "resetEmail",
@@ -411,36 +289,38 @@ async function sendResetCode(event) {
         ------------------------------------------------- */
 
         showForgotSuccess(
-            "If an account exists for this email, a password reset code has been sent."
+            data.message ||
+            "A password reset code has been sent to your email."
         );
 
 
-        setForgotButtonLoading(
+        setForgotLoading(
             button,
             false
         );
 
 
         /* -------------------------------------------------
-           GO TO RESET PASSWORD
+           REDIRECT
         ------------------------------------------------- */
 
         setTimeout(
-            () => {
+            function () {
 
                 window.location.href =
                     "/reset-password";
 
             },
-            1200
+            1500
         );
 
     }
 
+
     catch (error) {
 
         console.error(
-            "Forgot password error:",
+            "Forgot password request failed:",
             error
         );
 
@@ -450,7 +330,7 @@ async function sendResetCode(event) {
         );
 
 
-        setForgotButtonLoading(
+        setForgotLoading(
             button,
             false
         );
@@ -461,10 +341,10 @@ async function sendResetCode(event) {
 
 
 /* =========================================================
-   BUTTON LOADING
+   LOADING
 ========================================================= */
 
-function setForgotButtonLoading(
+function setForgotLoading(
     button,
     loading
 ) {
@@ -498,9 +378,6 @@ function setForgotButtonLoading(
 
         if (text) {
 
-            text.dataset.originalText =
-                text.textContent;
-
             text.textContent =
                 "Sending...";
 
@@ -529,7 +406,6 @@ function setForgotButtonLoading(
         if (text) {
 
             text.textContent =
-                text.dataset.originalText ||
                 "Send Reset Code";
 
         }
@@ -542,44 +418,6 @@ function setForgotButtonLoading(
             );
 
         }
-
-    }
-
-}
-
-
-/* =========================================================
-   HIDE MESSAGES
-========================================================= */
-
-function hideForgotMessages() {
-
-    const error =
-        document.getElementById(
-            "authError"
-        );
-
-
-    const success =
-        document.getElementById(
-            "authSuccess"
-        );
-
-
-    if (error) {
-
-        error.hidden = true;
-
-        error.textContent = "";
-
-    }
-
-
-    if (success) {
-
-        success.hidden = true;
-
-        success.textContent = "";
 
     }
 
@@ -627,17 +465,9 @@ function showForgotError(
     }
 
 
-    if (
-        typeof showToast ===
-        "function"
-    ) {
-
-        showToast(
-            message,
-            "error"
-        );
-
-    }
+    console.error(
+        message
+    );
 
 }
 
@@ -683,88 +513,46 @@ function showForgotSuccess(
     }
 
 
-    if (
-        typeof showToast ===
-        "function"
-    ) {
-
-        showToast(
-            message,
-            "success"
-        );
-
-    }
+    console.log(
+        message
+    );
 
 }
 
 
 /* =========================================================
-   RESPONSE MESSAGE
+   CLEAR MESSAGES
 ========================================================= */
 
-function getForgotResponseMessage(
-    result,
-    fallback
-) {
+function clearForgotMessages() {
 
-    if (!result) {
-        return fallback;
-    }
+    const error =
+        document.getElementById(
+            "authError"
+        );
 
 
-    if (
-        typeof getResponseMessage ===
-        "function"
-    ) {
+    const success =
+        document.getElementById(
+            "authSuccess"
+        );
 
-        try {
 
-            return getResponseMessage(
-                result,
-                fallback
-            );
+    if (error) {
 
-        }
+        error.hidden = true;
 
-        catch (error) {
-
-            console.warn(
-                "getResponseMessage failed:",
-                error
-            );
-
-        }
+        error.textContent = "";
 
     }
 
 
-    if (result.message) {
+    if (success) {
 
-        return result.message;
+        success.hidden = true;
 
-    }
-
-
-    if (
-        result.data &&
-        result.data.message
-    ) {
-
-        return result.data.message;
+        success.textContent = "";
 
     }
-
-
-    if (
-        result.data &&
-        result.data.error
-    ) {
-
-        return result.data.error;
-
-    }
-
-
-    return fallback;
 
 }
