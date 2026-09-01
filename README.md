@@ -1376,6 +1376,12 @@ GitHub:
 
 https://github.com/Aluval
 
+Portfolio:
+
+https://harsha24.online/
+
+[![Google Search](https://img.shields.io/badge/Google-ALUVALA%20EDIGA%20HARSHA%20VARDHAN%20GOUD-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://www.google.com/search?q=ALUVALA+EDIGA+HARSHA+VARDHAN+GOUD)
+
 ---
 
 # 📄 License
