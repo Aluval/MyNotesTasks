@@ -478,7 +478,7 @@ def valid_password(password):
 
 
 # ============================================================
-# RANDOM CODE
+# RANDOM 6-DIGIT CODE
 # ============================================================
 
 def generate_code():
@@ -500,40 +500,49 @@ def send_email(
     body
 ):
 
-    print("\n========== EMAIL DEBUG ==========")
-    print("Recipient:", recipient)
-    print("Subject:", subject)
-    print("Body:", body)
-    print("MAIL_USERNAME:", MAIL_USERNAME)
-    print("MAIL_PASSWORD configured:", bool(MAIL_PASSWORD))
-    print("MAIL_HOST:", MAIL_HOST)
-    print("MAIL_PORT:", MAIL_PORT)
-    print("=================================\n")
+    print(
+        "\n========== EMAIL DEBUG =========="
+    )
+
+    print(
+        "Recipient:",
+        recipient
+    )
+
+    print(
+        "Subject:",
+        subject
+    )
+
+    print(
+        "MAIL_USERNAME:",
+        MAIL_USERNAME
+    )
+
+    print(
+        "MAIL_PASSWORD configured:",
+        bool(MAIL_PASSWORD)
+    )
+
+    print(
+        "MAIL_HOST:",
+        MAIL_HOST
+    )
+
+    print(
+        "MAIL_PORT:",
+        MAIL_PORT
+    )
+
+    print(
+        "=================================\n"
+    )
+
 
     if not MAIL_USERNAME or not MAIL_PASSWORD:
 
         print(
-            "\n================================================"
-        )
-
-        print(
             "EMAIL CONFIGURATION MISSING"
-        )
-
-        print(
-            f"To: {recipient}"
-        )
-
-        print(
-            f"Subject: {subject}"
-        )
-
-        print(
-            body
-        )
-
-        print(
-            "================================================\n"
         )
 
         return False
@@ -557,20 +566,65 @@ def send_email(
         )
 
 
+        print(
+            "Connecting to SMTP server..."
+        )
+
+
         with smtplib.SMTP(
             MAIL_HOST,
-            MAIL_PORT
+            int(MAIL_PORT),
+            timeout=20
         ) as server:
 
+            print(
+                "SMTP connection successful."
+            )
+
+
+            server.ehlo()
+
+
+            print(
+                "Starting TLS..."
+            )
+
+
             server.starttls()
+
+
+            server.ehlo()
+
+
+            print(
+                "Logging into SMTP..."
+            )
+
 
             server.login(
                 MAIL_USERNAME,
                 MAIL_PASSWORD
             )
 
+
+            print(
+                "SMTP login successful."
+            )
+
+
+            print(
+                "Sending email..."
+            )
+
+
             server.send_message(
                 message
+            )
+
+
+            print(
+                "EMAIL SENT SUCCESSFULLY TO:",
+                recipient
             )
 
 
@@ -580,8 +634,8 @@ def send_email(
     except Exception as error:
 
         print(
-            "Email sending error:",
-            error
+            "EMAIL SENDING ERROR:",
+            repr(error)
         )
 
         return False
