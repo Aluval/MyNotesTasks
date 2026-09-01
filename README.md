@@ -1364,12 +1364,12 @@ MongoDB / Google Calendar / Email
 
 ### 📄 Project Documentation 
 
-[![Documentation PDF](https://img.shields.io/badge/Documentation-PDF-red?style=for-the-badge&logo=adobeacrobatreader)](docs/MyNotes&Tasks Project Documentation.pdf)
+[![Documentation PDF](https://img.shields.io/badge/Documentation-PDF-red?style=for-the-badge&logo=adobeacrobatreader)](docs/MyNotes%26Tasks%20Project%20Documentation.pdf)
 
-> Complete project documentation including system architecture,
-> workflows, UML diagrams, database design, security,
-> Google Calendar integration, email reminders,
-> implementation details, testing, deployment and application screenshots.
+- Complete project documentation including system architecture,
+- workflows, UML diagrams, database design, security,
+- Google Calendar integration, email reminders,
+- implementation details, testing, deployment and application screenshots.
 
 ### 👨‍💻 Developer GitHub
 
