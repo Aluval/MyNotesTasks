@@ -266,7 +266,7 @@ Due Date / Time
 Reminder Logic
  │
  ▼
-Gmail SMTP
+Gmail API (RESEND)
  │
  ▼
 User Email
@@ -602,7 +602,7 @@ Password Reset
 Resend
 Flask-Mail
 ```
-- 📧 Email Service: Resend API — migrated from direct Gmail SMTP for more reliable cloud deployment and transactional email delivery
+- 📧 Email Service: Resend API — migrated from direct Gmail SMTP for more reliable cloud deployment and transactional email delivery (Render)
 
 ## Google Integration
 
