@@ -510,45 +510,101 @@ def generate_code():
 # EMAIL SENDER
 # ============================================================
 
-def send_email(recipient, subject, body):
-    """
-    Send an email using Resend API.
+# ============================================================
+# EMAIL SENDER - RESEND API
+# ============================================================
 
-    This replaces Gmail SMTP because Render Free
-    blocks outbound SMTP traffic on ports 25, 465 and 587.
-    """
+def send_email(
+    recipient,
+    subject,
+    body
+):
+    print(
+        "\n========== EMAIL DEBUG =========="
+    )
 
-    print("\n========== EMAIL DEBUG ==========")
-    print("Recipient:", recipient)
-    print("Subject:", subject)
-    print("Resend API Key configured:", bool(RESEND_API_KEY))
-    print("From Email:", RESEND_FROM_EMAIL)
-    print("From Name:", RESEND_FROM_NAME)
-    print("=================================\n")
+    print(
+        "Recipient:",
+        recipient
+    )
 
-    # Check API key
+    print(
+        "Subject:",
+        subject
+    )
+
+    print(
+        "RESEND_API_KEY configured:",
+        bool(RESEND_API_KEY)
+    )
+
+    print(
+        "RESEND_FROM_EMAIL:",
+        RESEND_FROM_EMAIL
+    )
+
+    print(
+        "RESEND_FROM_NAME:",
+        RESEND_FROM_NAME
+    )
+
+    print(
+        "=================================\n"
+    )
+
+    # --------------------------------------------------------
+    # CHECK API KEY
+    # --------------------------------------------------------
+
     if not RESEND_API_KEY:
-        print("ERROR: RESEND_API_KEY is missing.")
+        print(
+            "RESEND API KEY MISSING"
+        )
+
         return False
 
+    # --------------------------------------------------------
+    # SEND EMAIL
+    # --------------------------------------------------------
+
     try:
+
         params = {
-            "from": f"{RESEND_FROM_NAME} <{RESEND_FROM_EMAIL}>",
-            "to": [recipient],
+            "from": (
+                f"{RESEND_FROM_NAME} "
+                f"<{RESEND_FROM_EMAIL}>"
+            ),
+
+            "to": [
+                recipient
+            ],
+
             "subject": subject,
+
             "text": body
         }
 
-        result = resend.Emails.send(params)
+        result = resend.Emails.send(
+            params
+        )
 
-        print("RESEND EMAIL SENT SUCCESSFULLY")
-        print("Resend Response:", result)
+        print(
+            "RESEND EMAIL SENT SUCCESSFULLY"
+        )
+
+        print(
+            "RESEND RESPONSE:",
+            result
+        )
 
         return True
 
     except Exception as error:
-        print("RESEND EMAIL SENDING ERROR:")
-        print(repr(error))
+
+        print(
+            "RESEND EMAIL SENDING ERROR:",
+            repr(error)
+        )
 
         return False
 
