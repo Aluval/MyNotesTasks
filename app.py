@@ -20,11 +20,10 @@
 
 import os,re
 import json
+import resend
 import secrets
 import base64
-import smtplib
 from datetime import datetime, timedelta, timezone
-from email.message import EmailMessage
 from functools import wraps
 import threading
 import time
@@ -127,6 +126,23 @@ os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 # ============================================================
 
 load_dotenv()
+
+# ============================================================
+# RESEND EMAIL CONFIGURATION
+# ============================================================
+
+RESEND_API_KEY = os.getenv("RESEND_API_KEY", "")
+RESEND_FROM_EMAIL = os.getenv(
+    "RESEND_FROM_EMAIL",
+    "noreply@harsha24.online"
+)
+RESEND_FROM_NAME = os.getenv(
+    "RESEND_FROM_NAME",
+    "MyNotes & Tasks"
+)
+
+if RESEND_API_KEY:
+    resend.api_key = RESEND_API_KEY
 
 
 # ============================================================
@@ -494,152 +510,47 @@ def generate_code():
 # EMAIL SENDER
 # ============================================================
 
-def send_email(
-    recipient,
-    subject,
-    body
-):
+def send_email(recipient, subject, body):
+    """
+    Send an email using Resend API.
 
-    print(
-        "\n========== EMAIL DEBUG =========="
-    )
+    This replaces Gmail SMTP because Render Free
+    blocks outbound SMTP traffic on ports 25, 465 and 587.
+    """
 
-    print(
-        "Recipient:",
-        recipient
-    )
+    print("\n========== EMAIL DEBUG ==========")
+    print("Recipient:", recipient)
+    print("Subject:", subject)
+    print("Resend API Key configured:", bool(RESEND_API_KEY))
+    print("From Email:", RESEND_FROM_EMAIL)
+    print("From Name:", RESEND_FROM_NAME)
+    print("=================================\n")
 
-    print(
-        "Subject:",
-        subject
-    )
-
-    print(
-        "MAIL_USERNAME:",
-        MAIL_USERNAME
-    )
-
-    print(
-        "MAIL_PASSWORD configured:",
-        bool(MAIL_PASSWORD)
-    )
-
-    print(
-        "MAIL_HOST:",
-        MAIL_HOST
-    )
-
-    print(
-        "MAIL_PORT:",
-        MAIL_PORT
-    )
-
-    print(
-        "=================================\n"
-    )
-
-
-    if not MAIL_USERNAME or not MAIL_PASSWORD:
-
-        print(
-            "EMAIL CONFIGURATION MISSING"
-        )
-
+    # Check API key
+    if not RESEND_API_KEY:
+        print("ERROR: RESEND_API_KEY is missing.")
         return False
 
-
     try:
+        params = {
+            "from": f"{RESEND_FROM_NAME} <{RESEND_FROM_EMAIL}>",
+            "to": [recipient],
+            "subject": subject,
+            "text": body
+        }
 
-        message = EmailMessage()
+        result = resend.Emails.send(params)
 
-        message["Subject"] = subject
-
-        message["From"] = (
-            f"{MAIL_FROM_NAME} "
-            f"<{MAIL_USERNAME}>"
-        )
-
-        message["To"] = recipient
-
-        message.set_content(
-            body
-        )
-
-
-        print(
-            "Connecting to SMTP server..."
-        )
-
-
-        with smtplib.SMTP(
-            MAIL_HOST,
-            int(MAIL_PORT),
-            timeout=20
-        ) as server:
-
-            print(
-                "SMTP connection successful."
-            )
-
-
-            server.ehlo()
-
-
-            print(
-                "Starting TLS..."
-            )
-
-
-            server.starttls()
-
-
-            server.ehlo()
-
-
-            print(
-                "Logging into SMTP..."
-            )
-
-
-            server.login(
-                MAIL_USERNAME,
-                MAIL_PASSWORD
-            )
-
-
-            print(
-                "SMTP login successful."
-            )
-
-
-            print(
-                "Sending email..."
-            )
-
-
-            server.send_message(
-                message
-            )
-
-
-            print(
-                "EMAIL SENT SUCCESSFULLY TO:",
-                recipient
-            )
-
+        print("RESEND EMAIL SENT SUCCESSFULLY")
+        print("Resend Response:", result)
 
         return True
 
-
     except Exception as error:
-
-        print(
-            "EMAIL SENDING ERROR:",
-            repr(error)
-        )
+        print("RESEND EMAIL SENDING ERROR:")
+        print(repr(error))
 
         return False
-
 
 # ============================================================
 # ACTIVITY LOG
