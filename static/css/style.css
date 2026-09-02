@@ -124,6 +124,58 @@ img {
 
 }
 
+/* ============================================================
+   PASSWORD RESET OTP - COMPACT 6 DIGIT BOXES
+============================================================ */
+
+.reset-code {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin: 12px 0 8px;
+}
+
+.reset-code-input {
+    width: 48px !important;
+    min-width: 48px !important;
+    max-width: 48px !important;
+
+    height: 52px !important;
+    min-height: 52px !important;
+    max-height: 52px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    text-align: center;
+    font-size: 22px !important;
+    font-weight: 600;
+
+    border-radius: 10px !important;
+    box-sizing: border-box !important;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+
+    .reset-code {
+        gap: 7px;
+    }
+
+    .reset-code-input {
+        width: 42px !important;
+        min-width: 42px !important;
+        max-width: 42px !important;
+
+        height: 48px !important;
+        min-height: 48px !important;
+        max-height: 48px !important;
+
+        font-size: 20px !important;
+    }
+}
 
 /* =========================================================
    3. BUTTONS
