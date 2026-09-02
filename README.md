@@ -599,9 +599,10 @@ Password Reset
 ## Email
 
 ```text
-Gmail SMTP
+Resend
 Flask-Mail
 ```
+- 📧 Email Service: Resend API — migrated from direct Gmail SMTP for more reliable cloud deployment and transactional email delivery
 
 ## Google Integration
 
