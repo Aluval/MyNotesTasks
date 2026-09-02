@@ -7564,21 +7564,55 @@ img {
 }
 
 /* =========================================================
-   TASKS — DESKTOP FULL AVAILABLE WIDTH
-   Mobile remains unchanged
+   DESKTOP — FULL AVAILABLE APPLICATION WIDTH
+   Mobile layout remains unchanged
 ========================================================= */
 
 @media (min-width: 801px) {
 
-    .app-main {
-        width: calc(100% - var(--sidebar-width));
+    /* Main application layout */
+    .app-layout {
+        width: 100%;
         max-width: none;
-        flex: 1 1 auto;
+        min-width: 0;
+        display: flex;
     }
 
-    .page-content {
+    /* Main content area beside sidebar */
+    .app-main {
+        width: auto;
+        max-width: none;
+        min-width: 0;
+        flex: 1 1 0;
+        margin-left: var(--sidebar-width);
+    }
+
+    /* Top navigation/header */
+    .app-topbar {
+        width: 100%;
+        max-width: none;
+    }
+
+    /* Main page content */
+    .page-content,
+    .dashboard-content {
         width: 100%;
         max-width: 1400px;
+        margin-left: 0;
+        margin-right: auto;
+        box-sizing: border-box;
+    }
+
+    /* Tasks section */
+    .tasks-list {
+        width: 100%;
+        max-width: none;
+    }
+
+    .task-list-item {
+        width: 100%;
+        max-width: none;
+        box-sizing: border-box;
     }
 
 }
