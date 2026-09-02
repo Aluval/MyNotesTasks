@@ -2857,13 +2857,10 @@ img {
 
 
 .app-main {
-
     margin-left: var(--sidebar-width);
-
+    width: calc(100% - var(--sidebar-width));
     min-width: 0;
-
-    flex: 1;
-
+    flex: 1 1 auto;
 }
 
 
@@ -3024,13 +3021,11 @@ img {
 
 .dashboard-content,
 .page-content {
-
+    width: 100%;
     max-width: 1400px;
-
-    margin: auto;
-
+    margin: 0 auto;
     padding: 30px;
-
+    box-sizing: border-box;
 }
 
 
@@ -7559,60 +7554,6 @@ img {
 
         padding: 3px 6px;
 
-    }
-
-}
-
-/* =========================================================
-   DESKTOP — FULL AVAILABLE APPLICATION WIDTH
-   Mobile layout remains unchanged
-========================================================= */
-
-@media (min-width: 801px) {
-
-    /* Main application layout */
-    .app-layout {
-        width: 100%;
-        max-width: none;
-        min-width: 0;
-        display: flex;
-    }
-
-    /* Main content area beside sidebar */
-    .app-main {
-        width: auto;
-        max-width: none;
-        min-width: 0;
-        flex: 1 1 0;
-        margin-left: var(--sidebar-width);
-    }
-
-    /* Top navigation/header */
-    .app-topbar {
-        width: 100%;
-        max-width: none;
-    }
-
-    /* Main page content */
-    .page-content,
-    .dashboard-content {
-        width: 100%;
-        max-width: 1400px;
-        margin-left: 0;
-        margin-right: auto;
-        box-sizing: border-box;
-    }
-
-    /* Tasks section */
-    .tasks-list {
-        width: 100%;
-        max-width: none;
-    }
-
-    .task-list-item {
-        width: 100%;
-        max-width: none;
-        box-sizing: border-box;
     }
 
 }
