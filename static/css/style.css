@@ -7562,3 +7562,23 @@ img {
     }
 
 }
+
+/* =========================================================
+   TASKS — DESKTOP FULL AVAILABLE WIDTH
+   Mobile remains unchanged
+========================================================= */
+
+@media (min-width: 801px) {
+
+    .app-main {
+        width: calc(100% - var(--sidebar-width));
+        max-width: none;
+        flex: 1 1 auto;
+    }
+
+    .page-content {
+        width: 100%;
+        max-width: 1400px;
+    }
+
+}
