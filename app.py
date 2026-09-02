@@ -5419,7 +5419,39 @@ def create_google_calendar_event(
 
     
 # ============================================================
-# START
+# START TASK REMINDER WORKER
+# ============================================================
+
+def start_task_reminder_worker():
+
+    if getattr(app, "_task_reminder_worker_started", False):
+        return
+
+    app._task_reminder_worker_started = True
+
+    reminder_thread = threading.Thread(
+        target=task_reminder_worker,
+        daemon=True,
+        name="task-reminder-worker"
+    )
+
+    reminder_thread.start()
+
+    print(
+        "TASK REMINDER WORKER STARTED."
+    )
+
+
+# ------------------------------------------------------------
+# START REMINDER WORKER
+# Works with Gunicorn / Render
+# ------------------------------------------------------------
+
+start_task_reminder_worker()
+
+
+# ============================================================
+# START FLASK
 # ============================================================
 
 if __name__ == "__main__":
@@ -5453,21 +5485,6 @@ if __name__ == "__main__":
     print(
         "=========================================="
     )
-
-    # --------------------------------------------------------
-    # START TASK REMINDER WORKER
-    # --------------------------------------------------------
-
-    reminder_thread = threading.Thread(
-        target=task_reminder_worker,
-        daemon=True
-    )
-
-    reminder_thread.start()
-
-    # --------------------------------------------------------
-    # START FLASK
-    # --------------------------------------------------------
 
     app.run(
 
